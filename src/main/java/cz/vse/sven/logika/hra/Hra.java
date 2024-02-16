@@ -1,0 +1,143 @@
+package cz.vse.sven.logika.hra;
+
+import cz.vse.sven.logika.objekty.Batoh;
+import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.prikazy.*;
+
+/**
+ * Třída Hra - třída představující logiku adventury.
+ * <p>
+ * Toto je hlavní třída  logiky aplikace.  Tato třída vytváří instanci třídy HerniPlan, která inicializuje mistnosti hry
+ * a vytváří seznam platných příkazů a instance tříd provádějící jednotlivé příkazy.
+ * Vypisuje uvítací a ukončovací text hry.
+ * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
+ *
+ * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
+ * @version prosinec 2023
+ */
+
+public class Hra implements IHra {
+
+    private SeznamPrikazu platnePrikazy;    // obsahuje seznam přípustných příkazů
+    private HerniPlan herniPlan;
+    private boolean konecHry = false;
+    private Batoh batoh;
+    private Penize penize;
+    private Progress progress;
+
+    /**
+     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan) a seznam platných příkazů.
+     */
+    public Hra() {
+        herniPlan = new HerniPlan();
+        batoh = new Batoh();
+        penize = new Penize();
+        progress = new Progress();
+        platnePrikazy = new SeznamPrikazu();
+        platnePrikazy.vlozPrikaz(new PrikazNapoveda(platnePrikazy));
+        platnePrikazy.vlozPrikaz(new PrikazJdi(herniPlan, progress));
+        platnePrikazy.vlozPrikaz(new PrikazKonec(this));
+        platnePrikazy.vlozPrikaz(new PrikazSeber(herniPlan, batoh));
+        platnePrikazy.vlozPrikaz(new PrikazKup(herniPlan, batoh, penize));
+        platnePrikazy.vlozPrikaz(new PrikazBatoh(batoh));
+        platnePrikazy.vlozPrikaz(new PrikazPromluv(herniPlan, batoh, penize, progress, this));
+        platnePrikazy.vlozPrikaz(new PrikazVymen(herniPlan, batoh, penize));
+        platnePrikazy.vlozPrikaz(new PrikazPenize(penize));
+        platnePrikazy.vlozPrikaz(new PrikazVyndej(herniPlan, batoh));
+    }
+
+    /**
+     * Vrátí úvodní zprávu pro hráče.
+     */
+    public String vratUvitani() {
+        return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
+                "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
+                "Rozhodne se, že Pepu nechá pod mostem a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
+                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu." +
+                herniPlan.getAktualniProstor().dlouhyPopis();
+    }
+
+    /**
+     * Vrátí závěrečnou zprávu pro hráče.
+     */
+    public String vratEpilog() {
+        String epilog = "";
+        if (herniPlan.isPerfektniVyhra()) {
+            epilog = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
+                    "Perfektni výhra, gratuluji.\n";
+        }
+        if (herniPlan.isVyhra()) {
+            epilog = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
+                    "Kim ale dneska bude o hladu - příště by jste to mohli napravit.\n" +
+                    "Výhra, dobrá práce.\n";
+        }
+        if (herniPlan.isProhra()) {
+            if (progress.getProgress() == 3) {
+                epilog = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
+                        "\nProhra, hodně štěstí příště.\n";
+            } else {
+                epilog = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
+                        "\nProhra, hodně štěstí příště.\n";
+            }
+        }
+        return epilog;
+    }
+
+    /**
+     * Vrací true, pokud hra skončila.
+     */
+    public boolean konecHry() {
+        return konecHry;
+    }
+
+    /**
+     * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
+     * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
+     * Pokud ano spustí samotné provádění příkazu.
+     *
+     * @param radek text, který zadal uživatel jako příkaz do hry.
+     * @return vrací se řetězec, který se má vypsat na obrazovku
+     */
+    public String zpracujPrikaz(String radek) {
+        String[] slova = radek.split("[ \t]+");
+        String slovoPrikazu = slova[0];
+        String[] parametry = new String[slova.length - 1];
+        for (int i = 0; i < parametry.length; i++) {
+            parametry[i] = slova[i + 1];
+        }
+        String textKVypsani;
+        if (platnePrikazy.jePlatnyPrikaz(slovoPrikazu)) {
+            IPrikaz prikaz = platnePrikazy.vratPrikaz(slovoPrikazu);
+            textKVypsani = prikaz.provedPrikaz(parametry);
+        } else {
+            textKVypsani = "Neznámý příkaz";
+        }
+        return textKVypsani;
+    }
+
+    /**
+     * Nastaví, že je konec hry
+     */
+    public void setKonecHry() {
+        this.konecHry = true;
+    }
+
+    /**
+     * Metoda vrátí odkaz na herní plán, je využita hlavně v testech,
+     * kde se jejím prostřednictvím získává aktualní místnost hry.
+     *
+     * @return odkaz na herní plán
+     */
+    public HerniPlan getHerniPlan() {
+        return herniPlan;
+    }
+
+    /**
+     * Metoda vrátí okdaz na progress - využito v testech
+     *
+     * @return odkaz na progress
+     */
+    public Progress getProgress() {
+        return progress;
+    }
+}
