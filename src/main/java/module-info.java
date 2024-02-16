@@ -3,6 +3,6 @@ module cz.vse.sven {
     requires javafx.fxml;
 
 
-    opens cz.vse.sven to javafx.fxml;
-    exports cz.vse.sven;
+    opens cz.vse.sven.main to javafx.fxml;
+    exports cz.vse.sven.main;
 }
