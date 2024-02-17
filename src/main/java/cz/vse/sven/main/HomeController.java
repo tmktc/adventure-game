@@ -2,7 +2,10 @@ package cz.vse.sven.main;
 
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.IHra;
+import cz.vse.sven.logika.objekty.Prostor;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,6 +18,9 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
+    private ListView panelVychodu;
+
+    @FXML
     private Button tlacitkoOdesli;
 
     @FXML
@@ -25,13 +31,26 @@ public class HomeController {
 
     private IHra hra = new Hra();
 
+    private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
+
     /**
-     * Metoda na začátku hry: vrací uvítání a focusuje na TextField
+     * Metoda na začátku hry:
+     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů
      */
     @FXML
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
+        panelVychodu.setItems(seznamVychodu);
+    }
+
+    /**
+     * Metoda nejdříve vyčistí seznam východů v panelu východů (ListView) a vloží do něj aktualizované východy
+     */
+    @FXML
+    private void aktualizujSeznamVychodu() {
+        seznamVychodu.clear();
+        seznamVychodu.addAll(hra.getHerniPlan().getAktualniProstor().getVychody());
     }
 
     /**

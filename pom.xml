@@ -6,7 +6,7 @@
 
     <groupId>cz.vse</groupId>
     <artifactId>Sven</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>Sven</name>
 
     <properties>
@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>cz.vse.sven/cz.vse.sven.HelloApplication</mainClass>
+                            <mainClass>cz.vse.sven/cz.vse.sven.main.Start</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

@@ -157,6 +157,19 @@ public class Prostor {
     }
 
     /**
+     * Vrací kolekci obsahující prostory, se kterými tento prostor sousedí.
+     * Takto získaný seznam sousedních prostor nelze upravovat (přidávat,
+     * odebírat východy) protože z hlediska správného návrhu je to plně
+     * záležitostí třídy Prostor.
+     *
+     * @return Nemodifikovatelná kolekce prostorů (východů), se kterými tento
+     * prostor sousedí.
+     */
+    public Collection<Prostor> getVychody() {
+        return Collections.unmodifiableCollection(vychody);
+    }
+
+    /**
      * Přidá věc do prostoru
      *
      * @param vec k přidání
