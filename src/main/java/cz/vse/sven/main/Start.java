@@ -16,13 +16,14 @@ import javafx.stage.Stage;
  * Třída  Start je hlavní třídou projektu,
  * který představuje jednoduchou textovou adventuru určenou k dalším úpravám a rozšiřování
  *
- * @author Jarmila Pavlíčková
- * @version ZS 2016/2017
+ * @author Jarmila Pavlíčková, Tomáš Kotouč
+ * @version únor 2024
  */
 public class Start extends Application {
 
-    /***************************************************************************
-     * Metoda, prostřednictvím níž se spouští celá aplikace.
+    /**
+     * Pokud je parametr "text", tak se hra spustí v textové verzi
+     * pokud parametr není "text", tak se hra spustí v grafické verzi
      *
      * @param args Parametry příkazového řádku
      */
@@ -37,6 +38,12 @@ public class Start extends Application {
         }
     }
 
+    /**
+     * Spuštění grafické verze - načtení FXML souboru, vytvoření a nastavení scény
+     *
+     * @param stage instance okna
+     * @throws Exception pokud nastane chyba
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -46,6 +53,5 @@ public class Start extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Adventura Sven");
-
     }
 }
