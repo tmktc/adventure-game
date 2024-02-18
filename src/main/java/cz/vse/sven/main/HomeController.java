@@ -9,15 +9,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * Controller pro home.fxml
  */
 public class HomeController {
+
+    @FXML
+    private ImageView hrac;
 
     @FXML
     private ListView<Prostor> panelVychodu;
@@ -35,18 +42,39 @@ public class HomeController {
 
     private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
 
+    private Map<String, Point2D> souradniceProstoru = new HashMap<>();
+
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů, registruje pozorovatele
+     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů,
+     * registruje pozorovatele
      */
     @FXML
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
-        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_MISTNOSTI, () -> aktualizujSeznamVychodu());
+        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_MISTNOSTI, () -> {
+            aktualizujSeznamVychodu();
+            aktualizujPolohuHrace();
+        });
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
         aktualizujSeznamVychodu();
+        vlozSouradnice();
+    }
+
+    /**
+     * Metoda nastaví souřadnice prostorů
+     */
+    private void vlozSouradnice() {
+        souradniceProstoru.put("domov", new Point2D(365,105));
+        souradniceProstoru.put("jidelna", new Point2D(425,135));
+        souradniceProstoru.put("smetiste", new Point2D(250,155));
+        souradniceProstoru.put("pracak", new Point2D(140,70));
+        souradniceProstoru.put("sekac", new Point2D(10,135));
+        souradniceProstoru.put("zastavarna", new Point2D(120,210));
+        souradniceProstoru.put("trafika", new Point2D(570,110));
+        souradniceProstoru.put("lidl", new Point2D(570,170));
     }
 
     /**
@@ -56,6 +84,15 @@ public class HomeController {
     private void aktualizujSeznamVychodu() {
         seznamVychodu.clear();
         seznamVychodu.addAll(hra.getHerniPlan().getAktualniProstor().getVychody());
+    }
+
+    /**
+     * Metoda aktualizuje polohu hráče na mapě
+     */
+    private void aktualizujPolohuHrace() {
+        String prostor = hra.getHerniPlan().getAktualniProstor().getNazev();
+        hrac.setLayoutX(souradniceProstoru.get(prostor).getX());
+        hrac.setLayoutY(souradniceProstoru.get(prostor).getY());
     }
 
     /**
@@ -118,6 +155,7 @@ public class HomeController {
     @FXML
     private void klikPanelVychodu(MouseEvent mouseEvent) {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
+        Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         String prikaz = PrikazJdi.NAZEV + " " + cil;
         zpracujPrikaz(prikaz);
