@@ -1,5 +1,11 @@
 package cz.vse.sven.logika.objekty;
 
+import cz.vse.sven.main.Pozorovatel;
+import cz.vse.sven.main.PredmetPozorovani;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Class HerniPlan - třída představující mapu a stav adventury.
  * <p>
@@ -11,14 +17,15 @@ package cz.vse.sven.logika.objekty;
  * Dále upravuje a kontroluje stavy možných konců hry
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
-public class HerniPlan {
+public class HerniPlan implements PredmetPozorovani {
 
     private Prostor aktualniProstor;
     private boolean vyhra = false;
     private boolean prohra = false;
     private boolean perfektniVyhra = false;
+    private Set<Pozorovatel> seznamPozorovatelu = new HashSet<>();
 
     /**
      * Konstruktor
@@ -119,12 +126,14 @@ public class HerniPlan {
     }
 
     /**
-     * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory
+     * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory,
+     * dále upozorní pozorovatele
      *
      * @param prostor nový aktuální prostor
      */
     public void setAktualniProstor(Prostor prostor) {
         aktualniProstor = prostor;
+        upozorniPozorovatele();
     }
 
     /**
@@ -179,5 +188,24 @@ public class HerniPlan {
      */
     public void setPerfektniVyhra(boolean stav) {
         this.perfektniVyhra = stav;
+    }
+
+    /**
+     * Metoda přidá pozorovatele do seznamu pozorovatelů
+     *
+     * @param pozorovatel který má být přidán
+     */
+    @Override
+    public void registruj(Pozorovatel pozorovatel) {
+        seznamPozorovatelu.add(pozorovatel);
+    }
+
+    /**
+     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu zavolána aktualizační metoda
+     */
+    private void upozorniPozorovatele() {
+        for (Pozorovatel pozorovatel : seznamPozorovatelu) {
+            pozorovatel.aktualizuj();
+        }
     }
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * Controller pro home.fxml
  */
-public class HomeController {
+public class HomeController implements Pozorovatel {
 
     @FXML
     private ListView panelVychodu;
@@ -42,6 +42,8 @@ public class HomeController {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
+        hra.getHerniPlan().registruj(this);
+        aktualizujSeznamVychodu();
     }
 
     /**
@@ -87,5 +89,13 @@ public class HomeController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Platform.exit();
         }
+    }
+
+    /**
+     * Zděděná metoda od Pozorovatele - pokaždé, když je zavolána, aktualizuje seznam východů
+     */
+    @Override
+    public void aktualizuj() {
+        aktualizujSeznamVychodu();
     }
 }
