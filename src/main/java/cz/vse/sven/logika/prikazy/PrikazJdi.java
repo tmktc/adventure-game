@@ -14,7 +14,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  */
 public class PrikazJdi implements IPrikaz {
 
-    private static final String NAZEV = "jdi";
+    public static final String NAZEV = "jdi";
     private HerniPlan plan;
     private Progress progress;
 
