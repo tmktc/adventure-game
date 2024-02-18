@@ -47,7 +47,7 @@ public class HomeController {
     /**
      * Metoda na začátku hry:
      * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů,
-     * registruje pozorovatele
+     * registruje pozorovatele, nastavuje továrnu buňek pro panel východů
      */
     @FXML
     private void initialize() {
@@ -61,6 +61,7 @@ public class HomeController {
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
         aktualizujSeznamVychodu();
         vlozSouradnice();
+        panelVychodu.setCellFactory(param -> new ListCellProstor());
     }
 
     /**
@@ -157,7 +158,7 @@ public class HomeController {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
-        String prikaz = PrikazJdi.NAZEV + " " + cil;
+        String prikaz = PrikazJdi.NAZEV + " " + cil.getNazev();
         zpracujPrikaz(prikaz);
     }
 }

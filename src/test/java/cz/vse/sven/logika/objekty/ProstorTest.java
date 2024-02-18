@@ -44,7 +44,7 @@ public class ProstorTest {
      */
     @Test
     public void vratSousedniProstor() {
-        assertEquals("jidelna", plan.getAktualniProstor().vratSousedniProstor("jidelna").toString());
+        assertEquals("jidelna", plan.getAktualniProstor().vratSousedniProstor("jidelna").getNazev());
         assertNull(plan.getAktualniProstor().vratSousedniProstor("test"));
     }
 

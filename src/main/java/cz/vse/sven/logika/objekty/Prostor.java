@@ -294,14 +294,4 @@ public class Prostor {
         }
         return nazvy;
     }
-
-    /**
-     * Metoda toString vrací název prostoru
-     *
-     * @return název prostoru
-     */
-    @Override
-    public String toString() {
-        return nazev;
-    }
 }
