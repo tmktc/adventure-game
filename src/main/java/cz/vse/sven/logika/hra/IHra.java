@@ -1,6 +1,7 @@
 package cz.vse.sven.logika.hra;
 
 import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.main.PredmetPozorovani;
 
 /**
  * Rozhraní které musí implementovat hra, je na ně navázáno uživatelské rozhraní
@@ -8,7 +9,7 @@ import cz.vse.sven.logika.objekty.HerniPlan;
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova
  * @version pro školní rok 2016/2017
  */
-public interface IHra {
+public interface IHra extends PredmetPozorovani {
     //== VEŘEJNÉ KONSTANTY =====================================================
     //== DEKLAROVANÉ METODY ====================================================
 

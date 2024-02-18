@@ -3,6 +3,13 @@ package cz.vse.sven.logika.hra;
 import cz.vse.sven.logika.objekty.Batoh;
 import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.prikazy.*;
+import cz.vse.sven.main.Pozorovatel;
+import cz.vse.sven.main.ZmenaHry;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Třída Hra - třída představující logiku adventury.
@@ -24,9 +31,10 @@ public class Hra implements IHra {
     private Batoh batoh;
     private Penize penize;
     private Progress progress;
+    private Map<ZmenaHry, Set<Pozorovatel>> seznamPozorovatelu = new HashMap<>();
 
     /**
-     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan) a seznam platných příkazů.
+     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan), seznam platných příkazů a seznam pozorovatelů.
      */
     public Hra() {
         herniPlan = new HerniPlan();
@@ -44,6 +52,9 @@ public class Hra implements IHra {
         platnePrikazy.vlozPrikaz(new PrikazVymen(herniPlan, batoh, penize));
         platnePrikazy.vlozPrikaz(new PrikazPenize(penize));
         platnePrikazy.vlozPrikaz(new PrikazVyndej(herniPlan, batoh));
+        for (ZmenaHry zmenaHry : ZmenaHry.values()) {
+            seznamPozorovatelu.put(zmenaHry, new HashSet<>());
+        }
     }
 
     /**
@@ -116,10 +127,11 @@ public class Hra implements IHra {
     }
 
     /**
-     * Nastaví, že je konec hry
+     * Nastaví, že je konec hry a upozorní na to pozorovatele
      */
     public void setKonecHry() {
         this.konecHry = true;
+        upozorniPozorovatele(ZmenaHry.KONEC_HRY);
     }
 
     /**
@@ -139,5 +151,24 @@ public class Hra implements IHra {
      */
     public Progress getProgress() {
         return progress;
+    }
+
+    /**
+     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
+     *
+     * @param pozorovatel který má být přidán
+     */
+    @Override
+    public void registruj(ZmenaHry zmenaHry, Pozorovatel pozorovatel) {
+        seznamPozorovatelu.get(zmenaHry).add(pozorovatel);
+    }
+
+    /**
+     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
+     */
+    private void upozorniPozorovatele(ZmenaHry zmenaHry) {
+        for (Pozorovatel pozorovatel : seznamPozorovatelu.get(zmenaHry)) {
+            pozorovatel.aktualizuj();
+        }
     }
 }

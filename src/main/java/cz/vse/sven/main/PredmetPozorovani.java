@@ -5,5 +5,5 @@ package cz.vse.sven.main;
  */
 public interface PredmetPozorovani {
 
-    void registruj(Pozorovatel pozorovatel);
+    void registruj(ZmenaHry zmenaHry, Pozorovatel pozorovatel);
 }

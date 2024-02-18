@@ -2,8 +2,11 @@ package cz.vse.sven.logika.objekty;
 
 import cz.vse.sven.main.Pozorovatel;
 import cz.vse.sven.main.PredmetPozorovani;
+import cz.vse.sven.main.ZmenaHry;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,13 +28,16 @@ public class HerniPlan implements PredmetPozorovani {
     private boolean vyhra = false;
     private boolean prohra = false;
     private boolean perfektniVyhra = false;
-    private Set<Pozorovatel> seznamPozorovatelu = new HashSet<>();
+    private Map<ZmenaHry, Set<Pozorovatel>> seznamPozorovatelu = new HashMap<>();
 
     /**
      * Konstruktor
      */
     public HerniPlan() {
         zalozProstoryHry();
+        for (ZmenaHry zmenaHry : ZmenaHry.values()) {
+            seznamPozorovatelu.put(zmenaHry, new HashSet<>());
+        }
     }
 
     /**
@@ -127,13 +133,13 @@ public class HerniPlan implements PredmetPozorovani {
 
     /**
      * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory,
-     * dále upozorní pozorovatele
+     * dále upozorní pozorovatele na změnu místnosti
      *
      * @param prostor nový aktuální prostor
      */
     public void setAktualniProstor(Prostor prostor) {
         aktualniProstor = prostor;
-        upozorniPozorovatele();
+        upozorniPozorovatele(ZmenaHry.ZMENA_MISTNOSTI);
     }
 
     /**
@@ -191,20 +197,20 @@ public class HerniPlan implements PredmetPozorovani {
     }
 
     /**
-     * Metoda přidá pozorovatele do seznamu pozorovatelů
+     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
      *
      * @param pozorovatel který má být přidán
      */
     @Override
-    public void registruj(Pozorovatel pozorovatel) {
-        seznamPozorovatelu.add(pozorovatel);
+    public void registruj(ZmenaHry zmenaHry, Pozorovatel pozorovatel) {
+        seznamPozorovatelu.get(zmenaHry).add(pozorovatel);
     }
 
     /**
-     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu zavolána aktualizační metoda
+     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
      */
-    private void upozorniPozorovatele() {
-        for (Pozorovatel pozorovatel : seznamPozorovatelu) {
+    private void upozorniPozorovatele(ZmenaHry zmenaHry) {
+        for (Pozorovatel pozorovatel : seznamPozorovatelu.get(zmenaHry)) {
             pozorovatel.aktualizuj();
         }
     }

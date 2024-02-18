@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * Controller pro home.fxml
  */
-public class HomeController implements Pozorovatel {
+public class HomeController {
 
     @FXML
     private ListView<Prostor> panelVychodu;
@@ -37,14 +37,15 @@ public class HomeController implements Pozorovatel {
 
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů
+     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů, registruje pozorovatele
      */
     @FXML
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
-        hra.getHerniPlan().registruj(this);
+        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_MISTNOSTI, () -> aktualizujSeznamVychodu());
+        hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
         aktualizujSeznamVychodu();
     }
 
@@ -55,6 +56,21 @@ public class HomeController implements Pozorovatel {
     private void aktualizujSeznamVychodu() {
         seznamVychodu.clear();
         seznamVychodu.addAll(hra.getHerniPlan().getAktualniProstor().getVychody());
+    }
+
+    /**
+     * Pokud je výsledkem příkazu konec hry, tak metoda:
+     * vypíše epilog
+     * zamezí interakci se vstupem(TextField), tlačítkem "Odešli" (Button) a panelem východů (ListView)
+     */
+    private void aktualizujKonecHry() {
+        if (hra.konecHry()) {
+            vystup.appendText(hra.vratEpilog());
+        }
+
+        vstup.setDisable(hra.konecHry());
+        tlacitkoOdesli.setDisable(hra.konecHry());
+        panelVychodu.setDisable(hra.konecHry());
     }
 
     /**
@@ -73,23 +89,12 @@ public class HomeController implements Pozorovatel {
     /**
      * Metoda vypíše zpracovávaný příkaz, nechá ho zpracovat metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
      *
-     * pokud je výsledkem příkazu konec hry, tak:
-     * vypíše epilog
-     * zamezí interakci se vstupem(TextField), tlačítkem "Odešli" (Button) a panelem východů (ListView)
-     *
      * @param prikaz který se má zpracovat
      */
     private void zpracujPrikaz(String prikaz) {
         vystup.appendText("> " + prikaz + "\n");
         String vysledek = hra.zpracujPrikaz(prikaz);
         vystup.appendText(vysledek + "\n");
-
-        if (hra.konecHry()) {
-            vystup.appendText(hra.vratEpilog());
-            vstup.setDisable(true);
-            tlacitkoOdesli.setDisable(true);
-            panelVychodu.setDisable(true);
-        }
     }
 
     /**
@@ -106,14 +111,6 @@ public class HomeController implements Pozorovatel {
     }
 
     /**
-     * Zděděná metoda od Pozorovatele - pokaždé, když je zavolána, aktualizuje seznam východů
-     */
-    @Override
-    public void aktualizuj() {
-        aktualizujSeznamVychodu();
-    }
-
-    /**
      * Metoda zajistí, aby se po kliknutí na prostor v panelu východů (ListView) do daného prostoru přešlo
      *
      * @param mouseEvent
@@ -121,7 +118,7 @@ public class HomeController implements Pozorovatel {
     @FXML
     private void klikPanelVychodu(MouseEvent mouseEvent) {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
-        if (cil==null) return;
+        if (cil == null) return;
         String prikaz = PrikazJdi.NAZEV + " " + cil;
         zpracujPrikaz(prikaz);
     }
