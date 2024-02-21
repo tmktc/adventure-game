@@ -2,7 +2,7 @@ package cz.vse.sven.logika.prikazy;
 
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.Progress;
-import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.hra.HerniPlan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

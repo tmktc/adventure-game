@@ -1,7 +1,7 @@
 package cz.vse.sven.logika.prikazy;
 
 import cz.vse.sven.logika.hra.Progress;
-import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Postava;
 import cz.vse.sven.logika.objekty.Prostor;
 

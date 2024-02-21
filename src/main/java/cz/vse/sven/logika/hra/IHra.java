@@ -1,6 +1,5 @@
 package cz.vse.sven.logika.hra;
 
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.main.PredmetPozorovani;
 
 /**

@@ -1,7 +1,8 @@
 package cz.vse.sven.logika.prikazy;
 
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.hra.HerniPlan;
+import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,5 +44,15 @@ class PrikazVyndejTest {
         batoh.vlozVec(new Vec("vec", true, false, false, 0));
         assertEquals("vec nyní leží na zemi", prikazVyndej.provedPrikaz("vec"));
         assertTrue(plan.getAktualniProstor().obsahujeVec("vec"));
+
+        //nacházíme se v lidlu
+        plan.setAktualniProstor(new Prostor("lidl","test"));
+        batoh.vlozVec(new Vec("vec2", true, false, false, 0));
+        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.provedPrikaz("vec2"));
+
+        //nacházíme se v trafice
+        plan.setAktualniProstor(new Prostor("trafika","test"));
+        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.provedPrikaz("vec2"));
+
     }
 }

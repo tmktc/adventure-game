@@ -5,6 +5,7 @@ package cz.vse.sven.main;
  */
 public enum ZmenaHry {
 
-    ZMENA_MISTNOSTI,
+    ZMENA_PROSTORU,
+    ZMENA_VECI_V_PROSTORU,
     KONEC_HRY
 }

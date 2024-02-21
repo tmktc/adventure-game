@@ -1,7 +1,7 @@
 package cz.vse.sven.logika.prikazy;
 
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
@@ -33,6 +33,7 @@ public class PrikazVyndej implements IPrikaz {
 
     /**
      * Metoda nejdříve zkontroluje, zda se věc v batohu nachází,
+     * pak zkontroluje, jestli se hráč nenachází v lidlu nebo trafice,
      * pak ji odstraní z batohu a vloží ji do aktuálního prostoru
      *
      * @param parametry počet parametrů závisí na konkrétním příkazu.
@@ -47,10 +48,15 @@ public class PrikazVyndej implements IPrikaz {
         String jmenoVeci = parametry[0];
         Prostor aktualniProstor = plan.getAktualniProstor();
         if (batoh.obsahujeVec(jmenoVeci)) {
-            Vec vec = batoh.vyberVec(jmenoVeci);
-            batoh.odstranVec(jmenoVeci);
-            aktualniProstor.addVec(vec);
-            return jmenoVeci + " nyní leží na zemi";
+
+            if (!(plan.getAktualniProstor().getNazev().equals("lidl") || plan.getAktualniProstor().getNazev().equals("trafika"))) {
+                Vec vec = batoh.vyberVec(jmenoVeci);
+                batoh.odstranVec(jmenoVeci);
+                aktualniProstor.addVec(vec);
+                return jmenoVeci + " nyní leží na zemi";
+            }
+            return "V tomto prostoru nelze odkládat věci";
+
 
         }
         return "Takovou věc u sebe nemáte";

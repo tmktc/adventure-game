@@ -5,6 +5,8 @@ import cz.vse.sven.logika.hra.IHra;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 import cz.vse.sven.logika.prikazy.PrikazJdi;
+import cz.vse.sven.logika.prikazy.PrikazKup;
+import cz.vse.sven.logika.prikazy.PrikazSeber;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +30,7 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
-    private ListView panelVeciNaZemi;
+    private ListView<Vec> panelVeciNaZemi;
 
     @FXML
     private ImageView hrac;
@@ -64,13 +66,14 @@ public class HomeController {
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
         panelVeciNaZemi.setItems(seznamVeciNaZemi);
-        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_MISTNOSTI, () -> {
+        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_PROSTORU, () -> {
             aktualizujSeznamVychodu();
             aktualizujPolohuHrace();
-            aktualizujSeznamVeciNaZemi();
         });
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
+        hra.registruj(ZmenaHry.ZMENA_VECI_V_PROSTORU,() -> aktualizujSeznamVeciNaZemi());
         aktualizujSeznamVychodu();
+        aktualizujSeznamVeciNaZemi();
         vlozSouradnice();
         panelVychodu.setCellFactory(param -> new ListCellProstor());
     }
@@ -119,7 +122,7 @@ public class HomeController {
     /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
      * vypíše epilog
-     * zamezí interakci se vstupem(TextField), tlačítkem "Odešli" (Button) a panelem východů (ListView)
+     * zamezí interakci se vstupem, panely a tlačítkem
      */
     private void aktualizujKonecHry() {
         if (hra.konecHry()) {
@@ -129,6 +132,7 @@ public class HomeController {
         vstup.setDisable(hra.konecHry());
         tlacitkoOdesli.setDisable(hra.konecHry());
         panelVychodu.setDisable(hra.konecHry());
+        panelVeciNaZemi.setDisable(hra.konecHry());
     }
 
     /**
@@ -179,6 +183,27 @@ public class HomeController {
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         String prikaz = PrikazJdi.NAZEV + " " + cil.getNazev();
+        zpracujPrikaz(prikaz);
+    }
+
+
+    /**
+     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
+     * věc buď sebrala nebo koupila (podle toho, kde se hráč nachází)
+     *
+     * @param mouseEvent
+     */
+    @FXML
+    private void klikPanelVeciNaZemi(MouseEvent mouseEvent) {
+        Vec cil = panelVeciNaZemi.getSelectionModel().getSelectedItem();
+        Platform.runLater(() -> vstup.requestFocus());
+        if(cil == null) return;
+        String prikaz;
+        if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl") || hra.getHerniPlan().getAktualniProstor().getNazev().equals("trafika")) {
+            prikaz = PrikazKup.NAZEV + " " + cil.getJmeno();
+        } else {
+            prikaz = PrikazSeber.NAZEV + " " + cil.getJmeno();
+        }
         zpracujPrikaz(prikaz);
     }
 

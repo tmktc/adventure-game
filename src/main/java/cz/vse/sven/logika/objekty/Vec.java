@@ -11,8 +11,8 @@ import java.util.Objects;
 public class Vec {
 
     private final String jmeno;
-    private final boolean sebratelna;
-    private final boolean koupitelna;
+    private boolean sebratelna;
+    private boolean koupitelna;
     private final boolean vymenitelna;
     private final int cena;
 
@@ -77,6 +77,24 @@ public class Vec {
      */
     public int getCena() {
         return cena;
+    }
+
+    /**
+     * Setter pro boolean hodnotu sebratelna
+     *
+     * @param s hodnota boolean, která se má nastavit
+     */
+    public void setSebratelna(boolean s) {
+        this.sebratelna = s;
+    }
+
+    /**
+     * Setter pro boolean hodnotu koupitelna
+     *
+     * @param k hodnota boolean, která se má nastavit
+     */
+    public void setKoupitelna(boolean k) {
+        this.koupitelna = k;
     }
 
     /**

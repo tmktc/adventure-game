@@ -1,5 +1,6 @@
 package cz.vse.sven.logika.objekty;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,8 @@
-package cz.vse.sven.logika.objekty;
+package cz.vse.sven.logika.hra;
 
+import cz.vse.sven.logika.objekty.Postava;
+import cz.vse.sven.logika.objekty.Prostor;
+import cz.vse.sven.logika.objekty.Vec;
 import cz.vse.sven.main.Pozorovatel;
 import cz.vse.sven.main.PredmetPozorovani;
 import cz.vse.sven.main.ZmenaHry;
@@ -139,7 +142,7 @@ public class HerniPlan implements PredmetPozorovani {
      */
     public void setAktualniProstor(Prostor prostor) {
         aktualniProstor = prostor;
-        upozorniPozorovatele(ZmenaHry.ZMENA_MISTNOSTI);
+        upozorniPozorovatele(ZmenaHry.ZMENA_PROSTORU);
     }
 
     /**

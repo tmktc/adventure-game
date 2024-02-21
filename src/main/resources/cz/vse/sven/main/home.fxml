@@ -70,8 +70,8 @@
                <children>
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Východy" textAlignment="CENTER" />
                       <ListView fx:id="panelVychodu" onMouseClicked="#klikPanelVychodu" />
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Leží na zemi" textAlignment="CENTER" />
-                  <ListView fx:id="panelVeciNaZemi"/>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Věci v tomto prostoru" textAlignment="CENTER" />
+                  <ListView onMouseClicked="#klikPanelVeciNaZemi" fx:id="panelVeciNaZemi"/>
                </children>
             </VBox>
                 <TextArea fx:id="vystup" editable="false" />

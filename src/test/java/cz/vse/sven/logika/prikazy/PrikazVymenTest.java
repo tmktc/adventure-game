@@ -2,7 +2,7 @@ package cz.vse.sven.logika.prikazy;
 
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Vec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

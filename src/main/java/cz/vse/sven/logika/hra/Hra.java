@@ -1,7 +1,6 @@
 package cz.vse.sven.logika.hra;
 
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.prikazy.*;
 import cz.vse.sven.main.Pozorovatel;
 import cz.vse.sven.main.ZmenaHry;
@@ -104,7 +103,8 @@ public class Hra implements IHra {
     /**
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
      * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
-     * Pokud ano spustí samotné provádění příkazu.
+     * Pokud ano spustí samotné provádění příkazu
+     * a upozorní pozorovatele na kontrolu možné změny věcí v prostoru.
      *
      * @param radek text, který zadal uživatel jako příkaz do hry.
      * @return vrací se řetězec, který se má vypsat na obrazovku
@@ -123,6 +123,7 @@ public class Hra implements IHra {
         } else {
             textKVypsani = "Neznámý příkaz";
         }
+        upozorniPozorovatele(ZmenaHry.ZMENA_VECI_V_PROSTORU);
         return textKVypsani;
     }
 
