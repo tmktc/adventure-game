@@ -3,6 +3,7 @@ package cz.vse.sven.main;
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.IHra;
 import cz.vse.sven.logika.objekty.Prostor;
+import cz.vse.sven.logika.objekty.Vec;
 import cz.vse.sven.logika.prikazy.PrikazJdi;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -27,6 +28,9 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
+    private ListView panelVeciNaZemi;
+
+    @FXML
     private ImageView hrac;
 
     @FXML
@@ -45,21 +49,25 @@ public class HomeController {
 
     private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
 
+    private ObservableList<Vec> seznamVeciNaZemi = FXCollections.observableArrayList();
+
     private Map<String, Point2D> souradniceProstoru = new HashMap<>();
 
     /**
      * Metoda na začátku hry:
      * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů,
-     * registruje pozorovatele, nastavuje továrnu buňek pro panel východů
+     * do panelu věcí na zemi vloží věci, registruje pozorovatele, nastavuje továrnu buňek pro panel východů
      */
     @FXML
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
+        panelVeciNaZemi.setItems(seznamVeciNaZemi);
         hra.getHerniPlan().registruj(ZmenaHry.ZMENA_MISTNOSTI, () -> {
             aktualizujSeznamVychodu();
             aktualizujPolohuHrace();
+            aktualizujSeznamVeciNaZemi();
         });
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
         aktualizujSeznamVychodu();
@@ -88,6 +96,15 @@ public class HomeController {
     private void aktualizujSeznamVychodu() {
         seznamVychodu.clear();
         seznamVychodu.addAll(hra.getHerniPlan().getAktualniProstor().getVychody());
+    }
+
+    /**
+     * Metoda nejdřívé vyčistí seznam věcí na zemi a vloží do něj aktualizovaný seznam
+     */
+    @FXML
+    private void aktualizujSeznamVeciNaZemi() {
+        seznamVeciNaZemi.clear();
+        seznamVeciNaZemi.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamVeci());
     }
 
     /**

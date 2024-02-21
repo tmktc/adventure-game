@@ -102,4 +102,14 @@ public class Vec {
     public int hashCode() {
         return Objects.hash(jmeno);
     }
+
+    /**
+     * Metoda toString věci
+     *
+     * @return jméno věci
+     */
+    @Override
+    public String toString() {
+        return getJmeno();
+    }
 }

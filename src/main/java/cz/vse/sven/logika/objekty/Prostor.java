@@ -170,6 +170,15 @@ public class Prostor {
     }
 
     /**
+     * Metoda vrátí kolekci věcí nacházejících se v prostoru
+     *
+     * @return kolekce věcí nacházejících se v prostoru
+     */
+    public Collection<Vec> getSeznamVeci() {
+        return Collections.unmodifiableCollection(seznamVeci.values());
+    }
+
+    /**
      * Přidá věc do prostoru
      *
      * @param vec k přidání

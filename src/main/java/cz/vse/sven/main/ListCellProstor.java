@@ -25,7 +25,7 @@ public class ListCellProstor extends ListCell<Prostor> {
             setText(prostor.getNazev());
             String cesta = getClass().getResource("prostory/" + prostor.getNazev() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
-            iw.setFitWidth(50);
+            iw.setFitWidth(35);
             iw.setPreserveRatio(true);
             setGraphic(iw);
         }
