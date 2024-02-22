@@ -1,5 +1,7 @@
 package cz.vse.sven.logika.objekty;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +88,15 @@ public class Batoh {
             nazvy += jmenoVeci + " ";
         }
         return nazvy;
+    }
+
+    /**
+     * Vrátí kolekci věcí v batohu
+     *
+     * @return kolekce věcí v batohu
+     */
+    public Collection<Vec> getObsahBatohu() {
+        return Collections.unmodifiableCollection(seznamVeci.values());
     }
 
     /**

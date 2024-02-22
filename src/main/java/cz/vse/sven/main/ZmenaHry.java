@@ -6,6 +6,6 @@ package cz.vse.sven.main;
 public enum ZmenaHry {
 
     ZMENA_PROSTORU,
-    ZMENA_VECI_V_PROSTORU,
+    ZMENA_VECI,
     KONEC_HRY
 }

@@ -123,7 +123,7 @@ public class Hra implements IHra {
         } else {
             textKVypsani = "Neznámý příkaz";
         }
-        upozorniPozorovatele(ZmenaHry.ZMENA_VECI_V_PROSTORU);
+        upozorniPozorovatele(ZmenaHry.ZMENA_VECI);
         return textKVypsani;
     }
 
@@ -143,6 +143,15 @@ public class Hra implements IHra {
      */
     public HerniPlan getHerniPlan() {
         return herniPlan;
+    }
+
+    /**
+     * Metoda vrátí odkaz na batoh ve hře
+     *
+     * @return odkaz na batoh
+     */
+    public Batoh getBatoh() {
+        return batoh;
     }
 
     /**

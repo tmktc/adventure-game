@@ -30,7 +30,10 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
-    private ListView<Vec> panelVeciNaZemi;
+    private ListView<Vec> panelVeciVBatohu;
+    
+    @FXML
+    private ListView<Vec> panelVeciVProstoru;
 
     @FXML
     private ImageView hrac;
@@ -51,7 +54,9 @@ public class HomeController {
 
     private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
 
-    private ObservableList<Vec> seznamVeciNaZemi = FXCollections.observableArrayList();
+    private ObservableList<Vec> seznamVeciVProstoru = FXCollections.observableArrayList();
+    
+    private ObservableList<Vec> seznamVeciVBatohu = FXCollections.observableArrayList();
 
     private Map<String, Point2D> souradniceProstoru = new HashMap<>();
 
@@ -65,15 +70,20 @@ public class HomeController {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
         panelVychodu.setItems(seznamVychodu);
-        panelVeciNaZemi.setItems(seznamVeciNaZemi);
+        panelVeciVProstoru.setItems(seznamVeciVProstoru);
+        panelVeciVBatohu.setItems(seznamVeciVBatohu);
         hra.getHerniPlan().registruj(ZmenaHry.ZMENA_PROSTORU, () -> {
             aktualizujSeznamVychodu();
             aktualizujPolohuHrace();
         });
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
-        hra.registruj(ZmenaHry.ZMENA_VECI_V_PROSTORU,() -> aktualizujSeznamVeciNaZemi());
+        hra.registruj(ZmenaHry.ZMENA_VECI,() -> {
+            aktualizujSeznamVeciVProstoru();
+            aktualizujSeznamVeciVBatohu();
+        });
         aktualizujSeznamVychodu();
-        aktualizujSeznamVeciNaZemi();
+        aktualizujSeznamVeciVProstoru();
+        aktualizujSeznamVeciVBatohu();
         vlozSouradnice();
         panelVychodu.setCellFactory(param -> new ListCellProstor());
     }
@@ -102,12 +112,21 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdřívé vyčistí seznam věcí na zemi a vloží do něj aktualizovaný seznam
+     * Metoda nejdřívé vyčistí seznam věcí v prostoru a vloží do něj aktualizovaný seznam
      */
     @FXML
-    private void aktualizujSeznamVeciNaZemi() {
-        seznamVeciNaZemi.clear();
-        seznamVeciNaZemi.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamVeci());
+    private void aktualizujSeznamVeciVProstoru() {
+        seznamVeciVProstoru.clear();
+        seznamVeciVProstoru.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamVeci());
+    }
+
+    /**
+     * Metoda nejdříve vyčistí seznam věcí v batohu a vloží do něj aktualizovaný seznam
+     */
+    @FXML
+    private void aktualizujSeznamVeciVBatohu() {
+        seznamVeciVBatohu.clear();
+        seznamVeciVBatohu.addAll(hra.getBatoh().getObsahBatohu());
     }
 
     /**
@@ -132,7 +151,8 @@ public class HomeController {
         vstup.setDisable(hra.konecHry());
         tlacitkoOdesli.setDisable(hra.konecHry());
         panelVychodu.setDisable(hra.konecHry());
-        panelVeciNaZemi.setDisable(hra.konecHry());
+        panelVeciVProstoru.setDisable(hra.konecHry());
+        panelVeciVBatohu.setDisable(hra.konecHry());
     }
 
     /**
@@ -186,7 +206,6 @@ public class HomeController {
         zpracujPrikaz(prikaz);
     }
 
-
     /**
      * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
      * věc buď sebrala nebo koupila (podle toho, kde se hráč nachází)
@@ -194,8 +213,8 @@ public class HomeController {
      * @param mouseEvent
      */
     @FXML
-    private void klikPanelVeciNaZemi(MouseEvent mouseEvent) {
-        Vec cil = panelVeciNaZemi.getSelectionModel().getSelectedItem();
+    private void klikPanelVeciVProstoru(MouseEvent mouseEvent) {
+        Vec cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if(cil == null) return;
         String prikaz;

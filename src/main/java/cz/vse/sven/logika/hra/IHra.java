@@ -1,5 +1,6 @@
 package cz.vse.sven.logika.hra;
 
+import cz.vse.sven.logika.objekty.Batoh;
 import cz.vse.sven.main.PredmetPozorovani;
 
 /**
@@ -51,6 +52,13 @@ public interface IHra extends PredmetPozorovani {
      * @return odkaz na herní plán
      */
     public HerniPlan getHerniPlan();
+
+    /**
+     * Metoda vrátí odkaz na batoh ve hře
+     *
+     * @return odkaz na batoh
+     */
+    public Batoh getBatoh();
 
     //== ZDĚDĚNÉ METODY ========================================================
     //== INTERNÍ DATOVÉ TYPY ===================================================
