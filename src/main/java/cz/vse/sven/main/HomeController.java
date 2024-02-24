@@ -66,8 +66,8 @@ public class HomeController {
 
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, focusuje na TextField, do panelů vloží aktualizované seznamy, registruje pozorovatele,
-     * nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
+     * vrací uvítání, focusuje na TextField, spojí panely se seznamy, registruje pozorovatele,
+     * do panelu vloží aktualizované seznamy, nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
     private void initialize() {
@@ -87,11 +87,13 @@ public class HomeController {
             aktualizujSeznamVeciVBatohu();
         });
         hra.registruj(ZmenaHry.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
-        aktualizujSeznamPostavVProstoru();
-        aktualizujSeznamVychodu();
-        aktualizujSeznamVeciVProstoru();
-        aktualizujSeznamVeciVBatohu();
         vlozSouradnice();
+        aktualizujSeznamVychodu();
+        aktualizujSeznamVeciVBatohu();
+        aktualizujSeznamVeciVProstoru();
+        aktualizujSeznamPostavVProstoru();
+        aktualizujPolohuHrace();
+        aktualizujKonecHry();
         panelVychodu.setCellFactory(param -> new ListCellProstor());
         panelVeciVProstoru.setCellFactory(param -> new ListCellVeci());
         panelVeciVBatohu.setCellFactory(param -> new ListCellVeci());
@@ -102,14 +104,14 @@ public class HomeController {
      * Metoda nastaví souřadnice prostorů
      */
     private void vlozSouradnice() {
-        souradniceProstoru.put("domov", new Point2D(365,105));
-        souradniceProstoru.put("jidelna", new Point2D(425,135));
-        souradniceProstoru.put("smetiste", new Point2D(250,155));
-        souradniceProstoru.put("pracak", new Point2D(140,70));
+        souradniceProstoru.put("domov", new Point2D(380,110));
+        souradniceProstoru.put("jidelna", new Point2D(435,140));
+        souradniceProstoru.put("smetiste", new Point2D(260,160));
+        souradniceProstoru.put("pracak", new Point2D(150,70));
         souradniceProstoru.put("sekac", new Point2D(10,135));
-        souradniceProstoru.put("zastavarna", new Point2D(120,210));
-        souradniceProstoru.put("trafika", new Point2D(570,110));
-        souradniceProstoru.put("lidl", new Point2D(570,170));
+        souradniceProstoru.put("zastavarna", new Point2D(125,215));
+        souradniceProstoru.put("trafika", new Point2D(590,115));
+        souradniceProstoru.put("lidl", new Point2D(590,175));
     }
 
     /**
@@ -200,19 +202,6 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na položku "Ukončit" a následným potvrzením "OK" se hra zavře
-     *
-     * @param actionEvent
-     */
-    public void ukoncitHru(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chtete ukončit hru? Veškerý postup bude ztracen.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Platform.exit();
-        }
-    }
-
-    /**
      * Metoda zajistí, aby se po kliknutí na prostor v panelu východů (ListView) do daného prostoru přešlo
      *
      * @param mouseEvent
@@ -294,5 +283,34 @@ public class HomeController {
         napovedaStage.setScene(napovedaScena);
         napovedaStage.show();
         wv.getEngine().load(getClass().getResource("napoveda.html").toExternalForm());
+    }
+
+    /**
+     * Metoda zajistí, že po kliknutí na položku "Ukončit" a následným potvrzením "OK" se hra zavře
+     *
+     * @param actionEvent
+     */
+    public void ukoncitHru(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chtete ukončit hru? Veškerý postup bude ztracen.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
+    }
+
+    /**
+     * Metoda zajistí, že po kliknutí na položku "Nová hra" a následným potvrzením "OK" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
+     *
+     * @param actionEvent
+     */
+    public void novaHra(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chcete začít od znova? Veškerý postup bude ztracen.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            hra = new Hra();
+            vstup.clear();
+            vystup.clear();
+            initialize();
+        }
     }
 }

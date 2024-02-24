@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.sven.main.HomeController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.sven.main.HomeController">
     <columnConstraints>
         <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
     </columnConstraints>
@@ -35,8 +35,9 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Hra">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#ukoncitHru" text="Ukončit" />
+                        <MenuItem onAction="#novaHra" text="Nová hra" />
                         <MenuItem onAction="#napovedaKlik" text="Nápověda" />
+                        <MenuItem onAction="#ukoncitHru" text="Ukončit" />
                     </items>
                 </Menu>
             </menus>
@@ -91,12 +92,12 @@
                <children>
                   <Pane>
                      <children>
-                        <ImageView fitHeight="291.0" fitWidth="652.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="350.0" fitWidth="700.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@mapa.PNG" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="hrac" fitHeight="37.0" fitWidth="37.0" layoutX="328.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="hrac" fitHeight="40.0" fitWidth="40.0" layoutX="380.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@hrac.png" />
                            </image>
