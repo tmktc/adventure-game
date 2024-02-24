@@ -95,6 +95,7 @@ public class HomeController {
         panelVychodu.setCellFactory(param -> new ListCellProstor());
         panelVeciVProstoru.setCellFactory(param -> new ListCellVeci());
         panelVeciVBatohu.setCellFactory(param -> new ListCellVeci());
+        panelPostavVProstoru.setCellFactory(param -> new ListCellPostavy());
     }
 
     /**

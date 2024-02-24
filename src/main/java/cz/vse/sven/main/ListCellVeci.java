@@ -25,7 +25,7 @@ public class ListCellVeci extends ListCell<Vec> {
             setText(vec.getJmeno());
             String cesta = getClass().getResource("veci/" + vec.getJmeno().toLowerCase() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
-            iw.setFitWidth(35);
+            iw.setFitWidth(30);
             iw.setPreserveRatio(true);
             setGraphic(iw);
         }

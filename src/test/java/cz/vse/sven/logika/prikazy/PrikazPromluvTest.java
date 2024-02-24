@@ -90,24 +90,31 @@ public class PrikazPromluvTest {
     }
 
     /**
-     * Otestuje správné fungování příkazu u Podezřelého
+     * Otestuje správné fungování příkazu u Podezřelého pro prohru
      */
     @Test
-    public void provedPrikazPodezrely() {
+    public void provedPrikazPodezrelyProhra() {
         // podmínky pro neúspěšnou konfrontaci lupiče - prohru
         progress.setProgress(3);
         plan.getAktualniProstor().addPostava(new Postava("PodezreleVypadajiciPan"));
         prikazPromluv.provedPrikaz("PodezreleVypadajiciPan");
 
         assertTrue(plan.isProhra());
+    }
 
-        // podmínky pro úspěšnou konfrontaci lupiče
+    /**
+     * Otestuje správné fungování příkazu u Podezřelého pro výhru
+     */
+    @Test
+    public void provedPrikazPodezrelyVyhra() {
+        plan.getAktualniProstor().addPostava(new Postava("PodezreleVypadajiciPan"));
         progress.setProgress(4);
         prikazPromluv.provedPrikaz("PodezreleVypadajiciPan");
 
         assertTrue(plan.getAktualniProstor().obsahujeVec("CervenaBunda"));
         assertTrue(plan.getAktualniProstor().obsahujeVec("ZelenaCepice"));
         assertFalse(plan.getAktualniProstor().obsahujePostavu("PodezreleVypadajiciPan"));
+
     }
 
     /**
