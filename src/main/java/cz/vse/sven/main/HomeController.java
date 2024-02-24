@@ -251,7 +251,8 @@ public class HomeController {
      *
      * @param mouseEvent
      */
-    public void klikPanelVeciVBatohu(MouseEvent mouseEvent) {
+    @FXML
+    private void klikPanelVeciVBatohu(MouseEvent mouseEvent) {
         Vec cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
@@ -262,6 +263,20 @@ public class HomeController {
             prikaz = PrikazVyndej.NAZEV + " " + cil.getJmeno();
         }
         zpracujPrikaz(prikaz);
+    }
+
+    /**
+     * Metoda zajistí, aby se po kliknutí na postavu v panelu postav v prostoru
+     * s danou postavou promluvilo
+     *
+     * @param mouseEvent
+     */
+    @FXML
+    private void klikPanelPostavVProstoru(MouseEvent mouseEvent) {
+        Postava cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
+        Platform.runLater(() -> vstup.requestFocus());
+        if (cil == null) return;
+        zpracujPrikaz(PrikazPromluv.NAZEV + " " + cil.getJmeno());
     }
 
     /**
