@@ -4,9 +4,7 @@ import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.IHra;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
-import cz.vse.sven.logika.prikazy.PrikazJdi;
-import cz.vse.sven.logika.prikazy.PrikazKup;
-import cz.vse.sven.logika.prikazy.PrikazSeber;
+import cz.vse.sven.logika.prikazy.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -222,6 +220,25 @@ public class HomeController {
             prikaz = PrikazKup.NAZEV + " " + cil.getJmeno();
         } else {
             prikaz = PrikazSeber.NAZEV + " " + cil.getJmeno();
+        }
+        zpracujPrikaz(prikaz);
+    }
+
+    /**
+     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
+     * věc buď vyndala nebo vyměnila (podle toho, kde se hráč nachází)
+     *
+     * @param mouseEvent
+     */
+    public void klikPanelVeciVBatohu(MouseEvent mouseEvent) {
+        Vec cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
+        Platform.runLater(() -> vstup.requestFocus());
+        if (cil == null) return;
+        String prikaz;
+        if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl")) {
+            prikaz = PrikazVymen.NAZEV + " " + cil.getJmeno();
+        } else {
+            prikaz = PrikazVyndej.NAZEV + " " + cil.getJmeno();
         }
         zpracujPrikaz(prikaz);
     }

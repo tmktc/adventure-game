@@ -78,7 +78,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Věci v batohu" textAlignment="CENTER" />
-                  <ListView fx:id="panelVeciVBatohu"/>
+                  <ListView fx:id="panelVeciVBatohu" onMouseClicked="#klikPanelVeciVBatohu"/>
                </children>
             </VBox>
             </items>

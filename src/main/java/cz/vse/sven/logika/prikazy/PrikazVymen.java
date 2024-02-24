@@ -14,7 +14,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  */
 public class PrikazVymen implements IPrikaz {
 
-    private static final String NAZEV = "vymen";
+    public static final String NAZEV = "vymen";
     private HerniPlan plan;
     private Batoh batoh;
     private Penize penize;

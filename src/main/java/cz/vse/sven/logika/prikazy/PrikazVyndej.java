@@ -16,7 +16,7 @@ import cz.vse.sven.logika.objekty.Vec;
 
 public class PrikazVyndej implements IPrikaz {
 
-    private static final String NAZEV = "vyndej";
+    public static final String NAZEV = "vyndej";
     private HerniPlan plan;
     private Batoh batoh;
 
