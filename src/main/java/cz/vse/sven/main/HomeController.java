@@ -61,7 +61,8 @@ public class HomeController {
     /**
      * Metoda na začátku hry:
      * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů,
-     * do panelu věcí na zemi vloží věci, registruje pozorovatele, nastavuje továrnu buňek pro panel východů
+     * do panelu věcí na zemi vloží věci, registruje pozorovatele,
+     * nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
     private void initialize() {
@@ -84,6 +85,8 @@ public class HomeController {
         aktualizujSeznamVeciVBatohu();
         vlozSouradnice();
         panelVychodu.setCellFactory(param -> new ListCellProstor());
+        panelVeciVProstoru.setCellFactory(param -> new ListCellVeci());
+        panelVeciVBatohu.setCellFactory(param -> new ListCellVeci());
     }
 
     /**

@@ -9,9 +9,16 @@ trafika.png newspaper_657114 <a href="https://www.freepik.com/icon/newspaper_657
 
 hrac.png player by Misbahul Munir from <a href="https://thenounproject.com/browse/icons/term/player/" target="_blank" title="player Icons">Noun Project</a> (CC BY 3.0)
 
+starehodiny.png alarm-clock_701537 <a href="https://www.freepik.com/icon/alarm-clock_701537#fromView=family&page=1&position=6&uuid=d0ea01de-2a35-4b3e-ba8f-b143ab331863">Icon by monkik</a>
+lahevodbranika.png, LahevOdSvijan.png, LahevOdPlzne.png beer_1408268 <a href="https://www.freepik.com/icon/beer_1408268#fromView=search&page=1&position=76&uuid=bf4fc98d-87ff-48e7-81aa-81fd1d46abcc">Icon by Good Ware</a>
+automatnalahve.png recycle-sign_861180 <a href="https://www.freepik.com/icon/recycle-sign_861180#fromView=family&page=1&position=0&uuid=b2d0fd31-3eac-4bf2-b229-5a212a40e21d">Icon by monkik</a>
+snus.png star_7966406 <a href="https://www.freepik.com/icon/star_7966406#fromView=search&page=2&position=61&uuid=a650b9a1-d54a-48fb-86fb-0d412470f0a1">Icon by manshagraphics</a>
+bezlepkovychleba.png bread_1261020 <a href="https://www.freepik.com/icon/bread_1261020#fromView=family&page=1&position=0&uuid=ff0293cc-5fce-4a24-993f-bc3d13201cff">Icon by monkik</a>
+psigranule.png bowl_2809729 <a href="https://www.freepik.com/icon/bowl_2809729#fromView=family&page=1&position=3&uuid=eb22cef8-ce03-4466-9658-def02b1caa67">Icon by monkik</a>
+rohliky.png croissant_992799 <a href="https://www.freepik.com/icon/croissant_992799#fromView=family&page=1&position=0&uuid=4b77544d-dd0a-44da-90d5-9eee862a97da">Icon by monkik</a>
 
-
-
+zelenacepice.png beanie_1365006 <a href="https://www.freepik.com/icon/beanie_1365006#fromView=family&page=1&position=3&uuid=ba423008-0587-4000-8d06-7350ffd4e9f5">Icon by monkik</a>
+cervenabunda.png jacket_2405560 <a href="https://www.freepik.com/icon/jacket_2405560#fromView=family&page=1&position=1&uuid=37c2e8db-1ba1-4041-aeaf-c82c19d1201f">Icon by monkik</a>
 
 
 
