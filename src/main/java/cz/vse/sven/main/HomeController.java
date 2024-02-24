@@ -2,6 +2,7 @@ package cz.vse.sven.main;
 
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.IHra;
+import cz.vse.sven.logika.objekty.Postava;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 import cz.vse.sven.logika.prikazy.*;
@@ -26,6 +27,9 @@ import java.util.Optional;
  * Controller pro home.fxml
  */
 public class HomeController {
+
+    @FXML
+    private ListView<Postava> panelPostavVProstoru;
 
     @FXML
     private ListView<Vec> panelVeciVBatohu;
@@ -56,12 +60,13 @@ public class HomeController {
     
     private ObservableList<Vec> seznamVeciVBatohu = FXCollections.observableArrayList();
 
+    private ObservableList<Postava> seznamPostavVProstoru = FXCollections.observableArrayList();
+
     private Map<String, Point2D> souradniceProstoru = new HashMap<>();
 
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, focusuje na TextField, do panelu východů (ListView) vloží seznam východů,
-     * do panelu věcí na zemi vloží věci, registruje pozorovatele,
+     * vrací uvítání, focusuje na TextField, do panelů vloží aktualizované seznamy, registruje pozorovatele,
      * nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
@@ -71,6 +76,7 @@ public class HomeController {
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
         panelVeciVBatohu.setItems(seznamVeciVBatohu);
+        panelPostavVProstoru.setItems(seznamPostavVProstoru);
         hra.getHerniPlan().registruj(ZmenaHry.ZMENA_PROSTORU, () -> {
             aktualizujSeznamVychodu();
             aktualizujPolohuHrace();
@@ -80,6 +86,8 @@ public class HomeController {
             aktualizujSeznamVeciVProstoru();
             aktualizujSeznamVeciVBatohu();
         });
+        hra.registruj(ZmenaHry.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
+        aktualizujSeznamPostavVProstoru();
         aktualizujSeznamVychodu();
         aktualizujSeznamVeciVProstoru();
         aktualizujSeznamVeciVBatohu();
@@ -131,6 +139,15 @@ public class HomeController {
     }
 
     /**
+     * Metoda nejdříve vyčistí seznam postav v prostoru a vloží do něj aktualizovaný seznam
+     */
+    @FXML
+    private void aktualizujSeznamPostavVProstoru() {
+        seznamPostavVProstoru.clear();
+        seznamPostavVProstoru.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamPostav());
+    }
+
+    /**
      * Metoda aktualizuje polohu hráče na mapě
      */
     private void aktualizujPolohuHrace() {
@@ -154,6 +171,7 @@ public class HomeController {
         panelVychodu.setDisable(hra.konecHry());
         panelVeciVProstoru.setDisable(hra.konecHry());
         panelVeciVBatohu.setDisable(hra.konecHry());
+        panelPostavVProstoru.setDisable(hra.konecHry());
     }
 
     /**

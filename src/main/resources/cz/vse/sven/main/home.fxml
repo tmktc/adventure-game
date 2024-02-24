@@ -68,8 +68,8 @@
             <items>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Východy" textAlignment="CENTER" />
-                      <ListView fx:id="panelVychodu" onMouseClicked="#klikPanelVychodu" />
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Postavy v tomto prostoru" textAlignment="CENTER" />
+                  <ListView fx:id="panelPostavVProstoru" />
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Věci v tomto prostoru" textAlignment="CENTER" />
                   <ListView fx:id="panelVeciVProstoru" onMouseClicked="#klikPanelVeciVProstoru" />
                </children>
@@ -78,7 +78,9 @@
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Věci v batohu" textAlignment="CENTER" />
-                  <ListView fx:id="panelVeciVBatohu" onMouseClicked="#klikPanelVeciVBatohu"/>
+                  <ListView fx:id="panelVeciVBatohu" onMouseClicked="#klikPanelVeciVBatohu" />
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Východy" textAlignment="CENTER" />
+                  <ListView fx:id="panelVychodu" onMouseClicked="#klikPanelVychodu" />
                </children>
             </VBox>
             </items>

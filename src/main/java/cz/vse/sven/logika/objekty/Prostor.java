@@ -179,6 +179,15 @@ public class Prostor {
     }
 
     /**
+     * Metoda vrátí kolekci postav nacházejích se v prostoru
+     *
+     * @return kolekce postav nacházejících se v prostoru
+     */
+    public Collection<Postava> getSeznamPostav() {
+        return Collections.unmodifiableCollection(seznamPostav.values());
+    }
+
+    /**
      * Přidá věc do prostoru
      *
      * @param vec k přidání

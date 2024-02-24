@@ -104,7 +104,7 @@ public class Hra implements IHra {
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
      * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
      * Pokud ano spustí samotné provádění příkazu
-     * a upozorní pozorovatele na kontrolu možné změny věcí v prostoru.
+     * a upozorní pozorovatele na kontrolu možné změny věcí a postav v prostoru.
      *
      * @param radek text, který zadal uživatel jako příkaz do hry.
      * @return vrací se řetězec, který se má vypsat na obrazovku
@@ -124,6 +124,7 @@ public class Hra implements IHra {
             textKVypsani = "Neznámý příkaz";
         }
         upozorniPozorovatele(ZmenaHry.ZMENA_VECI);
+        upozorniPozorovatele(ZmenaHry.ZMENA_POSTAV);
         return textKVypsani;
     }
 

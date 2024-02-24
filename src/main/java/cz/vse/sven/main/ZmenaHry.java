@@ -7,5 +7,6 @@ public enum ZmenaHry {
 
     ZMENA_PROSTORU,
     ZMENA_VECI,
+    ZMENA_POSTAV,
     KONEC_HRY
 }

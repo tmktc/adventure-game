@@ -53,4 +53,14 @@ public class Postava {
     public int hashCode() {
         return Objects.hash(jmeno);
     }
+
+    /**
+     * toString metoda Postavy
+     *
+     * @return jméno postavy
+     */
+    @Override
+    public String toString() {
+        return getJmeno();
+    }
 }

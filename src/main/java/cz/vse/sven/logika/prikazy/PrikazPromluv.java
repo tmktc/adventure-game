@@ -129,6 +129,7 @@ public class PrikazPromluv implements IPrikaz {
             return "\nSven: \n\"Sám ho nepřemůžu, musím si vzít na pomoc Kima, ten by měl být stále u jídelny.\n" +
                     "Ten chudák tam asi pořád čeká na ty jeho oblíbené bezlepkové nudle.\"\n";
         } else if (progress.getProgress() == 3) {
+            plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
             plan.setProhra(true);
             hra.setKonecHry();
             return "";
@@ -139,6 +140,7 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().addVec(new Vec("ZelenaCepice", true, false, false, 0));
 
             plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
+            plan.getAktualniProstor().removePostava("Kim");
 
             return "\nLupiče jste s Kimem přemohli, ten hanbou utekl. CervenaBunda a ZelenaCepice nyní leží na zemi.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
