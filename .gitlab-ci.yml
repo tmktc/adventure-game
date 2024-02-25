@@ -1,0 +1,10 @@
+image: jelastic/maven:3.9.5-openjdk-21
+
+sestaveni:
+  script:
+    - "mvn javafx:jlink -B"
+  artifacts:
+    paths:
+      - "target/*.zip"
+  only:
+    - master
