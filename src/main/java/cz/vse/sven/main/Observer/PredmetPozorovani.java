@@ -1,4 +1,4 @@
-package cz.vse.sven.main;
+package cz.vse.sven.main.Observer;
 
 /**
  * Rozhraní Observable (subjectu)

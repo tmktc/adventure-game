@@ -3,9 +3,9 @@ package cz.vse.sven.logika.hra;
 import cz.vse.sven.logika.objekty.Postava;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
-import cz.vse.sven.main.Pozorovatel;
-import cz.vse.sven.main.PredmetPozorovani;
-import cz.vse.sven.main.ZmenaHry;
+import cz.vse.sven.main.Observer.Pozorovatel;
+import cz.vse.sven.main.Observer.PredmetPozorovani;
+import cz.vse.sven.main.Observer.ZmenaHry;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,7 +64,7 @@ public class HerniPlan implements PredmetPozorovani {
         Vec lahevBranik = new Vec("LahevOdBranika", true, false, true, 0);
         Vec lahevSvijany = new Vec("LahevOdSvijan", true, false, true, 0);
         Vec lahevPlzen = new Vec("LahevOdPlzne", true, false, true, 0);
-        Vec automatLahve = new Vec("AutomatNaVraceniLahvi", false, false, false, 0);
+        Vec automatLahve = new Vec("AutomatNaLahve", false, false, false, 0);
 
         Vec snus = new Vec("Snus", false, true, false, 1);
         Vec bezlepkovyChleba = new Vec("BezlepkovyChleba", false, true, false, 2);

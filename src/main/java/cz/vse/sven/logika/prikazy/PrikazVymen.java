@@ -1,8 +1,8 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 
 /**
@@ -10,7 +10,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  * příkaz slouží k vyměnění láhví v automatu
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazVymen implements IPrikaz {
 
@@ -49,7 +49,7 @@ public class PrikazVymen implements IPrikaz {
 
         String lahev = parametry[0];
         Prostor aktualniProstor = plan.getAktualniProstor();
-        if (aktualniProstor.obsahujeVec("AutomatNaVraceniLahvi")) {
+        if (aktualniProstor.obsahujeVec("AutomatNaLahve")) {
             if (batoh.obsahujeVec(lahev)) {
                 if (batoh.vyberVec(lahev).isVymenitelna()) {
                     batoh.odstranVec(lahev);

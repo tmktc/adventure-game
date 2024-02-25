@@ -1,8 +1,8 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
@@ -11,7 +11,7 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkazem hráč koupí věci v obchodě
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazKup implements IPrikaz {
 

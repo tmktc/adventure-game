@@ -6,16 +6,18 @@ import cz.vse.sven.logika.objekty.Postava;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 import cz.vse.sven.logika.prikazy.*;
+import cz.vse.sven.main.ListCell.ListCellPostavy;
+import cz.vse.sven.main.ListCell.ListCellProstor;
+import cz.vse.sven.main.ListCell.ListCellVeci;
+import cz.vse.sven.main.Observer.ZmenaHry;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -25,15 +27,30 @@ import java.util.Optional;
 
 /**
  * Controller pro home.fxml
+ *
+ * @author Tomáš Kotouč
+ * @version únor 2024
  */
 public class HomeController {
+
+    @FXML
+    private Label labelVeciVProstoru;
+
+    @FXML
+    private Label labelPostavyVProstoru;
+
+    @FXML
+    private Label labelVeciVBatohu;
+
+    @FXML
+    private Label labelVychody;
 
     @FXML
     private ListView<Postava> panelPostavVProstoru;
 
     @FXML
     private ListView<Vec> panelVeciVBatohu;
-    
+
     @FXML
     private ListView<Vec> panelVeciVProstoru;
 
@@ -57,7 +74,7 @@ public class HomeController {
     private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
 
     private ObservableList<Vec> seznamVeciVProstoru = FXCollections.observableArrayList();
-    
+
     private ObservableList<Vec> seznamVeciVBatohu = FXCollections.observableArrayList();
 
     private ObservableList<Postava> seznamPostavVProstoru = FXCollections.observableArrayList();
@@ -82,7 +99,7 @@ public class HomeController {
             aktualizujPolohuHrace();
         });
         hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
-        hra.registruj(ZmenaHry.ZMENA_VECI,() -> {
+        hra.registruj(ZmenaHry.ZMENA_VECI, () -> {
             aktualizujSeznamVeciVProstoru();
             aktualizujSeznamVeciVBatohu();
         });
@@ -101,21 +118,21 @@ public class HomeController {
     }
 
     /**
-     * Metoda nastaví souřadnice prostorů
+     * Metoda nastaví souřadnice prostorů na mapě
      */
     private void vlozSouradnice() {
-        souradniceProstoru.put("domov", new Point2D(380,110));
-        souradniceProstoru.put("jidelna", new Point2D(435,140));
-        souradniceProstoru.put("smetiste", new Point2D(260,160));
-        souradniceProstoru.put("pracak", new Point2D(150,70));
-        souradniceProstoru.put("sekac", new Point2D(10,135));
-        souradniceProstoru.put("zastavarna", new Point2D(125,215));
-        souradniceProstoru.put("trafika", new Point2D(590,115));
-        souradniceProstoru.put("lidl", new Point2D(590,175));
+        souradniceProstoru.put("domov", new Point2D(380, 110));
+        souradniceProstoru.put("jidelna", new Point2D(435, 140));
+        souradniceProstoru.put("smetiste", new Point2D(260, 160));
+        souradniceProstoru.put("pracak", new Point2D(150, 70));
+        souradniceProstoru.put("sekac", new Point2D(10, 135));
+        souradniceProstoru.put("zastavarna", new Point2D(125, 215));
+        souradniceProstoru.put("trafika", new Point2D(590, 115));
+        souradniceProstoru.put("lidl", new Point2D(590, 175));
     }
 
     /**
-     * Metoda nejdříve vyčistí seznam východů v panelu východů (ListView) a vloží do něj aktualizované východy
+     * Metoda nejdříve vyčistí seznam východů v panelu východů (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
     private void aktualizujSeznamVychodu() {
@@ -124,7 +141,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdřívé vyčistí seznam věcí v prostoru a vloží do něj aktualizovaný seznam
+     * Metoda nejdřívé vyčistí seznam věcí v prostoru (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
     private void aktualizujSeznamVeciVProstoru() {
@@ -133,7 +150,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdříve vyčistí seznam věcí v batohu a vloží do něj aktualizovaný seznam
+     * Metoda nejdříve vyčistí seznam věcí v batohu (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
     private void aktualizujSeznamVeciVBatohu() {
@@ -175,15 +192,17 @@ public class HomeController {
         panelVeciVProstoru.setDisable(hra.konecHry());
         panelVeciVBatohu.setDisable(hra.konecHry());
         panelPostavVProstoru.setDisable(hra.konecHry());
+        labelVychody.setDisable(hra.konecHry());
+        labelVeciVBatohu.setDisable(hra.konecHry());
+        labelPostavyVProstoru.setDisable(hra.konecHry());
+        labelVeciVProstoru.setDisable(hra.konecHry());
     }
 
     /**
      * Metoda zachytí vstup (zadaný v TextField) jako příkaz a zavolá metodu na jeho zpracování
-     *
-     * @param actionEvent
      */
     @FXML
-    private void odesliVstup(ActionEvent actionEvent) {
+    private void odesliVstup() {
         String prikaz = vstup.getText();
         vstup.clear();
 
@@ -203,11 +222,9 @@ public class HomeController {
 
     /**
      * Metoda zajistí, aby se po kliknutí na prostor v panelu východů (ListView) do daného prostoru přešlo
-     *
-     * @param mouseEvent
      */
     @FXML
-    private void klikPanelVychodu(MouseEvent mouseEvent) {
+    private void klikPanelVychodu() {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
@@ -218,14 +235,12 @@ public class HomeController {
     /**
      * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
      * věc buď sebrala nebo koupila (podle toho, kde se hráč nachází)
-     *
-     * @param mouseEvent
      */
     @FXML
-    private void klikPanelVeciVProstoru(MouseEvent mouseEvent) {
+    private void klikPanelVeciVProstoru() {
         Vec cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
-        if(cil == null) return;
+        if (cil == null) return;
         String prikaz;
         if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl") || hra.getHerniPlan().getAktualniProstor().getNazev().equals("trafika")) {
             prikaz = PrikazKup.NAZEV + " " + cil.getJmeno();
@@ -236,13 +251,11 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
+     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v batohu
      * věc buď vyndala nebo vyměnila (podle toho, kde se hráč nachází)
-     *
-     * @param mouseEvent
      */
     @FXML
-    private void klikPanelVeciVBatohu(MouseEvent mouseEvent) {
+    private void klikPanelVeciVBatohu() {
         Vec cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
@@ -258,11 +271,9 @@ public class HomeController {
     /**
      * Metoda zajistí, aby se po kliknutí na postavu v panelu postav v prostoru
      * s danou postavou promluvilo
-     *
-     * @param mouseEvent
      */
     @FXML
-    private void klikPanelPostavVProstoru(MouseEvent mouseEvent) {
+    private void klikPanelPostavVProstoru() {
         Postava cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
         Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
@@ -272,11 +283,9 @@ public class HomeController {
     /**
      * Metoda zajistí, že po kliknutí na "Nápověda" v horní liště (MenuBar)
      * se zobrazí nápověda v podobě vyskakovacího okna (WevView) z html souboru
-     *
-     * @param actionEvent
      */
     @FXML
-    private void napovedaKlik(ActionEvent actionEvent) {
+    private void napovedaKlik() {
         Stage napovedaStage = new Stage();
         WebView wv = new WebView();
         Scene napovedaScena = new Scene(wv);
@@ -287,10 +296,8 @@ public class HomeController {
 
     /**
      * Metoda zajistí, že po kliknutí na položku "Ukončit" a následným potvrzením "OK" se hra zavře
-     *
-     * @param actionEvent
      */
-    public void ukoncitHru(ActionEvent actionEvent) {
+    public void ukoncitHru() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chtete ukončit hru? Veškerý postup bude ztracen.");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -300,10 +307,8 @@ public class HomeController {
 
     /**
      * Metoda zajistí, že po kliknutí na položku "Nová hra" a následným potvrzením "OK" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
-     *
-     * @param actionEvent
      */
-    public void novaHra(ActionEvent actionEvent) {
+    public void novaHra() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chcete začít od znova? Veškerý postup bude ztracen.");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

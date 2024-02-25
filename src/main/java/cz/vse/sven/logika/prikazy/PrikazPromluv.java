@@ -1,10 +1,10 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.hra.Progress;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
@@ -13,7 +13,7 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkaz promluví s vybranou postavou
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazPromluv implements IPrikaz {
 
@@ -142,7 +142,7 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
             plan.getAktualniProstor().removePostava("Kim");
 
-            return "\nLupiče jste s Kimem přemohli, ten hanbou utekl. CervenaBunda a ZelenaCepice nyní leží na zemi.\n" +
+            return "\nLupiče jste s Kimem přemohli, ten hanbou utekl. CervenaBunda a ZelenaCepice upadli na zem.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
         }
 
@@ -168,7 +168,7 @@ public class PrikazPromluv implements IPrikaz {
                         batoh.odstranVec("CervenaBunda") + "\n" +
                         batoh.odstranVec("ZelenaCepice") + "\n" +
                         penize.pridejPenize(4.5) +
-                        "\n\nSven: \n\"Teď už bych měl mít dostatek peněz na jídlo. Doufám, že v Lídlu budou slevy.\n" +
+                        "\n\nSven: \n\"Už bych měl mít dostatek peněz na jídlo. Doufám, že v Lidlu budou slevy.\n" +
                         "Měl bych si pospíšit, za chvíli budou zavírat.\"\n";
             }
 
@@ -193,7 +193,6 @@ public class PrikazPromluv implements IPrikaz {
                         "\n\nZastavárník: \n\"Potrebuješ víc peněz? Můj kámoš ze sekáče by pro tebe možná měl nějakej kšeft.\"\n";
             }
         }
-
         return "\nSven: \n\"Nemám nic, co bych zastavárníkovi mohl prodat.\"\n";
     }
 

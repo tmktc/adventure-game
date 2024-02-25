@@ -9,7 +9,7 @@ import java.util.Map;
  * Třída Batoh - třída představující inventář hráče
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Batoh {
 

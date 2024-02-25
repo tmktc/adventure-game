@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * si prostor ukládá odkaz na sousedící prostor.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Prostor {
 

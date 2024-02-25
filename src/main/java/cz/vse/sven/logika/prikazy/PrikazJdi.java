@@ -1,7 +1,7 @@
 package cz.vse.sven.logika.prikazy;
 
-import cz.vse.sven.logika.hra.Progress;
 import cz.vse.sven.logika.hra.HerniPlan;
+import cz.vse.sven.logika.hra.Progress;
 import cz.vse.sven.logika.objekty.Postava;
 import cz.vse.sven.logika.objekty.Prostor;
 
@@ -10,7 +10,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  * příkaz umožňuje hráči pohybovat se mezi prostory
  *
  * @author Jarmila Pavlickova, Luboš Pavlíček, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazJdi implements IPrikaz {
 

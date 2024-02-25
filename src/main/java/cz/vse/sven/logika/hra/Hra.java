@@ -2,8 +2,8 @@ package cz.vse.sven.logika.hra;
 
 import cz.vse.sven.logika.objekty.Batoh;
 import cz.vse.sven.logika.prikazy.*;
-import cz.vse.sven.main.Pozorovatel;
-import cz.vse.sven.main.ZmenaHry;
+import cz.vse.sven.main.Observer.Pozorovatel;
+import cz.vse.sven.main.Observer.ZmenaHry;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +19,7 @@ import java.util.Set;
  * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 
 public class Hra implements IHra {
@@ -62,7 +62,7 @@ public class Hra implements IHra {
     public String vratUvitani() {
         return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
                 "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
-                "Rozhodne se, že Pepu nechá pod mostem a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
+                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
                 "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu." +
                 herniPlan.getAktualniProstor().dlouhyPopis();
     }

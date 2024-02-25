@@ -1,13 +1,13 @@
 package cz.vse.sven.logika.hra;
 
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.main.PredmetPozorovani;
+import cz.vse.sven.main.Observer.PredmetPozorovani;
 
 /**
  * Rozhraní které musí implementovat hra, je na ně navázáno uživatelské rozhraní
  *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova
- * @version pro školní rok 2016/2017
+ * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
+ * @version únor 2024
  */
 public interface IHra extends PredmetPozorovani {
     //== VEŘEJNÉ KONSTANTY =====================================================

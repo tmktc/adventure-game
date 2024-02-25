@@ -6,15 +6,15 @@ import java.util.Objects;
  * Třída Vec - realizuje věci
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Vec {
 
     private final String jmeno;
-    private boolean sebratelna;
-    private boolean koupitelna;
     private final boolean vymenitelna;
     private final int cena;
+    private boolean sebratelna;
+    private boolean koupitelna;
 
 
     /**
@@ -53,12 +53,30 @@ public class Vec {
     }
 
     /**
+     * Setter pro boolean hodnotu sebratelna
+     *
+     * @param s hodnota boolean, která se má nastavit
+     */
+    public void setSebratelna(boolean s) {
+        this.sebratelna = s;
+    }
+
+    /**
      * Getter pro boolean koupitelna
      *
      * @return true/false
      */
     public boolean isKoupitelna() {
         return koupitelna;
+    }
+
+    /**
+     * Setter pro boolean hodnotu koupitelna
+     *
+     * @param k hodnota boolean, která se má nastavit
+     */
+    public void setKoupitelna(boolean k) {
+        this.koupitelna = k;
     }
 
     /**
@@ -77,24 +95,6 @@ public class Vec {
      */
     public int getCena() {
         return cena;
-    }
-
-    /**
-     * Setter pro boolean hodnotu sebratelna
-     *
-     * @param s hodnota boolean, která se má nastavit
-     */
-    public void setSebratelna(boolean s) {
-        this.sebratelna = s;
-    }
-
-    /**
-     * Setter pro boolean hodnotu koupitelna
-     *
-     * @param k hodnota boolean, která se má nastavit
-     */
-    public void setKoupitelna(boolean k) {
-        this.koupitelna = k;
     }
 
     /**
