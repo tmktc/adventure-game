@@ -142,7 +142,7 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
             plan.getAktualniProstor().removePostava("Kim");
 
-            return "\nLupiče jste s Kimem přemohli, ten hanbou utekl. CervenaBunda a ZelenaCepice upadli na zem.\n" +
+            return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. CervenaBunda a ZelenaCepice upadly na zem.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
         }
 
@@ -193,6 +193,7 @@ public class PrikazPromluv implements IPrikaz {
                         "\n\nZastavárník: \n\"Potrebuješ víc peněz? Můj kámoš ze sekáče by pro tebe možná měl nějakej kšeft.\"\n";
             }
         }
+
         return "\nSven: \n\"Nemám nic, co bych zastavárníkovi mohl prodat.\"\n";
     }
 
