@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * si prostor ukládá odkaz na sousedící prostor.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Prostor {
 
@@ -157,6 +157,37 @@ public class Prostor {
     }
 
     /**
+     * Vrací kolekci obsahující prostory, se kterými tento prostor sousedí.
+     * Takto získaný seznam sousedních prostor nelze upravovat (přidávat,
+     * odebírat východy) protože z hlediska správného návrhu je to plně
+     * záležitostí třídy Prostor.
+     *
+     * @return Nemodifikovatelná kolekce prostorů (východů), se kterými tento
+     * prostor sousedí.
+     */
+    public Collection<Prostor> getVychody() {
+        return Collections.unmodifiableCollection(vychody);
+    }
+
+    /**
+     * Metoda vrátí kolekci věcí nacházejících se v prostoru
+     *
+     * @return kolekce věcí nacházejících se v prostoru
+     */
+    public Collection<Vec> getSeznamVeci() {
+        return Collections.unmodifiableCollection(seznamVeci.values());
+    }
+
+    /**
+     * Metoda vrátí kolekci postav nacházejích se v prostoru
+     *
+     * @return kolekce postav nacházejících se v prostoru
+     */
+    public Collection<Postava> getSeznamPostav() {
+        return Collections.unmodifiableCollection(seznamPostav.values());
+    }
+
+    /**
      * Přidá věc do prostoru
      *
      * @param vec k přidání
@@ -280,15 +311,5 @@ public class Prostor {
             nazvy += jmenoPostavy + "  ";
         }
         return nazvy;
-    }
-
-    /**
-     * Metoda toString vrací název prostoru
-     *
-     * @return název prostoru
-     */
-    @Override
-    public String toString() {
-        return nazev;
     }
 }

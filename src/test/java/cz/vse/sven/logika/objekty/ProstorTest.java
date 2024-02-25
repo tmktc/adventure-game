@@ -1,5 +1,6 @@
 package cz.vse.sven.logika.objekty;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,7 @@ public class ProstorTest {
      */
     @Test
     public void vratSousedniProstor() {
-        assertEquals("jidelna", plan.getAktualniProstor().vratSousedniProstor("jidelna").toString());
+        assertEquals("jidelna", plan.getAktualniProstor().vratSousedniProstor("jidelna").getNazev());
         assertNull(plan.getAktualniProstor().vratSousedniProstor("test"));
     }
 

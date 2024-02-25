@@ -1,4 +1,16 @@
-package cz.vse.sven.logika.objekty;
+package cz.vse.sven.logika.hra;
+
+import cz.vse.sven.logika.objekty.Postava;
+import cz.vse.sven.logika.objekty.Prostor;
+import cz.vse.sven.logika.objekty.Vec;
+import cz.vse.sven.main.Observer.Pozorovatel;
+import cz.vse.sven.main.Observer.PredmetPozorovani;
+import cz.vse.sven.main.Observer.ZmenaHry;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class HerniPlan - třída představující mapu a stav adventury.
@@ -11,20 +23,24 @@ package cz.vse.sven.logika.objekty;
  * Dále upravuje a kontroluje stavy možných konců hry
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
-public class HerniPlan {
+public class HerniPlan implements PredmetPozorovani {
 
     private Prostor aktualniProstor;
     private boolean vyhra = false;
     private boolean prohra = false;
     private boolean perfektniVyhra = false;
+    private Map<ZmenaHry, Set<Pozorovatel>> seznamPozorovatelu = new HashMap<>();
 
     /**
      * Konstruktor
      */
     public HerniPlan() {
         zalozProstoryHry();
+        for (ZmenaHry zmenaHry : ZmenaHry.values()) {
+            seznamPozorovatelu.put(zmenaHry, new HashSet<>());
+        }
     }
 
     /**
@@ -48,7 +64,7 @@ public class HerniPlan {
         Vec lahevBranik = new Vec("LahevOdBranika", true, false, true, 0);
         Vec lahevSvijany = new Vec("LahevOdSvijan", true, false, true, 0);
         Vec lahevPlzen = new Vec("LahevOdPlzne", true, false, true, 0);
-        Vec automatLahve = new Vec("AutomatNaVraceniLahvi", false, false, false, 0);
+        Vec automatLahve = new Vec("AutomatNaLahve", false, false, false, 0);
 
         Vec snus = new Vec("Snus", false, true, false, 1);
         Vec bezlepkovyChleba = new Vec("BezlepkovyChleba", false, true, false, 2);
@@ -119,12 +135,14 @@ public class HerniPlan {
     }
 
     /**
-     * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory
+     * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory,
+     * dále upozorní pozorovatele na změnu místnosti
      *
      * @param prostor nový aktuální prostor
      */
     public void setAktualniProstor(Prostor prostor) {
         aktualniProstor = prostor;
+        upozorniPozorovatele(ZmenaHry.ZMENA_PROSTORU);
     }
 
     /**
@@ -179,5 +197,24 @@ public class HerniPlan {
      */
     public void setPerfektniVyhra(boolean stav) {
         this.perfektniVyhra = stav;
+    }
+
+    /**
+     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
+     *
+     * @param pozorovatel který má být přidán
+     */
+    @Override
+    public void registruj(ZmenaHry zmenaHry, Pozorovatel pozorovatel) {
+        seznamPozorovatelu.get(zmenaHry).add(pozorovatel);
+    }
+
+    /**
+     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
+     */
+    private void upozorniPozorovatele(ZmenaHry zmenaHry) {
+        for (Pozorovatel pozorovatel : seznamPozorovatelu.get(zmenaHry)) {
+            pozorovatel.aktualizuj();
+        }
     }
 }

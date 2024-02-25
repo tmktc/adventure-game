@@ -1,8 +1,14 @@
 package cz.vse.sven.logika.hra;
 
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.prikazy.*;
+import cz.vse.sven.main.Observer.Pozorovatel;
+import cz.vse.sven.main.Observer.ZmenaHry;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Třída Hra - třída představující logiku adventury.
@@ -13,7 +19,7 @@ import cz.vse.sven.logika.prikazy.*;
  * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 
 public class Hra implements IHra {
@@ -24,9 +30,10 @@ public class Hra implements IHra {
     private Batoh batoh;
     private Penize penize;
     private Progress progress;
+    private Map<ZmenaHry, Set<Pozorovatel>> seznamPozorovatelu = new HashMap<>();
 
     /**
-     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan) a seznam platných příkazů.
+     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan), seznam platných příkazů a seznam pozorovatelů.
      */
     public Hra() {
         herniPlan = new HerniPlan();
@@ -44,6 +51,9 @@ public class Hra implements IHra {
         platnePrikazy.vlozPrikaz(new PrikazVymen(herniPlan, batoh, penize));
         platnePrikazy.vlozPrikaz(new PrikazPenize(penize));
         platnePrikazy.vlozPrikaz(new PrikazVyndej(herniPlan, batoh));
+        for (ZmenaHry zmenaHry : ZmenaHry.values()) {
+            seznamPozorovatelu.put(zmenaHry, new HashSet<>());
+        }
     }
 
     /**
@@ -52,7 +62,7 @@ public class Hra implements IHra {
     public String vratUvitani() {
         return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
                 "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
-                "Rozhodne se, že Pepu nechá pod mostem a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
+                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
                 "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu." +
                 herniPlan.getAktualniProstor().dlouhyPopis();
     }
@@ -93,7 +103,8 @@ public class Hra implements IHra {
     /**
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
      * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
-     * Pokud ano spustí samotné provádění příkazu.
+     * Pokud ano spustí samotné provádění příkazu
+     * a upozorní pozorovatele na kontrolu možné změny věcí a postav v prostoru.
      *
      * @param radek text, který zadal uživatel jako příkaz do hry.
      * @return vrací se řetězec, který se má vypsat na obrazovku
@@ -112,14 +123,17 @@ public class Hra implements IHra {
         } else {
             textKVypsani = "Neznámý příkaz";
         }
+        upozorniPozorovatele(ZmenaHry.ZMENA_VECI);
+        upozorniPozorovatele(ZmenaHry.ZMENA_POSTAV);
         return textKVypsani;
     }
 
     /**
-     * Nastaví, že je konec hry
+     * Nastaví, že je konec hry a upozorní na to pozorovatele
      */
     public void setKonecHry() {
         this.konecHry = true;
+        upozorniPozorovatele(ZmenaHry.KONEC_HRY);
     }
 
     /**
@@ -133,11 +147,39 @@ public class Hra implements IHra {
     }
 
     /**
+     * Metoda vrátí odkaz na batoh ve hře
+     *
+     * @return odkaz na batoh
+     */
+    public Batoh getBatoh() {
+        return batoh;
+    }
+
+    /**
      * Metoda vrátí okdaz na progress - využito v testech
      *
      * @return odkaz na progress
      */
     public Progress getProgress() {
         return progress;
+    }
+
+    /**
+     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
+     *
+     * @param pozorovatel který má být přidán
+     */
+    @Override
+    public void registruj(ZmenaHry zmenaHry, Pozorovatel pozorovatel) {
+        seznamPozorovatelu.get(zmenaHry).add(pozorovatel);
+    }
+
+    /**
+     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
+     */
+    private void upozorniPozorovatele(ZmenaHry zmenaHry) {
+        for (Pozorovatel pozorovatel : seznamPozorovatelu.get(zmenaHry)) {
+            pozorovatel.aktualizuj();
+        }
     }
 }

@@ -1,13 +1,13 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.objekty.Vec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testovací třída PrikazKupTest slouží k otestování třídy PrikazKup
@@ -60,6 +60,8 @@ public class PrikazKupTest {
         // všechno v pořádku
         batoh.setKapacita(1);
         assertEquals("Koupili jste koupitelna za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
+        assertFalse(batoh.vyberVec("koupitelna").isKoupitelna());
+        assertTrue(batoh.vyberVec("koupitelna").isSebratelna());
 
 
     }

@@ -8,8 +8,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /*******************************************************************************
@@ -28,7 +26,7 @@ public class Start extends Application {
      * @param args Parametry příkazového řádku
      */
     public static void main(String[] args) {
-        if (args.length>0 && args[0].equals("text")) {
+        if (args.length > 0 && args[0].equals("text")) {
             IHra hra = new Hra();
             TextoveRozhrani ui = new TextoveRozhrani(hra);
             ui.hraj();

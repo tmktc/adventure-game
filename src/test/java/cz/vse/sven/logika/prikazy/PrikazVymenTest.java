@@ -1,8 +1,8 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.objekty.Vec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ public class PrikazVymenTest {
         assertEquals("Nejsi u automatu na výměnu lahví", prikazVymen.provedPrikaz("test"));
 
         // věc, kterou chceme vyměnit, u sebe nemáme
-        plan.getAktualniProstor().addVec(new Vec("AutomatNaVraceniLahvi", false, false, false, 0));
+        plan.getAktualniProstor().addVec(new Vec("AutomatNaLahve", false, false, false, 0));
         assertEquals("Takovou věc u sebe nemáš", prikazVymen.provedPrikaz("test"));
 
         // věc, kterou u sebe máme a chceme vyměnit, není vyměnitelná

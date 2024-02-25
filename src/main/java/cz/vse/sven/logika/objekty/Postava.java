@@ -6,7 +6,7 @@ import java.util.Objects;
  * Třída Postava - realizuje postavy ve hře
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Postava {
 
@@ -52,5 +52,15 @@ public class Postava {
     @Override
     public int hashCode() {
         return Objects.hash(jmeno);
+    }
+
+    /**
+     * toString metoda Postavy
+     *
+     * @return jméno postavy
+     */
+    @Override
+    public String toString() {
+        return getJmeno();
     }
 }

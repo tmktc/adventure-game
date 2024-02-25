@@ -1,10 +1,10 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Hra;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.hra.Progress;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
@@ -13,11 +13,11 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkaz promluví s vybranou postavou
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazPromluv implements IPrikaz {
 
-    private static final String NAZEV = "promluv";
+    public static final String NAZEV = "promluv";
     private HerniPlan plan;
     private Batoh batoh;
     private Penize penize;
@@ -129,6 +129,7 @@ public class PrikazPromluv implements IPrikaz {
             return "\nSven: \n\"Sám ho nepřemůžu, musím si vzít na pomoc Kima, ten by měl být stále u jídelny.\n" +
                     "Ten chudák tam asi pořád čeká na ty jeho oblíbené bezlepkové nudle.\"\n";
         } else if (progress.getProgress() == 3) {
+            plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
             plan.setProhra(true);
             hra.setKonecHry();
             return "";
@@ -139,8 +140,9 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().addVec(new Vec("ZelenaCepice", true, false, false, 0));
 
             plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
+            plan.getAktualniProstor().removePostava("Kim");
 
-            return "\nLupiče jste s Kimem přemohli, ten hanbou utekl. CervenaBunda a ZelenaCepice nyní leží na zemi.\n" +
+            return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. CervenaBunda a ZelenaCepice upadly na zem.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
         }
 
@@ -166,7 +168,7 @@ public class PrikazPromluv implements IPrikaz {
                         batoh.odstranVec("CervenaBunda") + "\n" +
                         batoh.odstranVec("ZelenaCepice") + "\n" +
                         penize.pridejPenize(4.5) +
-                        "\n\nSven: \n\"Teď už bych měl mít dostatek peněz na jídlo. Doufám, že v Lídlu budou slevy.\n" +
+                        "\n\nSven: \n\"Už bych měl mít dostatek peněz na jídlo. Doufám, že v Lidlu budou slevy.\n" +
                         "Měl bych si pospíšit, za chvíli budou zavírat.\"\n";
             }
 

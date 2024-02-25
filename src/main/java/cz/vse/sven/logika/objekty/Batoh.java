@@ -1,5 +1,7 @@
 package cz.vse.sven.logika.objekty;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ import java.util.Map;
  * Třída Batoh - třída představující inventář hráče
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Batoh {
 
@@ -86,6 +88,15 @@ public class Batoh {
             nazvy += jmenoVeci + " ";
         }
         return nazvy;
+    }
+
+    /**
+     * Vrátí kolekci věcí v batohu
+     *
+     * @return kolekce věcí v batohu
+     */
+    public Collection<Vec> getObsahBatohu() {
+        return Collections.unmodifiableCollection(seznamVeci.values());
     }
 
     /**

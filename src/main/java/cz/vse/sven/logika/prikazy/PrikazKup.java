@@ -1,8 +1,8 @@
 package cz.vse.sven.logika.prikazy;
 
+import cz.vse.sven.logika.hra.HerniPlan;
 import cz.vse.sven.logika.hra.Penize;
 import cz.vse.sven.logika.objekty.Batoh;
-import cz.vse.sven.logika.objekty.HerniPlan;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
@@ -11,11 +11,11 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkazem hráč koupí věci v obchodě
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazKup implements IPrikaz {
 
-    private static final String NAZEV = "kup";
+    public static final String NAZEV = "kup";
     private HerniPlan plan;
     private Batoh batoh;
     private Penize penize;
@@ -37,6 +37,8 @@ public class PrikazKup implements IPrikaz {
      * Metoda nejdříve zkontroluje, zda se daná věc v prostoru nachází,
      * zkontroluje koupitelnost věci pomocí metody jeVecKoupitelna,
      * pokud máme ke koupi dostatek peněz, tak nákup proběhne
+     * dále nastaví koupitelnost věci na false, protože věc již vlastníme
+     * a sebratelnost na true, kdybom věc chtěli odložit
      *
      * @param parametry - věc, kterou chceme koupit.
      * @return hlášení, zda se nákup povedl
@@ -59,6 +61,8 @@ public class PrikazKup implements IPrikaz {
                     if (batoh.vlozVec(vec)) {
                         aktualniProstor.removeVec(jmenoVeci);
                         penize.odectiPenize(vec.getCena());
+                        vec.setSebratelna(true);
+                        vec.setKoupitelna(false);
                         return "Koupili jste " + jmenoVeci + " za " + vec.getCena() + " Euro";
                     } else {
                         return "Nemáte dostatek místa v batohu";
