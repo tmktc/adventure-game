@@ -65,7 +65,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>cz.vse.sven/cz.vse.sven.main.Start</mainClass>
+                            <mainClass>cz.vse.sven.main.Start</mainClass>
                             <launcher>${project.artifactId}</launcher>
                             <jlinkZipName>${project.artifactId}-${project.version}</jlinkZipName>
                             <jlinkImageName>${project.artifactId}</jlinkImageName>
