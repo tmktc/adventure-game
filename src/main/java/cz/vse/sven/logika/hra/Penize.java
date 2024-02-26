@@ -44,4 +44,14 @@ public class Penize {
     public void odectiPenize(int castka) {
         penize -= castka;
     }
+
+    /**
+     * toString metoda Peněz
+     *
+     * @return hodnota peněz
+     */
+    @Override
+    public String toString() {
+        return String.valueOf(penize);
+    }
 }

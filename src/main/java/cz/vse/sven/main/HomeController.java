@@ -34,6 +34,12 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
+    private Label labelPenizeVKapse;
+
+    @FXML
+    private Label ukazatelPenezVKapse;
+
+    @FXML
     private Label labelVeciVProstoru;
 
     @FXML
@@ -90,6 +96,7 @@ public class HomeController {
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
         Platform.runLater(() -> vstup.requestFocus());
+        ukazatelPenezVKapse.setText(hra.getPenize());
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
         panelVeciVBatohu.setItems(seznamVeciVBatohu);
@@ -104,6 +111,7 @@ public class HomeController {
             aktualizujSeznamVeciVBatohu();
         });
         hra.registruj(ZmenaHry.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
+        hra.registruj(ZmenaHry.ZMENA_PENEZ, () -> aktualizujPenizeVKapse());
         vlozSouradnice();
         aktualizujSeznamVychodu();
         aktualizujSeznamVeciVBatohu();
@@ -177,6 +185,14 @@ public class HomeController {
     }
 
     /**
+     * Metoda aktualizuje ukazatel peněz v kapse
+     */
+    @FXML
+    private void aktualizujPenizeVKapse() {
+        ukazatelPenezVKapse.setText(hra.getPenize());
+    }
+
+    /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
      * vypíše epilog
      * zamezí interakci se vstupem, panely a tlačítkem
@@ -196,6 +212,8 @@ public class HomeController {
         labelVeciVBatohu.setDisable(hra.konecHry());
         labelPostavyVProstoru.setDisable(hra.konecHry());
         labelVeciVProstoru.setDisable(hra.konecHry());
+        labelPenizeVKapse.setDisable(hra.konecHry());
+        ukazatelPenezVKapse.setDisable(hra.konecHry());
     }
 
     /**

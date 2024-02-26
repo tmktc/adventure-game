@@ -60,6 +60,8 @@ public interface IHra extends PredmetPozorovani {
      */
     public Batoh getBatoh();
 
+    public String getPenize();
+
     //== ZDĚDĚNÉ METODY ========================================================
     //== INTERNÍ DATOVÉ TYPY ===================================================
 }

@@ -125,6 +125,7 @@ public class Hra implements IHra {
         }
         upozorniPozorovatele(ZmenaHry.ZMENA_VECI);
         upozorniPozorovatele(ZmenaHry.ZMENA_POSTAV);
+        upozorniPozorovatele(ZmenaHry.ZMENA_PENEZ);
         return textKVypsani;
     }
 
@@ -163,6 +164,13 @@ public class Hra implements IHra {
     public Progress getProgress() {
         return progress;
     }
+
+    /**
+     * Vrátí hodnotu peněz
+     *
+     * @return hodnota peněz
+     */
+    public String getPenize() {return penize.toString();}
 
     /**
      * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
