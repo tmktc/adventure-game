@@ -67,13 +67,10 @@ public class HomeController {
     private ListView<Prostor> panelVychodu;
 
     @FXML
-    private Button tlacitkoOdesli;
+    private Button tlacitkoNapoveda;
 
     @FXML
     private TextArea vystup;
-
-    @FXML
-    private TextField vstup;
 
     private IHra hra = new Hra();
 
@@ -89,13 +86,12 @@ public class HomeController {
 
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, focusuje na TextField, spojí panely se seznamy, registruje pozorovatele,
+     * vrací uvítání, spojí panely se seznamy, registruje pozorovatele,
      * do panelu vloží aktualizované seznamy, nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
     private void initialize() {
         vystup.appendText(hra.vratUvitani());
-        Platform.runLater(() -> vstup.requestFocus());
         ukazatelPenezVKapse.setText(hra.getPenize());
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
@@ -195,15 +191,14 @@ public class HomeController {
     /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
      * vypíše epilog
-     * zamezí interakci se vstupem, panely a tlačítkem
+     * zamezí interakci s panely a tlačítkem
      */
     private void aktualizujKonecHry() {
         if (hra.konecHry()) {
             vystup.appendText(hra.vratEpilog());
         }
 
-        vstup.setDisable(hra.konecHry());
-        tlacitkoOdesli.setDisable(hra.konecHry());
+        tlacitkoNapoveda.setDisable(hra.konecHry());
         panelVychodu.setDisable(hra.konecHry());
         panelVeciVProstoru.setDisable(hra.konecHry());
         panelVeciVBatohu.setDisable(hra.konecHry());
@@ -214,17 +209,6 @@ public class HomeController {
         labelVeciVProstoru.setDisable(hra.konecHry());
         labelPenizeVKapse.setDisable(hra.konecHry());
         ukazatelPenezVKapse.setDisable(hra.konecHry());
-    }
-
-    /**
-     * Metoda zachytí vstup (zadaný v TextField) jako příkaz a zavolá metodu na jeho zpracování
-     */
-    @FXML
-    private void odesliVstup() {
-        String prikaz = vstup.getText();
-        vstup.clear();
-
-        zpracujPrikaz(prikaz);
     }
 
     /**
@@ -244,7 +228,6 @@ public class HomeController {
     @FXML
     private void klikPanelVychodu() {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
-        Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         String prikaz = PrikazJdi.NAZEV + " " + cil.getNazev();
         zpracujPrikaz(prikaz);
@@ -257,7 +240,6 @@ public class HomeController {
     @FXML
     private void klikPanelVeciVProstoru() {
         Vec cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
-        Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         String prikaz;
         if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl") || hra.getHerniPlan().getAktualniProstor().getNazev().equals("trafika")) {
@@ -275,7 +257,6 @@ public class HomeController {
     @FXML
     private void klikPanelVeciVBatohu() {
         Vec cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
-        Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         String prikaz;
         if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl")) {
@@ -293,7 +274,6 @@ public class HomeController {
     @FXML
     private void klikPanelPostavVProstoru() {
         Postava cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
-        Platform.runLater(() -> vstup.requestFocus());
         if (cil == null) return;
         zpracujPrikaz(PrikazPromluv.NAZEV + " " + cil.getJmeno());
     }
@@ -331,7 +311,6 @@ public class HomeController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             hra = new Hra();
-            vstup.clear();
             vystup.clear();
             initialize();
         }

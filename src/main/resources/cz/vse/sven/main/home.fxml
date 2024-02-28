@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -36,7 +35,6 @@
                 <Menu mnemonicParsing="false" text="Hra">
                     <items>
                         <MenuItem onAction="#novaHra" text="Nová hra" />
-                        <MenuItem onAction="#napovedaKlik" text="Nápověda" />
                         <MenuItem onAction="#ukoncitHru" text="Ukončit" />
                     </items>
                 </Menu>
@@ -46,21 +44,22 @@
             <children>
             <VBox>
                <children>
-                  <Label fx:id="labelPenizeVKapse" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Peníze v kapse:" textAlignment="CENTER" />
-                  <Label fx:id="ukazatelPenezVKapse" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="labelPenizeVKapse" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Peníze:" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="ukazatelPenezVKapse" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin></Label>
                </children>
             </VBox>
-                <TextField fx:id="vstup" onAction="#odesliVstup" HBox.hgrow="ALWAYS">
+                <Button fx:id="tlacitkoNapoveda" mnemonicParsing="false" onAction="#napovedaKlik" text="Nápověda">
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </TextField>
-                <Button fx:id="tlacitkoOdesli" mnemonicParsing="false" onAction="#odesliVstup" text="Odešli">
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
                     </padding>
                     <HBox.margin>
-                        <Insets />
+                        <Insets left="777.0" />
                     </HBox.margin>
                 </Button>
             </children>
