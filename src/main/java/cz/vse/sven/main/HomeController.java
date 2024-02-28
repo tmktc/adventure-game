@@ -86,12 +86,12 @@ public class HomeController {
 
     /**
      * Metoda na začátku hry:
-     * vrací uvítání, spojí panely se seznamy, registruje pozorovatele,
+     * vrací informace o aktuálním prostoru, spojí panely se seznamy, registruje pozorovatele,
      * do panelu vloží aktualizované seznamy, nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
     private void initialize() {
-        vystup.appendText(hra.vratUvitani());
+        vystup.appendText(hra.getHerniPlan().getAktualniProstor().dlouhyPopis());
         ukazatelPenezVKapse.setText(hra.getPenize());
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
@@ -217,7 +217,6 @@ public class HomeController {
      * @param prikaz který se má zpracovat
      */
     private void zpracujPrikaz(String prikaz) {
-        vystup.appendText("> " + prikaz + "\n");
         String vysledek = hra.zpracujPrikaz(prikaz);
         vystup.appendText(vysledek + "\n");
     }

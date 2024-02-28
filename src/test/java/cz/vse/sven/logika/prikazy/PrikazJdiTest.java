@@ -37,10 +37,8 @@ public class PrikazJdiTest {
         // Není platný sousední prostor
         assertEquals("Tam se odsud jít nedá", prikazJdi.provedPrikaz("smetiste"));
 
-        String spravnyText = "\n" +
-                "--------------------------------------------------\n" +
-                "\n" +
-                "Nacházíš se u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.\n" +
+        String spravnyText =
+                "\n\nNacházíš se u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.\n" +
                 "\n" +
                 "východy: lidl  smetiste  trafika  domov  \n" +
                 "věci: \n" +
