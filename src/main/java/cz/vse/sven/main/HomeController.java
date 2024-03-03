@@ -190,12 +190,19 @@ public class HomeController {
 
     /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
-     * vypíše epilog
+     * ukáže okno s epilogem, po klinkutí na "OK" ukončí hru (zavře okno),
      * zamezí interakci s panely a tlačítkem
      */
     private void aktualizujKonecHry() {
         if (hra.konecHry()) {
-            vystup.appendText(hra.vratEpilog());
+            Alert konec = new Alert(Alert.AlertType.INFORMATION);
+            konec.setTitle("Konec hry");
+            konec.setContentText("Toto je konec hry, díky za zahrání!");
+            konec.setHeaderText(hra.vratEpilog());
+            Optional<ButtonType> result = konec.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
         }
 
         tlacitkoNapoveda.setDisable(hra.konecHry());
@@ -209,10 +216,11 @@ public class HomeController {
         labelVeciVProstoru.setDisable(hra.konecHry());
         labelPenizeVKapse.setDisable(hra.konecHry());
         ukazatelPenezVKapse.setDisable(hra.konecHry());
+        vystup.setDisable(hra.konecHry());
     }
 
     /**
-     * Metoda vypíše zpracovávaný příkaz, nechá ho zpracovat metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
+     * Metoda nechá zpracovat zadaný příkaz metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
      *
      * @param prikaz který se má zpracovat
      */
