@@ -190,21 +190,9 @@ public class HomeController {
 
     /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
-     * ukáže okno s epilogem, po klinkutí na "OK" ukončí hru (zavře okno),
-     * zamezí interakci s panely a tlačítkem
+     * zamezí interakci s panely a tlačítkem, ukáže konečné okno
      */
     private void aktualizujKonecHry() {
-        if (hra.konecHry()) {
-            Alert konec = new Alert(Alert.AlertType.INFORMATION);
-            konec.setTitle("Konec hry");
-            konec.setContentText("Toto je konec hry, díky za zahrání!");
-            konec.setHeaderText(hra.vratEpilog());
-            Optional<ButtonType> result = konec.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Platform.exit();
-            }
-        }
-
         tlacitkoNapoveda.setDisable(hra.konecHry());
         panelVychodu.setDisable(hra.konecHry());
         panelVeciVProstoru.setDisable(hra.konecHry());
@@ -217,6 +205,31 @@ public class HomeController {
         labelPenizeVKapse.setDisable(hra.konecHry());
         ukazatelPenezVKapse.setDisable(hra.konecHry());
         vystup.setDisable(hra.konecHry());
+
+        if (hra.konecHry()) {
+            dohraniHry();
+        }
+    }
+
+    /**
+     * Metoda zobrazí okno s epilogem a nabídne buď ukončení hry nebo spuštění nové
+     */
+    private void dohraniHry() {
+        Alert konec = new Alert(Alert.AlertType.CONFIRMATION);
+        konec.setTitle("Konec hry");
+        konec.setContentText("Toto je konec hry, díky za zahrání!");
+        konec.setHeaderText(hra.vratEpilog());
+
+        ButtonType novaHra = new ButtonType("Nová hra");
+        ButtonType ukoncit = new ButtonType("Ukončit");
+        konec.getButtonTypes().setAll(novaHra,ukoncit);
+
+        Optional<ButtonType> result = konec.showAndWait();
+        if (result.isPresent() && result.get() == ukoncit) {
+            ukoncitHru();
+        } else if (result.isPresent() && result.get() == novaHra) {
+            novaHra();
+        }
     }
 
     /**
@@ -300,26 +313,18 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na položku "Ukončit" a následným potvrzením "OK" se hra zavře
+     * Metoda zajistí, že po kliknutí na "Ukončit" se hra zavře
      */
     public void ukoncitHru() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chtete ukončit hru? Veškerý postup bude ztracen.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Platform.exit();
-        }
+        Platform.exit();
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na položku "Nová hra" a následným potvrzením "OK" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
+     * Metoda zajistí, že po kliknutí na položku "Nová hra" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
      */
     public void novaHra() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opravdu chcete začít od znova? Veškerý postup bude ztracen.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            hra = new Hra();
-            vystup.clear();
-            initialize();
-        }
+        hra = new Hra();
+        vystup.clear();
+        initialize();
     }
 }
