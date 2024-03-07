@@ -63,8 +63,7 @@ public class Hra implements IHra {
         return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
                 "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
                 "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
-                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu." +
-                herniPlan.getAktualniProstor().dlouhyPopis();
+                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.";
     }
 
     /**
@@ -157,11 +156,11 @@ public class Hra implements IHra {
     }
 
     /**
-     * Metoda vrátí okdaz na progress - využito v testech
+     * Vrátí instanci třídy peněz, která uchovává stav peněz v aktuální instanci hry
      *
-     * @return odkaz na progress
+     * @return instance peněz
      */
-    public Progress getProgress() {
+    public Progress getProgressInstance() {
         return progress;
     }
 

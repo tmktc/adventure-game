@@ -43,8 +43,8 @@ public class HraTest {
         hra.zpracujPrikaz("jdi sekac");
         hra.zpracujPrikaz("promluv Prodavac");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
+        hra.zpracujPrikaz("promluv Podezrely");
         assertEquals(true, hra.getHerniPlan().isProhra());
     }
 
@@ -61,13 +61,13 @@ public class HraTest {
         hra.zpracujPrikaz("jdi sekac");
         hra.zpracujPrikaz("promluv Prodavac");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi jidelna");
         hra.zpracujPrikaz("promluv Kim");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("seber CervenaBunda");
         hra.zpracujPrikaz("seber ZelenaCepice");
         hra.zpracujPrikaz("jdi sekac");
@@ -92,13 +92,13 @@ public class HraTest {
         hra.zpracujPrikaz("jdi sekac");
         hra.zpracujPrikaz("promluv Prodavac");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi jidelna");
         hra.zpracujPrikaz("promluv Kim");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("seber CervenaBunda");
         hra.zpracujPrikaz("seber ZelenaCepice");
         hra.zpracujPrikaz("jdi sekac");
@@ -130,13 +130,13 @@ public class HraTest {
         hra.zpracujPrikaz("jdi sekac");
         hra.zpracujPrikaz("promluv Prodavac");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi jidelna");
         hra.zpracujPrikaz("promluv Kim");
         hra.zpracujPrikaz("jdi smetiste");
         hra.zpracujPrikaz("jdi pracak");
-        hra.zpracujPrikaz("promluv PodezreleVypadajiciPan");
+        hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("seber CervenaBunda");
         hra.zpracujPrikaz("seber ZelenaCepice");
         hra.zpracujPrikaz("jdi sekac");
@@ -170,7 +170,7 @@ public class HraTest {
         assertEquals(spravnyText, hra.vratEpilog());
 
 
-        hra.getProgress().setProgress(3);
+        hra.getProgressInstance().setProgress(3);
         String spravnyText2 = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
                 "\nProhra, hodně štěstí příště.\n";
         assertEquals(spravnyText2, hra.vratEpilog());

@@ -56,7 +56,7 @@ public class HerniPlan implements PredmetPozorovani {
         Prostor pracak = new Prostor("pracak", "u pracáku.");
         Prostor sekac = new Prostor("sekac", "v sekáči.");
         Prostor zastavarna = new Prostor("zastavarna", "v zastavárně.");
-        Prostor lidl = new Prostor("lidl", "v Lidlu, ceník: \nRohliky - 1 \nPsiGranule - 4 \nBezlepkovyChleba - 2");
+        Prostor lidl = new Prostor("lidl", "v Lidlu, ceník: \nRohliky - 1   \nPsiGranule - 4   \nBezlepkovyChleba - 2");
         Prostor trafika = new Prostor("trafika", "v trafice, ceník: \nSnus - 1");
 
         //vytváření jednotlivých věcí
@@ -75,7 +75,7 @@ public class HerniPlan implements PredmetPozorovani {
         //vytvareni jednotlivych postav
         Postava pepa = new Postava("Pepa");
         Postava kim = new Postava("Kim");
-        Postava lupic = new Postava("PodezreleVypadajiciPan");
+        Postava lupic = new Postava("Podezrely");
         Postava prodavac = new Postava("Prodavac");
         Postava zastavarnik = new Postava("Zastavarnik");
 

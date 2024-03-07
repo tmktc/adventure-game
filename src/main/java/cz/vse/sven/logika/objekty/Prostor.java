@@ -312,4 +312,23 @@ public class Prostor {
         }
         return nazvy;
     }
+
+    /**
+     * Vrátí popis prostoru
+     *
+     * @return popis prostoru
+     */
+    public String getPopis() {
+        return popis;
+    }
+
+    /**
+     * toString metoda třídy Prostor
+     *
+     * @return název prostoru
+     */
+    @Override
+    public String toString() {
+        return nazev;
+    }
 }

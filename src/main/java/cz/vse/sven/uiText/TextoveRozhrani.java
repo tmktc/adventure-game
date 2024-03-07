@@ -32,7 +32,7 @@ public class TextoveRozhrani {
      * hodnotu true). Nakonec vypíše text epilogu a po 15 sekundách se automaticky zavře.
      */
     public void hraj() {
-        System.out.println(hra.vratUvitani());
+        System.out.println(hra.vratUvitani() + hra.getHerniPlan().getAktualniProstor().dlouhyPopis());
 
         // základní cyklus programu - opakovaně se čtou příkazy a poté
         // se provádějí do konce hry.

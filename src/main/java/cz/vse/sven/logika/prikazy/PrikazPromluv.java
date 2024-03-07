@@ -60,7 +60,7 @@ public class PrikazPromluv implements IPrikaz {
             return switch (jmeno) {
                 case "Pepa" -> dialogPepa();
                 case "Kim" -> dialogKim();
-                case "PodezreleVypadajiciPan" -> dialogPodezrely();
+                case "Podezrely" -> dialogPodezrely();
                 case "Prodavac" -> dialogProdavac();
                 case "Zastavarnik" -> dialogZastavarnik();
                 default -> "default";
@@ -129,7 +129,7 @@ public class PrikazPromluv implements IPrikaz {
             return "\nSven: \n\"Sám ho nepřemůžu, musím si vzít na pomoc Kima, ten by měl být stále u jídelny.\n" +
                     "Ten chudák tam asi pořád čeká na ty jeho oblíbené bezlepkové nudle.\"\n";
         } else if (progress.getProgress() == 3) {
-            plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
+            plan.getAktualniProstor().removePostava("Podezrely");
             plan.setProhra(true);
             hra.setKonecHry();
             return "";
@@ -139,7 +139,7 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().addVec(new Vec("CervenaBunda", true, false, false, 0));
             plan.getAktualniProstor().addVec(new Vec("ZelenaCepice", true, false, false, 0));
 
-            plan.getAktualniProstor().removePostava("PodezreleVypadajiciPan");
+            plan.getAktualniProstor().removePostava("Podezrely");
             plan.getAktualniProstor().removePostava("Kim");
 
             return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. CervenaBunda a ZelenaCepice upadly na zem.\n" +

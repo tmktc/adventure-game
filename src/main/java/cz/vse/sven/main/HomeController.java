@@ -34,6 +34,12 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
+    private Label hlaseniPriInterakciSVecmi;
+
+    @FXML
+    private Label popisProstoru;
+
+    @FXML
     private Label labelPenizeVKapse;
 
     @FXML
@@ -69,9 +75,6 @@ public class HomeController {
     @FXML
     private Button tlacitkoNapoveda;
 
-    @FXML
-    private TextArea vystup;
-
     private IHra hra = new Hra();
 
     private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
@@ -86,12 +89,11 @@ public class HomeController {
 
     /**
      * Metoda na začátku hry:
-     * vrací informace o aktuálním prostoru, spojí panely se seznamy, registruje pozorovatele,
+     * spojí panely se seznamy, registruje pozorovatele,
      * do panelu vloží aktualizované seznamy, nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
      */
     @FXML
     private void initialize() {
-        vystup.appendText(hra.getHerniPlan().getAktualniProstor().dlouhyPopis());
         ukazatelPenezVKapse.setText(hra.getPenize());
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
@@ -125,14 +127,14 @@ public class HomeController {
      * Metoda nastaví souřadnice prostorů na mapě
      */
     private void vlozSouradnice() {
-        souradniceProstoru.put("domov", new Point2D(380, 110));
-        souradniceProstoru.put("jidelna", new Point2D(435, 140));
-        souradniceProstoru.put("smetiste", new Point2D(260, 160));
-        souradniceProstoru.put("pracak", new Point2D(150, 70));
-        souradniceProstoru.put("sekac", new Point2D(10, 135));
-        souradniceProstoru.put("zastavarna", new Point2D(125, 215));
-        souradniceProstoru.put("trafika", new Point2D(590, 115));
-        souradniceProstoru.put("lidl", new Point2D(590, 175));
+        souradniceProstoru.put("domov", new Point2D(360, 95));
+        souradniceProstoru.put("jidelna", new Point2D(415, 125));
+        souradniceProstoru.put("smetiste", new Point2D(245, 145));
+        souradniceProstoru.put("pracak", new Point2D(140, 60));
+        souradniceProstoru.put("sekac", new Point2D(10, 125));
+        souradniceProstoru.put("zastavarna", new Point2D(120, 200));
+        souradniceProstoru.put("trafika", new Point2D(560, 105));
+        souradniceProstoru.put("lidl", new Point2D(560, 160));
     }
 
     /**
@@ -172,12 +174,13 @@ public class HomeController {
     }
 
     /**
-     * Metoda aktualizuje polohu hráče na mapě
+     * Metoda aktualizuje polohu hráče na mapě, aktualizuje popis prostoru
      */
     private void aktualizujPolohuHrace() {
         String prostor = hra.getHerniPlan().getAktualniProstor().getNazev();
         hrac.setLayoutX(souradniceProstoru.get(prostor).getX());
         hrac.setLayoutY(souradniceProstoru.get(prostor).getY());
+        popisProstoru.setText("Nacházíš se " + hra.getHerniPlan().getAktualniProstor().getPopis().replaceAll("\n",""));
     }
 
     /**
@@ -204,7 +207,6 @@ public class HomeController {
         labelVeciVProstoru.setDisable(hra.konecHry());
         labelPenizeVKapse.setDisable(hra.konecHry());
         ukazatelPenezVKapse.setDisable(hra.konecHry());
-        vystup.setDisable(hra.konecHry());
 
         if (hra.konecHry()) {
             dohraniHry();
@@ -233,13 +235,48 @@ public class HomeController {
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
+     * Metoda nechá zpracovat zadaný příkaz jdi metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
+     * dále vymaže obsah hlášení při interakci s věcmi
+     *
+     * @param prikaz který se má zpracovat
+     */
+    private void zpracujPrechodDoJinehoProstoru(String prikaz) {
+        hlaseniPriInterakciSVecmi.setText("");
+        hra.zpracujPrikaz(prikaz);
+    }
+
+    /**
+     * Metoda nechá zpracovat zadaný příkaz promluv metodou ve třídě "Hra" a výsledek vrátí v podobě vyskakovacího okna
+     *
+     * @param prikaz který se má zpracovat
+     */
+    private void zpracujDialog(String prikaz) {
+        String dialog = hra.zpracujPrikaz(prikaz);
+        Alert dialogOkno = new Alert(Alert.AlertType.INFORMATION);
+        dialogOkno.setTitle("Dialog");
+        dialogOkno.setHeaderText(dialog);
+        dialogOkno.show();
+
+    }
+
+    /**
+     * Metoda nechá zpracovat zadaný příkaz seber/vymen/kup/vyndej metodou ve třídě "Hra"
+     * a aktualizuje hlášení při interakci s věcí
+     *
+     * @param prikaz který se má zpracovat
+     */
+    private void zpracujInterakciSVeci(String prikaz) {
+        String hlaseni = hra.zpracujPrikaz(prikaz);
+        hlaseniPriInterakciSVecmi.setText(hlaseni);
+    }
+
+    /**
+     * Metoda nechá zpracovat zadaný příkaz metodou ve třídě "Hra"
      *
      * @param prikaz který se má zpracovat
      */
     private void zpracujPrikaz(String prikaz) {
-        String vysledek = hra.zpracujPrikaz(prikaz);
-        vystup.appendText(vysledek + "\n");
+        hra.zpracujPrikaz(prikaz);
     }
 
     /**
@@ -250,7 +287,7 @@ public class HomeController {
         Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
         if (cil == null) return;
         String prikaz = PrikazJdi.NAZEV + " " + cil.getNazev();
-        zpracujPrikaz(prikaz);
+        zpracujPrechodDoJinehoProstoru(prikaz);
     }
 
     /**
@@ -267,7 +304,7 @@ public class HomeController {
         } else {
             prikaz = PrikazSeber.NAZEV + " " + cil.getJmeno();
         }
-        zpracujPrikaz(prikaz);
+        zpracujInterakciSVeci(prikaz);
     }
 
     /**
@@ -284,18 +321,30 @@ public class HomeController {
         } else {
             prikaz = PrikazVyndej.NAZEV + " " + cil.getJmeno();
         }
-        zpracujPrikaz(prikaz);
+        zpracujInterakciSVeci(prikaz);
     }
 
     /**
      * Metoda zajistí, aby se po kliknutí na postavu v panelu postav v prostoru
      * s danou postavou promluvilo
+     *
+     * Pokud se daným promluvením dohraje hra, tak se zavolá taková metoda zpracování příkazu, která nevytvoří okno dialogu.
+     * Protože se již ukazuje okno s epilogem, tak by se dané okno s dialogem ukázalo až v případné nové hře (což nechceme)
      */
     @FXML
     private void klikPanelPostavVProstoru() {
         Postava cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
         if (cil == null) return;
-        zpracujPrikaz(PrikazPromluv.NAZEV + " " + cil.getJmeno());
+        String prikaz = PrikazPromluv.NAZEV + " " + cil.getJmeno();
+
+        if (
+                (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Pepa") && (hra.getProgressInstance().getProgress() >= 6))
+                        || (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Podezrely") && hra.getProgressInstance().getProgress() == 3)
+        ) {
+            zpracujPrikaz(prikaz);
+        } else {
+            zpracujDialog(prikaz);
+        }
     }
 
     /**
@@ -324,7 +373,6 @@ public class HomeController {
      */
     public void novaHra() {
         hra = new Hra();
-        vystup.clear();
         initialize();
     }
 }

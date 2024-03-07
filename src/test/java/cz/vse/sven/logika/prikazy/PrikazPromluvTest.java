@@ -96,8 +96,8 @@ public class PrikazPromluvTest {
     public void provedPrikazPodezrelyProhra() {
         // podmínky pro neúspěšnou konfrontaci lupiče - prohru
         progress.setProgress(3);
-        plan.getAktualniProstor().addPostava(new Postava("PodezreleVypadajiciPan"));
-        prikazPromluv.provedPrikaz("PodezreleVypadajiciPan");
+        plan.getAktualniProstor().addPostava(new Postava("Podezrely"));
+        prikazPromluv.provedPrikaz("Podezrely");
 
         assertTrue(plan.isProhra());
     }
@@ -107,13 +107,13 @@ public class PrikazPromluvTest {
      */
     @Test
     public void provedPrikazPodezrelyVyhra() {
-        plan.getAktualniProstor().addPostava(new Postava("PodezreleVypadajiciPan"));
+        plan.getAktualniProstor().addPostava(new Postava("Podezrely"));
         progress.setProgress(4);
-        prikazPromluv.provedPrikaz("PodezreleVypadajiciPan");
+        prikazPromluv.provedPrikaz("Podezrely");
 
         assertTrue(plan.getAktualniProstor().obsahujeVec("CervenaBunda"));
         assertTrue(plan.getAktualniProstor().obsahujeVec("ZelenaCepice"));
-        assertFalse(plan.getAktualniProstor().obsahujePostavu("PodezreleVypadajiciPan"));
+        assertFalse(plan.getAktualniProstor().obsahujePostavu("Podezrely"));
 
     }
 
