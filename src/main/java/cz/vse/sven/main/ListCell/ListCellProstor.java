@@ -8,12 +8,12 @@ import javafx.scene.image.ImageView;
  * Třída slouží k úpravě buňěk (východů) v panelu východů (listView)
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class ListCellProstor extends ListCell<Prostor> {
 
     /**
-     * Metoda nastavuje obrázky jednotlivých východů
+     * Metoda nastavuje jména a obrázky jednotlivých východů
      *
      * @param prostor jaký prostor se v buňce nachází
      * @param empty   jestli je buňka prázdná
@@ -25,7 +25,7 @@ public class ListCellProstor extends ListCell<Prostor> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(prostor.getNazev());
+            setText(prostor.getNazevGrafickaVerze());
             String cesta = getClass().getResource("/cz/vse/sven/main/prostory/" + prostor.getNazev() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
             iw.setFitWidth(30);

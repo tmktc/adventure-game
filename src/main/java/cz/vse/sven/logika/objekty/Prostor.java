@@ -13,11 +13,12 @@ import java.util.stream.Collectors;
  * si prostor ukládá odkaz na sousedící prostor.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class Prostor {
 
     private String nazev;
+    private String nazevGrafickaVerze;
     private String popis;
     private Set<Prostor> vychody;    // obsahuje sousedni mistnosti
     private Map<String, Vec> seznamVeci;
@@ -31,8 +32,9 @@ public class Prostor {
      *              víceslovný název bez mezer.
      * @param popis Popis prostoru.
      */
-    public Prostor(String nazev, String popis) {
+    public Prostor(String nazev, String nazevGrafickaVerze, String popis) {
         this.nazev = nazev;
+        this.nazevGrafickaVerze = nazevGrafickaVerze;
         this.popis = popis;
         vychody = new HashSet<>();
         seznamVeci = new HashMap<>();
@@ -106,6 +108,15 @@ public class Prostor {
      */
     public String getNazev() {
         return nazev;
+    }
+
+    /**
+     * Getter pro název zobrazovaný v grafické verzi
+     *
+     * @return název zobrazovaný v grafické verzi
+     */
+    public String getNazevGrafickaVerze() {
+        return nazevGrafickaVerze;
     }
 
     /**

@@ -43,12 +43,12 @@ public class PrikazKupTest {
         assertEquals("Taková věc tu není", prikazKup.provedPrikaz("test"));
 
         // vec neni koupitelna
-        Vec nekoupitelna = new Vec("nekoupitelna", true, false, true, 0);
+        Vec nekoupitelna = new Vec("nekoupitelna", "Nekoupitelná",true, false, true, 0);
         plan.getAktualniProstor().addVec(nekoupitelna);
         assertEquals("Taková věc není koupitelná", prikazKup.provedPrikaz("nekoupitelna"));
 
         // nedostatek penez
-        Vec koupitelna = new Vec("koupitelna", false, true, false, 1);
+        Vec koupitelna = new Vec("koupitelna", "Koupitelná",false, true, false, 1);
         plan.getAktualniProstor().addVec(koupitelna);
         assertEquals("Nemáte dostatek peněz ke koupi této věci", prikazKup.provedPrikaz("koupitelna"));
 

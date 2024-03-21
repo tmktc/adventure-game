@@ -8,12 +8,12 @@ import javafx.scene.image.ImageView;
  * Třída slouží k úpravě buňěk (postav) v panelu postav v prostoru (listView)
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class ListCellPostavy extends ListCell<Postava> {
 
     /**
-     * Metoda nastavuje obrázky jednotlivých postav
+     * Metoda nastavuje jména a obrázky jednotlivých postav
      *
      * @param postava jaká postava se v buňce nachází
      * @param empty   jestli je buňka prázdná
@@ -25,7 +25,7 @@ public class ListCellPostavy extends ListCell<Postava> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(postava.getJmeno());
+            setText(postava.getJmenoGrafickaVerze());
             String cesta = getClass().getResource("/cz/vse/sven/main/postavy/" + postava.getJmeno().toLowerCase() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
             iw.setFitWidth(30);

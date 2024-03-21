@@ -21,8 +21,8 @@ public class PrikazBatohTest {
     @BeforeEach
     public void setUp() {
         batoh = new Batoh();
-        Vec vec1 = new Vec("Vec1", true, false, false, 0);
-        Vec vec2 = new Vec("Vec2", true, false, false, 0);
+        Vec vec1 = new Vec("Vec1", "Věc1",true, false, false, 0);
+        Vec vec2 = new Vec("Vec2", "Věc2",true, false, false, 0);
         batoh.vlozVec(vec1);
         batoh.vlozVec(vec2);
     }

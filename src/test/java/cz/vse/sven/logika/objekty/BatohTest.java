@@ -19,7 +19,7 @@ public class BatohTest {
     public void setUp() {
         batoh = new Batoh();
         batoh.setKapacita(1);
-        vec = new Vec("Vec", true, false, false, 0);
+        vec = new Vec("Vec", "Věc",true, false, false, 0);
     }
 
     /**
@@ -28,7 +28,7 @@ public class BatohTest {
     @Test
     public void vlozVecDoBatohu() {
         assertTrue(batoh.vlozVec(vec));
-        assertFalse(batoh.vlozVec(new Vec("vec2", true, false, false, 0)));
+        assertFalse(batoh.vlozVec(new Vec("vec2", "Věc2",true, false, false, 0)));
     }
 
     /**

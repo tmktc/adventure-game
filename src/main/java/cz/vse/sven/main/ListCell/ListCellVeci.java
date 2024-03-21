@@ -8,12 +8,12 @@ import javafx.scene.image.ImageView;
  * Třída slouží k úpravě buňěk (věcí) v panelu věcí v prostoru a batohu (listView)
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class ListCellVeci extends ListCell<Vec> {
 
     /**
-     * Metoda nastavuje obrázky jednotlivých věcí
+     * Metoda nastavuje jména a obrázky jednotlivých věcí
      *
      * @param vec   jaká věc se v buňce nachází
      * @param empty jestli je buňka prázdná
@@ -25,7 +25,7 @@ public class ListCellVeci extends ListCell<Vec> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(vec.getJmeno());
+            setText(vec.getJmenoGrafickaVerze());
             String cesta = getClass().getResource("/cz/vse/sven/main/veci/" + vec.getJmeno().toLowerCase() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
             iw.setFitWidth(30);
