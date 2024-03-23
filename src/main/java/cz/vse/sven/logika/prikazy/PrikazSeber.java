@@ -10,7 +10,7 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkazem hráč sebere vybranou věc
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class PrikazSeber implements IPrikaz {
 
@@ -53,7 +53,7 @@ public class PrikazSeber implements IPrikaz {
             } else {
                 if (batoh.vlozVec(vec)) {
                     aktualniProstor.removeVec(jmenoVeci);
-                    return "Sebrali jste " + jmenoVeci;
+                    return "Sebrali jste " + vec.getJmenoCele();
                 } else {
                     return "Nemáte dostatek místa v batohu";
                 }

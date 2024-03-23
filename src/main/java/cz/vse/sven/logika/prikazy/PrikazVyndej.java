@@ -5,13 +5,12 @@ import cz.vse.sven.logika.objekty.Batoh;
 import cz.vse.sven.logika.objekty.Prostor;
 import cz.vse.sven.logika.objekty.Vec;
 
-
 /**
  * Třída PrikazPoloz - implementuje pro hru příkaz vyndej
  * příkaz vyndá věc z batohu a položí ji na zem
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 
 public class PrikazVyndej implements IPrikaz {
@@ -53,7 +52,7 @@ public class PrikazVyndej implements IPrikaz {
                 Vec vec = batoh.vyberVec(jmenoVeci);
                 batoh.odstranVec(jmenoVeci);
                 aktualniProstor.addVec(vec);
-                return jmenoVeci + " nyní leží na zemi";
+                return vec.getJmenoCele() + " nyní leží na zemi";
             }
             return "V tomto prostoru nelze odkládat věci";
 

@@ -12,16 +12,16 @@ public class Postava {
 
     private final String jmeno;
 
-    private final String jmenoGrafickaVerze;
+    private final String jmenoCele;
 
     /**
      * Konstruktor
      *
      * @param jmeno postavy
      */
-    public Postava(String jmeno, String jmenoGrafickaVerze) {
+    public Postava(String jmeno, String jmenoCele) {
         this.jmeno = jmeno;
-        this.jmenoGrafickaVerze = jmenoGrafickaVerze;
+        this.jmenoCele = jmenoCele;
     }
 
     /**
@@ -34,12 +34,12 @@ public class Postava {
     }
 
     /**
-     * Getter pro jméno zobrazované v grafické verzi
+     * Getter pro jméno s mezerami a diakritikou
      *
-     * @return jméno zobrazované v grafické verzi
+     * @return jméno s mezerami a diakritikou
      */
-    public String getJmenoGrafickaVerze() {
-        return jmenoGrafickaVerze;
+    public String getJmenoCele() {
+        return jmenoCele;
     }
 
     /**

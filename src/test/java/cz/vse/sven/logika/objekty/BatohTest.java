@@ -38,7 +38,7 @@ public class BatohTest {
     @Test
     public void odstranVecZBatohu() {
         batoh.vlozVec(vec);
-        assertEquals(" - Předali jste Vec", batoh.odstranVec("Vec"));
+        assertEquals(" - Předali jste Věc", batoh.odstranVec("Vec"));
         assertNull(batoh.odstranVec("test"));
     }
 

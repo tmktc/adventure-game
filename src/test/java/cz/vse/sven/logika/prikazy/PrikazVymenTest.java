@@ -51,7 +51,7 @@ public class PrikazVymenTest {
 
         // všechno správně
         batoh.vlozVec(new Vec("vymenitelna", "Vyměnitelná",true, false, true, 0));
-        assertEquals("Vyměnili jste vymenitelna a dostali jste 1 Euro", prikazVymen.provedPrikaz("vymenitelna"));
+        assertEquals("Vyměnili jste Vyměnitelná a dostali jste 1 Euro", prikazVymen.provedPrikaz("vymenitelna"));
 
 
     }

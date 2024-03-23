@@ -50,6 +50,6 @@ public class PrikazSeberTest {
 
         // všechno v pořádku
         batoh.setKapacita(1);
-        assertEquals("Sebrali jste test3", prikazSeber.provedPrikaz("test3"));
+        assertEquals("Sebrali jste Test3", prikazSeber.provedPrikaz("test3"));
     }
 }

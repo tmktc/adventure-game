@@ -42,7 +42,7 @@ class PrikazVyndejTest {
 
         //věc u sebe máme
         batoh.vlozVec(new Vec("vec", "Věc",true, false, false, 0));
-        assertEquals("vec nyní leží na zemi", prikazVyndej.provedPrikaz("vec"));
+        assertEquals("Věc nyní leží na zemi", prikazVyndej.provedPrikaz("vec"));
         assertTrue(plan.getAktualniProstor().obsahujeVec("vec"));
 
         //nacházíme se v lidlu

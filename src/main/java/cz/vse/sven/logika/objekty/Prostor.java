@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Prostor {
 
     private String nazev;
-    private String nazevGrafickaVerze;
+    private String nazevCely;
     private String popis;
     private Set<Prostor> vychody;    // obsahuje sousedni mistnosti
     private Map<String, Vec> seznamVeci;
@@ -32,9 +32,9 @@ public class Prostor {
      *              víceslovný název bez mezer.
      * @param popis Popis prostoru.
      */
-    public Prostor(String nazev, String nazevGrafickaVerze, String popis) {
+    public Prostor(String nazev, String nazevCely, String popis) {
         this.nazev = nazev;
-        this.nazevGrafickaVerze = nazevGrafickaVerze;
+        this.nazevCely = nazevCely;
         this.popis = popis;
         vychody = new HashSet<>();
         seznamVeci = new HashMap<>();
@@ -111,12 +111,12 @@ public class Prostor {
     }
 
     /**
-     * Getter pro název zobrazovaný v grafické verzi
+     * Getter pro název s mezerami a diakritikou
      *
-     * @return název zobrazovaný v grafické verzi
+     * @return název s mezerami a diakritikou
      */
-    public String getNazevGrafickaVerze() {
-        return nazevGrafickaVerze;
+    public String getNazevCely() {
+        return nazevCely;
     }
 
     /**

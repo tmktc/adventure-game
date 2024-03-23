@@ -127,14 +127,14 @@ public class HomeController {
      * Metoda nastaví souřadnice prostorů na mapě
      */
     private void vlozSouradnice() {
-        souradniceProstoru.put("domov", new Point2D(360, 95));
-        souradniceProstoru.put("jidelna", new Point2D(415, 125));
-        souradniceProstoru.put("smetiste", new Point2D(245, 145));
-        souradniceProstoru.put("pracak", new Point2D(140, 60));
-        souradniceProstoru.put("sekac", new Point2D(10, 125));
-        souradniceProstoru.put("zastavarna", new Point2D(120, 200));
-        souradniceProstoru.put("trafika", new Point2D(560, 105));
-        souradniceProstoru.put("lidl", new Point2D(560, 160));
+        souradniceProstoru.put("domov", new Point2D(380, 100));
+        souradniceProstoru.put("jidelna", new Point2D(435, 130));
+        souradniceProstoru.put("smetiste", new Point2D(260, 155));
+        souradniceProstoru.put("pracak", new Point2D(150, 60));
+        souradniceProstoru.put("sekac", new Point2D(10, 130));
+        souradniceProstoru.put("zastavarna", new Point2D(125, 205));
+        souradniceProstoru.put("trafika", new Point2D(590, 110));
+        souradniceProstoru.put("lidl", new Point2D(590, 170));
     }
 
     /**

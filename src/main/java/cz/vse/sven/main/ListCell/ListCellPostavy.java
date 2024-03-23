@@ -3,6 +3,7 @@ package cz.vse.sven.main.ListCell;
 import cz.vse.sven.logika.objekty.Postava;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 
 /**
  * Třída slouží k úpravě buňěk (postav) v panelu postav v prostoru (listView)
@@ -25,10 +26,11 @@ public class ListCellPostavy extends ListCell<Postava> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(postava.getJmenoGrafickaVerze());
+            setText(postava.getJmenoCele());
+            setFont(Font.font(13));
             String cesta = getClass().getResource("/cz/vse/sven/main/postavy/" + postava.getJmeno().toLowerCase() + ".png").toExternalForm();
             ImageView iw = new ImageView(cesta);
-            iw.setFitWidth(30);
+            iw.setFitWidth(35);
             iw.setPreserveRatio(true);
             setGraphic(iw);
         }

@@ -59,7 +59,7 @@ public class PrikazKupTest {
 
         // všechno v pořádku
         batoh.setKapacita(1);
-        assertEquals("Koupili jste koupitelna za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
+        assertEquals("Koupili jste Koupitelná za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
         assertFalse(batoh.vyberVec("koupitelna").isKoupitelna());
         assertTrue(batoh.vyberVec("koupitelna").isSebratelna());
 

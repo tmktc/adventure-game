@@ -142,7 +142,7 @@ public class PrikazPromluv implements IPrikaz {
             plan.getAktualniProstor().removePostava("Podezrely");
             plan.getAktualniProstor().removePostava("Kim");
 
-            return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. CervenaBunda a ZelenaCepice upadly na zem.\n" +
+            return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. Červená bunda a Zelená čepice upadly na zem.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
         }
 

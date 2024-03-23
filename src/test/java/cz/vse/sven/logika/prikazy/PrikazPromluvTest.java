@@ -84,7 +84,7 @@ public class PrikazPromluvTest {
         assertEquals("\n" +
                 "Sven: \n" +
                 "\"Ještě jednou díky za pomoc Kime, tady máš ode mě překvapení.\"\n" +
-                " - Předali jste BezlepkovyChleba\n", prikazPromluv.provedPrikaz("Kim"));
+                " - Předali jste Bezlepkový chleba\n", prikazPromluv.provedPrikaz("Kim"));
         assertFalse(batoh.obsahujeVec("BezlepkovyChleba"));
         assertEquals(7, progress.getProgress());
     }

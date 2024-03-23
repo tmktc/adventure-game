@@ -56,11 +56,11 @@ public class HerniPlan implements PredmetPozorovani {
         Prostor pracak = new Prostor("pracak", "Pracák","u pracáku.");
         Prostor sekac = new Prostor("sekac", "Sekáč","v sekáči.");
         Prostor zastavarna = new Prostor("zastavarna", "Zastavárna","v zastavárně.");
-        Prostor lidl = new Prostor("lidl", "Lidl","v Lidlu, ceník: \nRohliky - 1   \nPsiGranule - 4   \nBezlepkovyChleba - 2");
+        Prostor lidl = new Prostor("lidl", "Lidl","v Lidlu, ceník: \nRohlíky - 1   \nPsí granule - 4   \nBezlepkový chleba - 2");
         Prostor trafika = new Prostor("trafika", "Trafika","v trafice, ceník: \nSnus - 1");
 
         //vytváření jednotlivých věcí
-        Vec stareHodiny = new Vec("StareHodiny", "Staré Hodiny", true, false, false, 0);
+        Vec stareHodiny = new Vec("StareHodiny", "Staré hodiny", true, false, false, 0);
         Vec lahevBranik = new Vec("LahevOdBranika", "Láhev od Braníka",true, false, true, 0);
         Vec lahevSvijany = new Vec("LahevOdSvijan", "Láhev od Svijan",true, false, true, 0);
         Vec lahevPlzen = new Vec("LahevOdPlzne", "Láhev od Plzně",true, false, true, 0);

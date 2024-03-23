@@ -9,7 +9,7 @@ import java.util.Map;
  * Třída Batoh - třída představující inventář hráče
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class Batoh {
 
@@ -45,8 +45,9 @@ public class Batoh {
      */
     public String odstranVec(String vec) {
         if (seznamVeci.containsKey(vec)) {
+            String v = vyberVec(vec).getJmenoCele();
             seznamVeci.remove(vec);
-            return " - Předali jste " + vec;
+            return " - Předali jste " + v;
         }
         return null;
     }

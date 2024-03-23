@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Vec {
 
     private final String jmeno;
-    private final String jmenoGrafickaVerze;
+    private final String jmenoCele;
     private final boolean vymenitelna;
     private final int cena;
     private boolean sebratelna;
@@ -27,9 +27,9 @@ public class Vec {
      * @param vymenitelna jestli jde vymenit
      * @param cena        veci
      */
-    public Vec(String jmeno, String jmenoGrafickaVerze, boolean sebratelna, boolean koupitelna, boolean vymenitelna, int cena) {
+    public Vec(String jmeno, String jmenoCele, boolean sebratelna, boolean koupitelna, boolean vymenitelna, int cena) {
         this.jmeno = jmeno;
-        this.jmenoGrafickaVerze = jmenoGrafickaVerze;
+        this.jmenoCele = jmenoCele;
         this.sebratelna = sebratelna;
         this.koupitelna = koupitelna;
         this.vymenitelna = vymenitelna;
@@ -46,12 +46,12 @@ public class Vec {
     }
 
     /**
-     * Getter pro jméno zobrazované v grafické verzi
+     * Getter pro jméno s mezerami a diakritikou
      *
-     * @return jméno zobrazované v grafické verzi
+     * @return jméno s mezerami a diakritikou
      */
-    public String getJmenoGrafickaVerze() {
-        return jmenoGrafickaVerze;
+    public String getJmenoCele() {
+        return jmenoCele;
     }
 
     /**
