@@ -3,6 +3,9 @@ package cz.vse.sven.logika.hra;
 /**
  * Třída Progress - slouží k manipulaci s hodnotou progress
  * hodnota progress ukazuje v jaké částí příběhu se hráč práve nachází
+ *
+ * @author Tomáš Kotouč
+ * @version prosinec 2023
  */
 public class Progress {
 

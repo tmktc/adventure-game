@@ -50,26 +50,26 @@ public class HerniPlan implements PredmetPozorovani {
      */
     private void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
-        Prostor domov = new Prostor("domov", "Domov","pod mostem, kde Sven bydlí.");
-        Prostor jidelna = new Prostor("jidelna", "Jídelna","u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.");
-        Prostor smetiste = new Prostor("smetiste", "Smetiště","na smetišti.");
-        Prostor pracak = new Prostor("pracak", "Pracák","u pracáku.");
-        Prostor sekac = new Prostor("sekac", "Sekáč","v sekáči.");
-        Prostor zastavarna = new Prostor("zastavarna", "Zastavárna","v zastavárně.");
-        Prostor lidl = new Prostor("lidl", "Lidl","v Lidlu, ceník: \nRohlíky - 1   \nPsí granule - 4   \nBezlepkový chleba - 2");
-        Prostor trafika = new Prostor("trafika", "Trafika","v trafice, ceník: \nSnus - 1");
+        Prostor domov = new Prostor("domov", "Domov", "pod mostem, kde Sven bydlí.");
+        Prostor jidelna = new Prostor("jidelna", "Jídelna", "u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.");
+        Prostor smetiste = new Prostor("smetiste", "Smetiště", "na smetišti.");
+        Prostor pracak = new Prostor("pracak", "Pracák", "u pracáku.");
+        Prostor sekac = new Prostor("sekac", "Sekáč", "v sekáči.");
+        Prostor zastavarna = new Prostor("zastavarna", "Zastavárna", "v zastavárně.");
+        Prostor lidl = new Prostor("lidl", "Lidl", "v Lidlu, ceník: \nRohlíky - 1   \nPsí granule - 4   \nBezlepkový chleba - 2");
+        Prostor trafika = new Prostor("trafika", "Trafika", "v trafice, ceník: \nSnus - 1");
 
         //vytváření jednotlivých věcí
         Vec stareHodiny = new Vec("StareHodiny", "Staré hodiny", true, false, false, 0);
-        Vec lahevBranik = new Vec("LahevOdBranika", "Láhev od Braníka",true, false, true, 0);
-        Vec lahevSvijany = new Vec("LahevOdSvijan", "Láhev od Svijan",true, false, true, 0);
-        Vec lahevPlzen = new Vec("LahevOdPlzne", "Láhev od Plzně",true, false, true, 0);
-        Vec automatLahve = new Vec("AutomatNaLahve", "Automat na láhve",false, false, false, 0);
+        Vec lahevBranik = new Vec("LahevOdBranika", "Láhev od Braníka", true, false, true, 0);
+        Vec lahevSvijany = new Vec("LahevOdSvijan", "Láhev od Svijan", true, false, true, 0);
+        Vec lahevPlzen = new Vec("LahevOdPlzne", "Láhev od Plzně", true, false, true, 0);
+        Vec automatLahve = new Vec("AutomatNaLahve", "Automat na láhve", false, false, false, 0);
 
-        Vec snus = new Vec("Snus", "Snus",false, true, false, 1);
-        Vec bezlepkovyChleba = new Vec("BezlepkovyChleba", "Bezlepkový chleba",false, true, false, 2);
-        Vec granule = new Vec("PsiGranule", "Psí granule",false, true, false, 4);
-        Vec rohliky = new Vec("Rohliky", "Rohlíky",false, true, false, 1);
+        Vec snus = new Vec("Snus", "Snus", false, true, false, 1);
+        Vec bezlepkovyChleba = new Vec("BezlepkovyChleba", "Bezlepkový chleba", false, true, false, 2);
+        Vec granule = new Vec("PsiGranule", "Psí granule", false, true, false, 4);
+        Vec rohliky = new Vec("Rohliky", "Rohlíky", false, true, false, 1);
 
 
         //vytvareni jednotlivych postav

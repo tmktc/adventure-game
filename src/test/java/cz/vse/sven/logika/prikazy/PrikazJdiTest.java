@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Testovací třída PrikazJdiTest slouží k otestování třídy PrikazJdi
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class PrikazJdiTest {
 
@@ -39,10 +39,10 @@ public class PrikazJdiTest {
 
         String spravnyText =
                 "\n\nNacházíš se u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.\n" +
-                "\n" +
-                "východy: lidl  smetiste  trafika  domov  \n" +
-                "věci: \n" +
-                "postavy: Kim  \n";
+                        "\n" +
+                        "východy: lidl  smetiste  trafika  domov  \n" +
+                        "věci: \n" +
+                        "postavy: Kim  \n";
 
         // Platný sousední prostor
         assertEquals(spravnyText, prikazJdi.provedPrikaz("jidelna"));

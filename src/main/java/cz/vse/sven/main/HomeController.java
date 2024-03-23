@@ -29,7 +29,7 @@ import java.util.Optional;
  * Controller pro home.fxml
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class HomeController {
 
@@ -43,7 +43,7 @@ public class HomeController {
     private Label labelPenizeVKapse;
 
     @FXML
-    private Label ukazatelPenezVKapse;
+    private Label ukazatelPenez;
 
     @FXML
     private Label labelVeciVProstoru;
@@ -94,7 +94,7 @@ public class HomeController {
      */
     @FXML
     private void initialize() {
-        ukazatelPenezVKapse.setText(hra.getPenize());
+        ukazatelPenez.setText(hra.getPenize());
         panelVychodu.setItems(seznamVychodu);
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
         panelVeciVBatohu.setItems(seznamVeciVBatohu);
@@ -109,7 +109,7 @@ public class HomeController {
             aktualizujSeznamVeciVBatohu();
         });
         hra.registruj(ZmenaHry.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
-        hra.registruj(ZmenaHry.ZMENA_PENEZ, () -> aktualizujPenizeVKapse());
+        hra.registruj(ZmenaHry.ZMENA_PENEZ, () -> aktualizujPenize());
         vlozSouradnice();
         aktualizujSeznamVychodu();
         aktualizujSeznamVeciVBatohu();
@@ -176,25 +176,27 @@ public class HomeController {
     /**
      * Metoda aktualizuje polohu hráče na mapě, aktualizuje popis prostoru
      */
+    @FXML
     private void aktualizujPolohuHrace() {
         String prostor = hra.getHerniPlan().getAktualniProstor().getNazev();
         hrac.setLayoutX(souradniceProstoru.get(prostor).getX());
         hrac.setLayoutY(souradniceProstoru.get(prostor).getY());
-        popisProstoru.setText("Nacházíš se " + hra.getHerniPlan().getAktualniProstor().getPopis().replaceAll("\n",""));
+        popisProstoru.setText("Nacházíš se " + hra.getHerniPlan().getAktualniProstor().getPopis().replaceAll("\n", ""));
     }
 
     /**
-     * Metoda aktualizuje ukazatel peněz v kapse
+     * Metoda aktualizuje ukazatel peněz
      */
     @FXML
-    private void aktualizujPenizeVKapse() {
-        ukazatelPenezVKapse.setText(hra.getPenize());
+    private void aktualizujPenize() {
+        ukazatelPenez.setText(hra.getPenize());
     }
 
     /**
      * Pokud je výsledkem příkazu konec hry, tak metoda:
      * zamezí interakci s panely a tlačítkem, ukáže konečné okno
      */
+    @FXML
     private void aktualizujKonecHry() {
         tlacitkoNapoveda.setDisable(hra.konecHry());
         panelVychodu.setDisable(hra.konecHry());
@@ -206,7 +208,7 @@ public class HomeController {
         labelPostavyVProstoru.setDisable(hra.konecHry());
         labelVeciVProstoru.setDisable(hra.konecHry());
         labelPenizeVKapse.setDisable(hra.konecHry());
-        ukazatelPenezVKapse.setDisable(hra.konecHry());
+        ukazatelPenez.setDisable(hra.konecHry());
 
         if (hra.konecHry()) {
             dohraniHry();
@@ -214,60 +216,41 @@ public class HomeController {
     }
 
     /**
-     * Metoda zobrazí okno s epilogem a nabídne buď ukončení hry nebo spuštění nové
-     */
-    private void dohraniHry() {
-        Alert konec = new Alert(Alert.AlertType.CONFIRMATION);
-        konec.setTitle("Konec hry");
-        konec.setContentText("Toto je konec hry, díky za zahrání!");
-        konec.setHeaderText(hra.vratEpilog());
-
-        ButtonType novaHra = new ButtonType("Nová hra");
-        ButtonType ukoncit = new ButtonType("Ukončit");
-        konec.getButtonTypes().setAll(novaHra,ukoncit);
-
-        Optional<ButtonType> result = konec.showAndWait();
-        if (result.isPresent() && result.get() == ukoncit) {
-            ukoncitHru();
-        } else if (result.isPresent() && result.get() == novaHra) {
-            novaHra();
-        }
-    }
-
-    /**
-     * Metoda nechá zpracovat zadaný příkaz jdi metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
+     * Metoda nechá zpracovat zadaný příkaz "jdi" metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
      * dále vymaže obsah hlášení při interakci s věcmi
      *
      * @param prikaz který se má zpracovat
      */
+    @FXML
     private void zpracujPrechodDoJinehoProstoru(String prikaz) {
         hlaseniPriInterakciSVecmi.setText("");
         hra.zpracujPrikaz(prikaz);
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz promluv metodou ve třídě "Hra" a výsledek vrátí v podobě vyskakovacího okna
+     * Metoda nechá zpracovat zadaný příkaz "seber"/"vymen"/"kup"/"vyndej" metodou ve třídě "Hra"
+     * a aktualizuje hlášení při interakci s věcí
      *
      * @param prikaz který se má zpracovat
      */
-    private void zpracujDialog(String prikaz) {
+    @FXML
+    private void zpracujInterakciSVeci(String prikaz) {
+        String hlaseni = hra.zpracujPrikaz(prikaz);
+        hlaseniPriInterakciSVecmi.setText(hlaseni);
+    }
+
+    /**
+     * Metoda nechá zpracovat zadaný příkaz "promluv" metodou ve třídě "Hra" a výsledek vrátí v podobě vyskakovacího okna
+     *
+     * @param prikaz který se má zpracovat
+     */
+    @FXML
+    private void zpracujDialogOkno(String prikaz) {
         String dialog = hra.zpracujPrikaz(prikaz);
         Alert dialogOkno = new Alert(Alert.AlertType.INFORMATION);
         dialogOkno.setTitle("Dialog");
         dialogOkno.setHeaderText(dialog);
         dialogOkno.show();
-
-    }
-
-    /**
-     * Metoda nechá zpracovat zadaný příkaz seber/vymen/kup/vyndej metodou ve třídě "Hra"
-     * a aktualizuje hlášení při interakci s věcí
-     *
-     * @param prikaz který se má zpracovat
-     */
-    private void zpracujInterakciSVeci(String prikaz) {
-        String hlaseni = hra.zpracujPrikaz(prikaz);
-        hlaseniPriInterakciSVecmi.setText(hlaseni);
     }
 
     /**
@@ -275,7 +258,7 @@ public class HomeController {
      *
      * @param prikaz který se má zpracovat
      */
-    private void zpracujPrikaz(String prikaz) {
+    private void zpracujDialog(String prikaz) {
         hra.zpracujPrikaz(prikaz);
     }
 
@@ -327,9 +310,9 @@ public class HomeController {
     /**
      * Metoda zajistí, aby se po kliknutí na postavu v panelu postav v prostoru
      * s danou postavou promluvilo
-     *
+     * <p>
      * Pokud se daným promluvením dohraje hra, tak se zavolá taková metoda zpracování příkazu, která nevytvoří okno dialogu.
-     * Protože se již ukazuje okno s epilogem, tak by se dané okno s dialogem ukázalo až v případné nové hře (což nechceme)
+     * (protože se již ukazuje okno s epilogem, tak by se dané okno s dialogem ukázalo až v případné nové hře - což nechceme)
      */
     @FXML
     private void klikPanelPostavVProstoru() {
@@ -341,9 +324,9 @@ public class HomeController {
                 (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Pepa") && (hra.getProgressInstance().getProgress() >= 6))
                         || (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Podezrely") && hra.getProgressInstance().getProgress() == 3)
         ) {
-            zpracujPrikaz(prikaz);
-        } else {
             zpracujDialog(prikaz);
+        } else {
+            zpracujDialogOkno(prikaz);
         }
     }
 
@@ -352,7 +335,7 @@ public class HomeController {
      * se zobrazí nápověda v podobě vyskakovacího okna (WevView) z html souboru
      */
     @FXML
-    private void napovedaKlik() {
+    private void klikNapoveda() {
         Stage napovedaStage = new Stage();
         WebView wv = new WebView();
         Scene napovedaScena = new Scene(wv);
@@ -362,16 +345,40 @@ public class HomeController {
     }
 
     /**
+     * Metoda zobrazí okno s epilogem a nabídne buď ukončení hry nebo spuštění nové
+     */
+    @FXML
+    private void dohraniHry() {
+        Alert konec = new Alert(Alert.AlertType.CONFIRMATION);
+        konec.setTitle("Konec hry");
+        konec.setContentText("Toto je konec hry, díky za zahrání!");
+        konec.setHeaderText(hra.vratEpilog());
+
+        ButtonType novaHra = new ButtonType("Nová hra");
+        ButtonType ukoncit = new ButtonType("Ukončit");
+        konec.getButtonTypes().setAll(novaHra, ukoncit);
+
+        Optional<ButtonType> result = konec.showAndWait();
+        if (result.isPresent() && result.get() == ukoncit) {
+            ukoncitHru();
+        } else if (result.isPresent() && result.get() == novaHra) {
+            novaHra();
+        }
+    }
+
+    /**
      * Metoda zajistí, že po kliknutí na "Ukončit" se hra zavře
      */
-    public void ukoncitHru() {
+    @FXML
+    private void ukoncitHru() {
         Platform.exit();
     }
 
     /**
      * Metoda zajistí, že po kliknutí na položku "Nová hra" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
      */
-    public void novaHra() {
+    @FXML
+    private void novaHra() {
         hra = new Hra();
         initialize();
     }

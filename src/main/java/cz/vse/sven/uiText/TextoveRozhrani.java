@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
  * Tato třída vytváří instanci třídy Hra, která představuje logiku aplikace.
  * Čte vstup zadaný uživatelem a předává tento řetězec logice a vypisuje odpověď logiky na konzoli.
  *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova
- * @version pro školní rok 2016/2017
+ * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
+ * @version březen 2024
  */
 public class TextoveRozhrani {
 

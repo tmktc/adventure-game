@@ -19,7 +19,7 @@ import java.util.Set;
  * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 
 public class Hra implements IHra {
@@ -93,13 +93,6 @@ public class Hra implements IHra {
     }
 
     /**
-     * Vrací true, pokud hra skončila.
-     */
-    public boolean konecHry() {
-        return konecHry;
-    }
-
-    /**
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
      * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
      * Pokud ano spustí samotné provádění příkazu
@@ -126,6 +119,13 @@ public class Hra implements IHra {
         upozorniPozorovatele(ZmenaHry.ZMENA_POSTAV);
         upozorniPozorovatele(ZmenaHry.ZMENA_PENEZ);
         return textKVypsani;
+    }
+
+    /**
+     * Vrací true, pokud hra skončila.
+     */
+    public boolean konecHry() {
+        return konecHry;
     }
 
     /**
@@ -156,9 +156,9 @@ public class Hra implements IHra {
     }
 
     /**
-     * Vrátí instanci třídy peněz, která uchovává stav peněz v aktuální instanci hry
+     * Vrátí instanci třídy progress, která uchovává stav postupu v aktuální instanci hry
      *
-     * @return instance peněz
+     * @return instance třídy progress
      */
     public Progress getProgressInstance() {
         return progress;
@@ -169,7 +169,9 @@ public class Hra implements IHra {
      *
      * @return hodnota peněz
      */
-    public String getPenize() {return penize.toString();}
+    public String getPenize() {
+        return penize.toString();
+    }
 
     /**
      * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry

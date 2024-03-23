@@ -5,6 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Testovací třída HraTest slouží k otestování třídy Hra
+ *
+ * @author Tomáš Kotouč
+ * @version březen 2024
+ */
 public class HraTest {
 
     private Hra hra;

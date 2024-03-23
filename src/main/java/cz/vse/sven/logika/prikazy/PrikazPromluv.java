@@ -136,8 +136,8 @@ public class PrikazPromluv implements IPrikaz {
         } else if (progress.getProgress() == 4) {
             progress.addProgress();
 
-            plan.getAktualniProstor().addVec(new Vec("CervenaBunda", "Červená bunda",true, false, false, 0));
-            plan.getAktualniProstor().addVec(new Vec("ZelenaCepice", "Zelená čepice",true, false, false, 0));
+            plan.getAktualniProstor().addVec(new Vec("CervenaBunda", "Červená bunda", true, false, false, 0));
+            plan.getAktualniProstor().addVec(new Vec("ZelenaCepice", "Zelená čepice", true, false, false, 0));
 
             plan.getAktualniProstor().removePostava("Podezrely");
             plan.getAktualniProstor().removePostava("Kim");

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Testovací třída PrikazPromluvTest slouží k otestování třídy PrikazPromluv
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class PrikazPromluvTest {
 
@@ -59,14 +59,14 @@ public class PrikazPromluvTest {
         assertTrue(plan.isProhra());
 
         //podminky pro vyhru
-        batoh.vlozVec(new Vec("PsiGranule", "Psí granule",false, false, false, 0));
-        batoh.vlozVec(new Vec("Rohliky", "Rohlíky",false, false, false, 0));
+        batoh.vlozVec(new Vec("PsiGranule", "Psí granule", false, false, false, 0));
+        batoh.vlozVec(new Vec("Rohliky", "Rohlíky", false, false, false, 0));
         prikazPromluv.provedPrikaz("Pepa");
         assertTrue(plan.isVyhra());
 
         //podminky pro perfektni vyhru
         progress.setProgress(7);
-        batoh.vlozVec(new Vec("Snus", "Snus",false, false, false, 0));
+        batoh.vlozVec(new Vec("Snus", "Snus", false, false, false, 0));
         prikazPromluv.provedPrikaz("Pepa");
         assertTrue(plan.isPerfektniVyhra());
     }
@@ -79,7 +79,7 @@ public class PrikazPromluvTest {
         // podminky pro posledni dialog s Kimem
         progress.setProgress(6);
         plan.getAktualniProstor().addPostava(new Postava("Kim", "Kim"));
-        batoh.vlozVec(new Vec("BezlepkovyChleba", "Bezlepkový chleba",false, false, false, 0));
+        batoh.vlozVec(new Vec("BezlepkovyChleba", "Bezlepkový chleba", false, false, false, 0));
 
         assertEquals("\n" +
                 "Sven: \n" +
@@ -125,8 +125,8 @@ public class PrikazPromluvTest {
         // podmínky pro získání odměny
         plan.getAktualniProstor().addPostava(new Postava("Prodavac", "Prodavač"));
         progress.setProgress(5);
-        batoh.vlozVec(new Vec("CervenaBunda", "Červená bunda",false, false, false, 0));
-        batoh.vlozVec(new Vec("ZelenaCepice", "Zelená Čepice",false, false, false, 0));
+        batoh.vlozVec(new Vec("CervenaBunda", "Červená bunda", false, false, false, 0));
+        batoh.vlozVec(new Vec("ZelenaCepice", "Zelená Čepice", false, false, false, 0));
         prikazPromluv.provedPrikaz("Prodavac");
 
         assertEquals(6, progress.getProgress());
@@ -143,7 +143,7 @@ public class PrikazPromluvTest {
     public void provedPrikazZastavarnik() {
         // podmínky pro získání odměny
         plan.getAktualniProstor().addPostava(new Postava("Zastavarnik", "Zastavárník"));
-        batoh.vlozVec(new Vec("StareHodiny", "Staré hodiny",false, false, false, 0));
+        batoh.vlozVec(new Vec("StareHodiny", "Staré hodiny", false, false, false, 0));
         prikazPromluv.provedPrikaz("Zastavarnik");
 
         assertEquals(0.5, penize.getPenize(), 0.0001);
