@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Testovací třída PrikazVymenTest slouží k otestování třídy PrikazVymen
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class PrikazVymenTest {
 
@@ -42,16 +42,16 @@ public class PrikazVymenTest {
         assertEquals("Nejsi u automatu na výměnu lahví", prikazVymen.provedPrikaz("test"));
 
         // věc, kterou chceme vyměnit, u sebe nemáme
-        plan.getAktualniProstor().addVec(new Vec("AutomatNaLahve", false, false, false, 0));
+        plan.getAktualniProstor().addVec(new Vec("AutomatNaLahve", "Automat na láhve", false, false, false, 0));
         assertEquals("Takovou věc u sebe nemáš", prikazVymen.provedPrikaz("test"));
 
         // věc, kterou u sebe máme a chceme vyměnit, není vyměnitelná
-        batoh.vlozVec(new Vec("nevymenitelna", false, true, false, 1));
+        batoh.vlozVec(new Vec("nevymenitelna", "Nevyměnitelná", false, true, false, 1));
         assertEquals("Tuto věc nelze vyměnit", prikazVymen.provedPrikaz("nevymenitelna"));
 
         // všechno správně
-        batoh.vlozVec(new Vec("vymenitelna", true, false, true, 0));
-        assertEquals("Vyměnili jste vymenitelna a dostali jste 1 Euro", prikazVymen.provedPrikaz("vymenitelna"));
+        batoh.vlozVec(new Vec("vymenitelna", "Vyměnitelná", true, false, true, 0));
+        assertEquals("Vyměnili jste Vyměnitelná a dostali jste 1 Euro", prikazVymen.provedPrikaz("vymenitelna"));
 
 
     }

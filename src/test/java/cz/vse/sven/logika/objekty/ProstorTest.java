@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Testovací třída ProstorTest slouží k otestování třídy Prostor
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class ProstorTest {
 
@@ -22,9 +22,9 @@ public class ProstorTest {
     @BeforeEach
     public void setUp() {
         plan = new HerniPlan();
-        test = new Prostor("test", "testpopis");
-        sebratelna = new Vec("sebratelna", true, false, false, 0);
-        koupitelna = new Vec("koupitelna", false, true, false, 1);
+        test = new Prostor("test", "test", "testpopis");
+        sebratelna = new Vec("sebratelna", "Sebratelná", true, false, false, 0);
+        koupitelna = new Vec("koupitelna", "Koupitelná", false, true, false, 1);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ProstorTest {
         assertEquals("věci: ", plan.getAktualniProstor().seznamVeci());
 
         //přidání a odebrání věci
-        plan.getAktualniProstor().addVec(new Vec("test", true, false, false, 0));
+        plan.getAktualniProstor().addVec(new Vec("test", "Test", true, false, false, 0));
         assertEquals("věci: test  ", plan.getAktualniProstor().seznamVeci());
         plan.getAktualniProstor().removeVec("test");
         assertEquals("věci: ", plan.getAktualniProstor().seznamVeci());
@@ -97,7 +97,7 @@ public class ProstorTest {
         plan.getAktualniProstor().removePostava("Pepa");
         assertEquals("postavy: ", plan.getAktualniProstor().seznamPostav());
 
-        plan.getAktualniProstor().addPostava(new Postava("postava"));
+        plan.getAktualniProstor().addPostava(new Postava("postava", "postava"));
         assertEquals("postavy: postava  ", plan.getAktualniProstor().seznamPostav());
     }
 }

@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 /*******************************************************************************
@@ -37,7 +38,8 @@ public class Start extends Application {
     }
 
     /**
-     * Spuštění grafické verze - načtení FXML souboru, vytvoření a nastavení scény
+     * Spuštění grafické verze - načtení FXML souboru, vytvoření a nastavení scény,
+     * zobrazí okno s uvítáním
      *
      * @param stage instance okna
      * @throws Exception pokud nastane chyba
@@ -51,5 +53,13 @@ public class Start extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Adventura Sven");
+
+        Alert uvitani = new Alert(Alert.AlertType.INFORMATION);
+        uvitani.setTitle("Uvítání");
+        uvitani.setHeaderText("\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
+                "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
+                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
+                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.");
+        uvitani.show();
     }
 }

@@ -4,7 +4,7 @@ package cz.vse.sven.logika.hra;
  * Třída Peníze - třída představující peníze hráče
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version únor 2024
  */
 public class Penize {
     private double penize;
@@ -43,5 +43,15 @@ public class Penize {
      */
     public void odectiPenize(int castka) {
         penize -= castka;
+    }
+
+    /**
+     * toString metoda Peněz
+     *
+     * @return hodnota peněz
+     */
+    @Override
+    public String toString() {
+        return String.valueOf(penize);
     }
 }

@@ -10,7 +10,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  * příkaz umožňuje hráči pohybovat se mezi prostory
  *
  * @author Jarmila Pavlickova, Luboš Pavlíček, Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class PrikazJdi implements IPrikaz {
 
@@ -56,11 +56,11 @@ public class PrikazJdi implements IPrikaz {
             //Kim nás musí po určitý čas následovat, takže vždy z předchozího prostoru Kima odebereme a do dalšího přidáme
             if (progress.getProgress() == 4) {
                 aktualniProstor.removePostava("Kim");
-                sousedniProstor.addPostava(new Postava("Kim"));
+                sousedniProstor.addPostava(new Postava("Kim", "Kim"));
             }
             if (progress.getProgress() > 4) {
                 if (sousedniProstor.getNazev().equals("jidelna")) {
-                    sousedniProstor.addPostava(new Postava("Kim"));
+                    sousedniProstor.addPostava(new Postava("Kim", "Kim"));
                 }
                 if (!(aktualniProstor.getNazev().equals("jidelna"))) {
                     aktualniProstor.removePostava("Kim");

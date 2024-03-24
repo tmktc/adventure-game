@@ -6,11 +6,12 @@ import java.util.Objects;
  * Třída Vec - realizuje věci
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class Vec {
 
     private final String jmeno;
+    private final String jmenoCele;
     private final boolean vymenitelna;
     private final int cena;
     private boolean sebratelna;
@@ -26,8 +27,9 @@ public class Vec {
      * @param vymenitelna jestli jde vymenit
      * @param cena        veci
      */
-    public Vec(String jmeno, boolean sebratelna, boolean koupitelna, boolean vymenitelna, int cena) {
+    public Vec(String jmeno, String jmenoCele, boolean sebratelna, boolean koupitelna, boolean vymenitelna, int cena) {
         this.jmeno = jmeno;
+        this.jmenoCele = jmenoCele;
         this.sebratelna = sebratelna;
         this.koupitelna = koupitelna;
         this.vymenitelna = vymenitelna;
@@ -41,6 +43,15 @@ public class Vec {
      */
     public String getJmeno() {
         return jmeno;
+    }
+
+    /**
+     * Getter pro jméno s mezerami a diakritikou
+     *
+     * @return jméno s mezerami a diakritikou
+     */
+    public String getJmenoCele() {
+        return jmenoCele;
     }
 
     /**

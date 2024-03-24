@@ -6,19 +6,22 @@ import java.util.Objects;
  * Třída Postava - realizuje postavy ve hře
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class Postava {
 
     private final String jmeno;
+
+    private final String jmenoCele;
 
     /**
      * Konstruktor
      *
      * @param jmeno postavy
      */
-    public Postava(String jmeno) {
+    public Postava(String jmeno, String jmenoCele) {
         this.jmeno = jmeno;
+        this.jmenoCele = jmenoCele;
     }
 
     /**
@@ -28,6 +31,15 @@ public class Postava {
      */
     public String getJmeno() {
         return jmeno;
+    }
+
+    /**
+     * Getter pro jméno s mezerami a diakritikou
+     *
+     * @return jméno s mezerami a diakritikou
+     */
+    public String getJmenoCele() {
+        return jmenoCele;
     }
 
     /**

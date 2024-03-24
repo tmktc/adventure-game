@@ -19,7 +19,7 @@ import java.util.Set;
  * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 
 public class Hra implements IHra {
@@ -63,8 +63,7 @@ public class Hra implements IHra {
         return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
                 "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
                 "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
-                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu." +
-                herniPlan.getAktualniProstor().dlouhyPopis();
+                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.";
     }
 
     /**
@@ -94,13 +93,6 @@ public class Hra implements IHra {
     }
 
     /**
-     * Vrací true, pokud hra skončila.
-     */
-    public boolean konecHry() {
-        return konecHry;
-    }
-
-    /**
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
      * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
      * Pokud ano spustí samotné provádění příkazu
@@ -125,7 +117,15 @@ public class Hra implements IHra {
         }
         upozorniPozorovatele(ZmenaHry.ZMENA_VECI);
         upozorniPozorovatele(ZmenaHry.ZMENA_POSTAV);
+        upozorniPozorovatele(ZmenaHry.ZMENA_PENEZ);
         return textKVypsani;
+    }
+
+    /**
+     * Vrací true, pokud hra skončila.
+     */
+    public boolean konecHry() {
+        return konecHry;
     }
 
     /**
@@ -156,12 +156,21 @@ public class Hra implements IHra {
     }
 
     /**
-     * Metoda vrátí okdaz na progress - využito v testech
+     * Vrátí instanci třídy progress, která uchovává stav postupu v aktuální instanci hry
      *
-     * @return odkaz na progress
+     * @return instance třídy progress
      */
-    public Progress getProgress() {
+    public Progress getProgressInstance() {
         return progress;
+    }
+
+    /**
+     * Vrátí hodnotu peněz
+     *
+     * @return hodnota peněz
+     */
+    public String getPenize() {
+        return penize.toString();
     }
 
     /**

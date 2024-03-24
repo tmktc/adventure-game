@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Testovací třída PrikazKupTest slouží k otestování třídy PrikazKup
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class PrikazKupTest {
 
@@ -43,12 +43,12 @@ public class PrikazKupTest {
         assertEquals("Taková věc tu není", prikazKup.provedPrikaz("test"));
 
         // vec neni koupitelna
-        Vec nekoupitelna = new Vec("nekoupitelna", true, false, true, 0);
+        Vec nekoupitelna = new Vec("nekoupitelna", "Nekoupitelná", true, false, true, 0);
         plan.getAktualniProstor().addVec(nekoupitelna);
         assertEquals("Taková věc není koupitelná", prikazKup.provedPrikaz("nekoupitelna"));
 
         // nedostatek penez
-        Vec koupitelna = new Vec("koupitelna", false, true, false, 1);
+        Vec koupitelna = new Vec("koupitelna", "Koupitelná", false, true, false, 1);
         plan.getAktualniProstor().addVec(koupitelna);
         assertEquals("Nemáte dostatek peněz ke koupi této věci", prikazKup.provedPrikaz("koupitelna"));
 
@@ -59,7 +59,7 @@ public class PrikazKupTest {
 
         // všechno v pořádku
         batoh.setKapacita(1);
-        assertEquals("Koupili jste koupitelna za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
+        assertEquals("Koupili jste Koupitelná za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
         assertFalse(batoh.vyberVec("koupitelna").isKoupitelna());
         assertTrue(batoh.vyberVec("koupitelna").isSebratelna());
 

@@ -13,11 +13,12 @@ import java.util.stream.Collectors;
  * si prostor ukládá odkaz na sousedící prostor.
  *
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class Prostor {
 
     private String nazev;
+    private String nazevCely;
     private String popis;
     private Set<Prostor> vychody;    // obsahuje sousedni mistnosti
     private Map<String, Vec> seznamVeci;
@@ -31,8 +32,9 @@ public class Prostor {
      *              víceslovný název bez mezer.
      * @param popis Popis prostoru.
      */
-    public Prostor(String nazev, String popis) {
+    public Prostor(String nazev, String nazevCely, String popis) {
         this.nazev = nazev;
+        this.nazevCely = nazevCely;
         this.popis = popis;
         vychody = new HashSet<>();
         seznamVeci = new HashMap<>();
@@ -109,12 +111,21 @@ public class Prostor {
     }
 
     /**
+     * Getter pro název s mezerami a diakritikou
+     *
+     * @return název s mezerami a diakritikou
+     */
+    public String getNazevCely() {
+        return nazevCely;
+    }
+
+    /**
      * Vrací "dlouhý" popis prostoru
      *
      * @return Dlouhý popis prostoru
      */
     public String dlouhyPopis() {
-        return "\n--------------------------------------------------\n\nNacházíš se " + popis + "\n\n"
+        return "\n\nNacházíš se " + popis + "\n\n"
                 + popisVychodu() + "\n"
                 + seznamVeci() + "\n"
                 + seznamPostav() + "\n";
@@ -311,5 +322,24 @@ public class Prostor {
             nazvy += jmenoPostavy + "  ";
         }
         return nazvy;
+    }
+
+    /**
+     * Vrátí popis prostoru
+     *
+     * @return popis prostoru
+     */
+    public String getPopis() {
+        return popis;
+    }
+
+    /**
+     * toString metoda třídy Prostor
+     *
+     * @return název prostoru
+     */
+    @Override
+    public String toString() {
+        return nazev;
     }
 }

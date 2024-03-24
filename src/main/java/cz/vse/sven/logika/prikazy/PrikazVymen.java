@@ -10,7 +10,7 @@ import cz.vse.sven.logika.objekty.Prostor;
  * příkaz slouží k vyměnění láhví v automatu
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class PrikazVymen implements IPrikaz {
 
@@ -52,9 +52,10 @@ public class PrikazVymen implements IPrikaz {
         if (aktualniProstor.obsahujeVec("AutomatNaLahve")) {
             if (batoh.obsahujeVec(lahev)) {
                 if (batoh.vyberVec(lahev).isVymenitelna()) {
+                    String l = batoh.vyberVec(lahev).getJmenoCele();
                     batoh.odstranVec(lahev);
                     penize.pridejPenize(1);
-                    return "Vyměnili jste " + lahev + " a dostali jste 1 Euro";
+                    return "Vyměnili jste " + l + " a dostali jste 1 Euro";
                 } else {
                     return "Tuto věc nelze vyměnit";
                 }

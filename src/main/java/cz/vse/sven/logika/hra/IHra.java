@@ -60,6 +60,20 @@ public interface IHra extends PredmetPozorovani {
      */
     public Batoh getBatoh();
 
+    /**
+     * Vrátí hodnotu peněz
+     *
+     * @return hodnota peněz
+     */
+    public String getPenize();
+
+    /**
+     * Vrátí instanci třídy peněz, která uchovává stav peněz v aktuální instanci hry
+     *
+     * @return instance peněz
+     */
+    public Progress getProgressInstance();
+
     //== ZDĚDĚNÉ METODY ========================================================
     //== INTERNÍ DATOVÉ TYPY ===================================================
 }

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Testovací třída BatohTest slouží k otestování třídy Batoh
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class BatohTest {
     private Batoh batoh;
@@ -19,7 +19,7 @@ public class BatohTest {
     public void setUp() {
         batoh = new Batoh();
         batoh.setKapacita(1);
-        vec = new Vec("Vec", true, false, false, 0);
+        vec = new Vec("Vec", "Věc", true, false, false, 0);
     }
 
     /**
@@ -28,7 +28,7 @@ public class BatohTest {
     @Test
     public void vlozVecDoBatohu() {
         assertTrue(batoh.vlozVec(vec));
-        assertFalse(batoh.vlozVec(new Vec("vec2", true, false, false, 0)));
+        assertFalse(batoh.vlozVec(new Vec("vec2", "Věc2", true, false, false, 0)));
     }
 
     /**
@@ -38,7 +38,7 @@ public class BatohTest {
     @Test
     public void odstranVecZBatohu() {
         batoh.vlozVec(vec);
-        assertEquals(" - Předali jste Vec", batoh.odstranVec("Vec"));
+        assertEquals(" - Předali jste Věc", batoh.odstranVec("Vec"));
         assertNull(batoh.odstranVec("test"));
     }
 

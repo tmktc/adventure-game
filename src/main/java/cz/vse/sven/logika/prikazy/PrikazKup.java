@@ -11,7 +11,7 @@ import cz.vse.sven.logika.objekty.Vec;
  * příkazem hráč koupí věci v obchodě
  *
  * @author Tomáš Kotouč
- * @version únor 2024
+ * @version březen 2024
  */
 public class PrikazKup implements IPrikaz {
 
@@ -63,7 +63,7 @@ public class PrikazKup implements IPrikaz {
                         penize.odectiPenize(vec.getCena());
                         vec.setSebratelna(true);
                         vec.setKoupitelna(false);
-                        return "Koupili jste " + jmenoVeci + " za " + vec.getCena() + " Euro";
+                        return "Koupili jste " + vec.getJmenoCele() + " za " + vec.getCena() + " Euro";
                     } else {
                         return "Nemáte dostatek místa v batohu";
                     }

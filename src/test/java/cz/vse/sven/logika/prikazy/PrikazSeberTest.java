@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Testovací třída PrikazSeberTest slouží k otestování třídy PrikazSeber
  *
  * @author Tomáš Kotouč
- * @version prosinec 2023
+ * @version březen 2024
  */
 public class PrikazSeberTest {
 
@@ -40,16 +40,16 @@ public class PrikazSeberTest {
         assertEquals("Taková věc tu není", prikazSeber.provedPrikaz("test"));
 
         //věc není sebratelná
-        plan.getAktualniProstor().addVec(new Vec("test2", false, false, false, 0));
+        plan.getAktualniProstor().addVec(new Vec("test2", "Test2", false, false, false, 0));
         assertEquals("Takovou věc nelze sebrat", prikazSeber.provedPrikaz("test2"));
 
         // nedostatek místa v batohu
         batoh.setKapacita(0);
-        plan.getAktualniProstor().addVec(new Vec("test3", true, false, false, 0));
+        plan.getAktualniProstor().addVec(new Vec("test3", "Test3", true, false, false, 0));
         assertEquals("Nemáte dostatek místa v batohu", prikazSeber.provedPrikaz("test3"));
 
         // všechno v pořádku
         batoh.setKapacita(1);
-        assertEquals("Sebrali jste test3", prikazSeber.provedPrikaz("test3"));
+        assertEquals("Sebrali jste Test3", prikazSeber.provedPrikaz("test3"));
     }
 }
