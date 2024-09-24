@@ -1,7 +1,6 @@
 package cz.vse.sven.logika.objekty;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Trida Prostor - popisuje jednotlivé prostory (místnosti) hry
@@ -159,11 +158,11 @@ public class Prostor {
         List<Prostor> hledaneProstory =
                 vychody.stream()
                         .filter(sousedni -> sousedni.getNazev().equals(nazevSouseda))
-                        .collect(Collectors.toList());
+                        .toList();
         if (hledaneProstory.isEmpty()) {
             return null;
         } else {
-            return hledaneProstory.get(0);
+            return hledaneProstory.getFirst();
         }
     }
 

@@ -3,7 +3,7 @@ package cz.vse.sven.logika.hra;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testovací třída HraTest slouží k otestování třídy Hra
@@ -27,13 +27,13 @@ public class HraTest {
     public void zakladniPrubehHry() {
         assertEquals("domov", hra.getHerniPlan().getAktualniProstor().getNazev());
         hra.zpracujPrikaz("jdi jidelna");
-        assertEquals(false, hra.konecHry());
+        assertFalse(hra.konecHry());
         assertEquals("jidelna", hra.getHerniPlan().getAktualniProstor().getNazev());
         hra.zpracujPrikaz("jdi smetiste");
-        assertEquals(false, hra.konecHry());
+        assertFalse(hra.konecHry());
         assertEquals("smetiste", hra.getHerniPlan().getAktualniProstor().getNazev());
         hra.zpracujPrikaz("konec");
-        assertEquals(true, hra.konecHry());
+        assertTrue(hra.konecHry());
     }
 
     /**
@@ -51,7 +51,7 @@ public class HraTest {
         hra.zpracujPrikaz("jdi pracak");
         hra.zpracujPrikaz("promluv Podezrely");
         hra.zpracujPrikaz("promluv Podezrely");
-        assertEquals(true, hra.getHerniPlan().isProhra());
+        assertTrue(hra.getHerniPlan().isProhra());
     }
 
     /**
@@ -82,7 +82,7 @@ public class HraTest {
         hra.zpracujPrikaz("jdi jidelna");
         hra.zpracujPrikaz("jdi domov");
         hra.zpracujPrikaz("promluv Pepa");
-        assertEquals(true, hra.getHerniPlan().isProhra());
+        assertTrue(hra.getHerniPlan().isProhra());
     }
 
     /**
@@ -117,7 +117,7 @@ public class HraTest {
         hra.zpracujPrikaz("jdi jidelna");
         hra.zpracujPrikaz("jdi domov");
         hra.zpracujPrikaz("promluv Pepa");
-        assertEquals(true, hra.getHerniPlan().isVyhra());
+        assertTrue(hra.getHerniPlan().isVyhra());
     }
 
     /**
@@ -162,7 +162,7 @@ public class HraTest {
         hra.zpracujPrikaz("promluv Kim");
         hra.zpracujPrikaz("jdi domov");
         hra.zpracujPrikaz("promluv Pepa");
-        assertEquals(true, hra.getHerniPlan().isPerfektniVyhra());
+        assertTrue(hra.getHerniPlan().isPerfektniVyhra());
     }
 
     /**

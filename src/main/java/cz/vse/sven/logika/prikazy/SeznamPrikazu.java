@@ -41,11 +41,7 @@ public class SeznamPrikazu {
      * @return instance třídy, která provede požadovaný příkaz
      */
     public IPrikaz vratPrikaz(String retezec) {
-        if (mapaSPrikazy.containsKey(retezec)) {
-            return mapaSPrikazy.get(retezec);
-        } else {
-            return null;
-        }
+        return mapaSPrikazy.getOrDefault(retezec, null);
     }
 
     /**

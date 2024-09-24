@@ -41,7 +41,7 @@ public class PrikazKonec implements IPrikaz {
 
     /**
      * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     *
+     * <p>
      * @ return nazev prikazu
      */
     @Override

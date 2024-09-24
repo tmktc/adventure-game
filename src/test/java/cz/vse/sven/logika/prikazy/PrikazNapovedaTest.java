@@ -18,18 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PrikazNapovedaTest {
 
     private SeznamPrikazu seznamPrikazu;
-    private HerniPlan plan;
-    private Progress progress;
-    private Batoh batoh;
-    private Penize penize;
 
 
     @BeforeEach
     public void setUp() {
-        plan = new HerniPlan();
-        progress = new Progress();
-        batoh = new Batoh();
-        penize = new Penize();
+        HerniPlan plan = new HerniPlan();
+        Progress progress = new Progress();
+        Batoh batoh = new Batoh();
+        Penize penize = new Penize();
 
         seznamPrikazu = new SeznamPrikazu();
         seznamPrikazu.vlozPrikaz(new PrikazJdi(plan, progress));

@@ -25,7 +25,6 @@ public class PrikazPromluvTest {
     private Progress progress;
     private Penize penize;
     private PrikazPromluv prikazPromluv;
-    private Hra hra;
 
 
     @BeforeEach
@@ -34,7 +33,7 @@ public class PrikazPromluvTest {
         batoh = new Batoh();
         penize = new Penize();
         progress = new Progress();
-        hra = new Hra();
+        Hra hra = new Hra();
         prikazPromluv = new PrikazPromluv(plan, batoh, penize, progress, hra);
     }
 
