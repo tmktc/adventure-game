@@ -35,25 +35,25 @@ public class CommandPickUp implements ICommand {
      * dále pomocí metody jeVecSebratelna zjistí, zda je sebratelná,
      * pokud má hráč dostatek místa v batohu, tak se věc do batohu vloží
      *
-     * @param parametry - věc, co chceme sebrat
+     * @param parameters - věc, co chceme sebrat
      * @return hlášení, zda se sebrání povedlo
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        if (parametry.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste název věci, kterou chcete sebrat";
         }
 
-        String jmenoVeci = parametry[0];
-        Area aktualniArea = plan.getAktualniProstor();
-        if (aktualniArea.obsahujeVec(jmenoVeci)) {
-            Item item = aktualniArea.jeVecSebratelna(jmenoVeci);
+        String jmenoVeci = parameters[0];
+        Area aktualniArea = plan.getCurrentArea();
+        if (aktualniArea.containsItem(jmenoVeci)) {
+            Item item = aktualniArea.canItemBePickedUp(jmenoVeci);
             if (item == null) {
                 return "Takovou věc nelze sebrat";
             } else {
-                if (backpack.vlozVec(item)) {
-                    aktualniArea.removeVec(jmenoVeci);
-                    return "Sebrali jste " + item.getJmenoCele();
+                if (backpack.putItem(item)) {
+                    aktualniArea.removeItem(jmenoVeci);
+                    return "Sebrali jste " + item.getFullName();
                 } else {
                     return "Nemáte dostatek místa v batohu";
                 }
@@ -68,7 +68,7 @@ public class CommandPickUp implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
+    public String getName() {
         return NAZEV;
     }
 }

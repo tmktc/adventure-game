@@ -26,14 +26,14 @@ public class CommandEndTest {
      * Otestuje správné fungování příkazu
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandEnd prikazKonec = new CommandEnd(game);
 
         //zadání příkazu
-        assertEquals("Hra byla ukončena příkazem konec. Díky za zahrání.", prikazKonec.provedPrikaz());
+        assertEquals("Hra byla ukončena příkazem konec. Díky za zahrání.", prikazKonec.executeCommand());
 
         // konec hry
-        assertTrue(game.konecHry());
+        assertTrue(game.gameEnd());
 
     }
 }

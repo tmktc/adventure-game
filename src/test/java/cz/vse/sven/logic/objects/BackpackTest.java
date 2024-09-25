@@ -18,7 +18,7 @@ public class BackpackTest {
     @BeforeEach
     public void setUp() {
         backpack = new Backpack();
-        backpack.setKapacita(1);
+        backpack.setCapacity(1);
         item = new Item("Vec", "Věc", true, false, false, 0);
     }
 
@@ -26,9 +26,9 @@ public class BackpackTest {
      * Otestuje, zda je možné do batohu vložit věc a zda není možné překročit kapacitu batohu
      */
     @Test
-    public void vlozVecDoBatohu() {
-        assertTrue(backpack.vlozVec(item));
-        assertFalse(backpack.vlozVec(new Item("vec2", "Věc2", true, false, false, 0)));
+    public void putItemDoBatohu() {
+        assertTrue(backpack.putItem(item));
+        assertFalse(backpack.putItem(new Item("vec2", "Věc2", true, false, false, 0)));
     }
 
     /**
@@ -36,30 +36,30 @@ public class BackpackTest {
      * Pokud věc, kterou chceme odstranit, v batohu není, otestuje, zda vrátí null
      */
     @Test
-    public void odstranVecZBatohu() {
-        backpack.vlozVec(item);
-        assertEquals(" - Předali jste Věc", backpack.odstranVec("Vec"));
-        assertNull(backpack.odstranVec("test"));
+    public void removeItemZBatohu() {
+        backpack.putItem(item);
+        assertEquals(" - Předali jste Věc", backpack.removeItem("Vec"));
+        assertNull(backpack.removeItem("test"));
     }
 
     /**
      * Otestuje, zda je možné zjistit, zda se věc v batohu nachází
      */
     @Test
-    public void obsahujeVecVBatohu() {
-        backpack.vlozVec(item);
-        assertTrue(backpack.obsahujeVec("Vec"));
-        assertFalse(backpack.obsahujeVec("test"));
+    public void containsItemVBatohu() {
+        backpack.putItem(item);
+        assertTrue(backpack.containsItem("Vec"));
+        assertFalse(backpack.containsItem("test"));
     }
 
     /**
      * Otestuje, zda bude vybrána správná věc
      */
     @Test
-    public void vyberVecVBatohu() {
-        backpack.vlozVec(item);
-        assertEquals(item, backpack.vyberVec("Vec"));
-        assertNull(backpack.vyberVec("test"));
+    public void selectItemVBatohu() {
+        backpack.putItem(item);
+        assertEquals(item, backpack.selectItem("Vec"));
+        assertNull(backpack.selectItem("test"));
     }
 
     /**
@@ -67,7 +67,7 @@ public class BackpackTest {
      */
     @Test
     public void nazvyVeciVBatohu() {
-        backpack.vlozVec(item);
-        assertEquals("věci v batohu: Vec ", backpack.seznamVeci());
+        backpack.putItem(item);
+        assertEquals("věci v batohu: Vec ", backpack.itemList());
     }
 }

@@ -31,28 +31,28 @@ class CommandThrowAwayTest {
      * Otestuje všechny možné případy
      */
     @Test
-    void provedPrikaz() {
+    void executeCommand() {
         CommandThrowAway prikazVyndej = new CommandThrowAway(plan, backpack);
 
         //žádný parametr
-        assertEquals("Nezadali jste název věci, kterou chcete vyndat z batohu", prikazVyndej.provedPrikaz());
+        assertEquals("Nezadali jste název věci, kterou chcete vyndat z batohu", prikazVyndej.executeCommand());
 
         //danou věc nemáme v batohu
-        assertEquals("Takovou věc u sebe nemáte", prikazVyndej.provedPrikaz("test"));
+        assertEquals("Takovou věc u sebe nemáte", prikazVyndej.executeCommand("test"));
 
         //věc u sebe máme
-        backpack.vlozVec(new Item("vec", "Věc", true, false, false, 0));
-        assertEquals("Věc nyní leží na zemi", prikazVyndej.provedPrikaz("vec"));
-        assertTrue(plan.getAktualniProstor().obsahujeVec("vec"));
+        backpack.putItem(new Item("vec", "Věc", true, false, false, 0));
+        assertEquals("Věc nyní leží na zemi", prikazVyndej.executeCommand("vec"));
+        assertTrue(plan.getCurrentArea().containsItem("vec"));
 
         //nacházíme se v lidlu
-        plan.setAktualniProstor(new Area("lidl", "Lidl", "test"));
-        backpack.vlozVec(new Item("vec2", "Věc2", true, false, false, 0));
-        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.provedPrikaz("vec2"));
+        plan.setCurrentArea(new Area("lidl", "Lidl", "test"));
+        backpack.putItem(new Item("vec2", "Věc2", true, false, false, 0));
+        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.executeCommand("vec2"));
 
         //nacházíme se v trafice
-        plan.setAktualniProstor(new Area("trafika", "test", "test"));
-        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.provedPrikaz("vec2"));
+        plan.setCurrentArea(new Area("trafika", "test", "test"));
+        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.executeCommand("vec2"));
 
     }
 }

@@ -28,9 +28,9 @@ public class CommandHelpTest {
         Money money = new Money();
 
         listOfCommands = new ListOfCommands();
-        listOfCommands.vlozPrikaz(new CommandGo(plan, progress));
-        listOfCommands.vlozPrikaz(new CommandBackpack(backpack));
-        listOfCommands.vlozPrikaz(new CommandBuy(plan, backpack, money));
+        listOfCommands.insertCommand(new CommandGo(plan, progress));
+        listOfCommands.insertCommand(new CommandBackpack(backpack));
+        listOfCommands.insertCommand(new CommandBuy(plan, backpack, money));
 
     }
 
@@ -38,12 +38,12 @@ public class CommandHelpTest {
      * Otestuje, zda příkaz správně vypíše nápovědu
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandHelp prikazNapoveda = new CommandHelp(listOfCommands);
         String spravnyText = "Hra má čtyři možné konce. Dva z nich jsou špatné, jeden dobrý a jeden perfektní.\n" +
                 "Průběh hry se vždy posune dál díky promluvení s nějakou postavou. Dávejte pozor, co postavy říkají.\n\n" +
                 "Možné příkazy: batoh jdi kup ";
 
-        assertEquals(spravnyText, prikazNapoveda.provedPrikaz());
+        assertEquals(spravnyText, prikazNapoveda.executeCommand());
     }
 }

@@ -10,7 +10,7 @@ import cz.vse.sven.logic.objects.Backpack;
  */
 public class CommandBackpack implements ICommand {
 
-    private static final String NAZEV = "batoh";
+    private static final String NAME = "backpack";
     private Backpack backpack;
 
     /**
@@ -28,8 +28,8 @@ public class CommandBackpack implements ICommand {
      * @return seznam věcí v batohu
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        return backpack.seznamVeci();
+    public String executeCommand(String... parameters) {
+        return backpack.itemList();
     }
 
     /**
@@ -38,7 +38,7 @@ public class CommandBackpack implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

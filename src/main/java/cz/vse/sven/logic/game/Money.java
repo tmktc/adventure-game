@@ -7,13 +7,13 @@ package cz.vse.sven.logic.game;
  * @version únor 2024
  */
 public class Money {
-    private double penize;
+    private double money;
 
     /**
      * Konstruktor - nastavuje, kolik peněz má hráč na začátku hry u sebe
      */
     public Money() {
-        penize = 0;
+        money = 0;
     }
 
     /**
@@ -21,28 +21,28 @@ public class Money {
      *
      * @return částka
      */
-    public double getPenize() {
-        return penize;
+    public double getMoney() {
+        return money;
     }
 
     /**
      * Metoda přidává hráči peníze
      *
-     * @param castka ke přidání
+     * @param sum ke přidání
      * @return zpráva, že byly přičteny peníze
      */
-    public String pridejPenize(double castka) {
-        penize += castka;
-        return " - Dostali jste " + castka + " Euro";
+    public String addMoney(double sum) {
+        money += sum;
+        return " - Dostali jste " + sum + " Euro";
     }
 
     /**
      * Metodá odečítá hráči peníze
      *
-     * @param castka k odečtení
+     * @param sum k odečtení
      */
-    public void odectiPenize(int castka) {
-        penize -= castka;
+    public void subtractMoney(int sum) {
+        money -= sum;
     }
 
     /**
@@ -52,6 +52,6 @@ public class Money {
      */
     @Override
     public String toString() {
-        return String.valueOf(penize);
+        return String.valueOf(money);
     }
 }

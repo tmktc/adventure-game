@@ -8,5 +8,5 @@ package cz.vse.sven.main.Observer;
  */
 public interface Observer {
 
-    void aktualizuj();
+    void update();
 }

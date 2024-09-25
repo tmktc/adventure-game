@@ -33,35 +33,35 @@ public class CommandBuyTest {
      * Otestuje všechny možné případy
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandBuy prikazKup = new CommandBuy(plan, backpack, money);
 
         // bez parametru
-        assertEquals("Nezadali jste název položky, kterou chcete koupit", prikazKup.provedPrikaz());
+        assertEquals("Nezadali jste název položky, kterou chcete koupit", prikazKup.executeCommand());
 
         // vec neni v prostoru
-        assertEquals("Taková věc tu není", prikazKup.provedPrikaz("test"));
+        assertEquals("Taková věc tu není", prikazKup.executeCommand("test"));
 
         // vec neni koupitelna
         Item nekoupitelna = new Item("nekoupitelna", "Nekoupitelná", true, false, true, 0);
-        plan.getAktualniProstor().addVec(nekoupitelna);
-        assertEquals("Taková věc není koupitelná", prikazKup.provedPrikaz("nekoupitelna"));
+        plan.getCurrentArea().addItem(nekoupitelna);
+        assertEquals("Taková věc není koupitelná", prikazKup.executeCommand("nekoupitelna"));
 
         // nedostatek penez
         Item koupitelna = new Item("koupitelna", "Koupitelná", false, true, false, 1);
-        plan.getAktualniProstor().addVec(koupitelna);
-        assertEquals("Nemáte dostatek peněz ke koupi této věci", prikazKup.provedPrikaz("koupitelna"));
+        plan.getCurrentArea().addItem(koupitelna);
+        assertEquals("Nemáte dostatek peněz ke koupi této věci", prikazKup.executeCommand("koupitelna"));
 
         // nedostatek mista v batohu
-        money.pridejPenize(1);
-        backpack.setKapacita(0);
-        assertEquals("Nemáte dostatek místa v batohu", prikazKup.provedPrikaz("koupitelna"));
+        money.addMoney(1);
+        backpack.setCapacity(0);
+        assertEquals("Nemáte dostatek místa v batohu", prikazKup.executeCommand("koupitelna"));
 
         // všechno v pořádku
-        backpack.setKapacita(1);
-        assertEquals("Koupili jste Koupitelná za 1 Euro", prikazKup.provedPrikaz("koupitelna"));
-        assertFalse(backpack.vyberVec("koupitelna").isKoupitelna());
-        assertTrue(backpack.vyberVec("koupitelna").isSebratelna());
+        backpack.setCapacity(1);
+        assertEquals("Koupili jste Koupitelná za 1 Euro", prikazKup.executeCommand("koupitelna"));
+        assertFalse(backpack.selectItem("koupitelna").isPurchasable());
+        assertTrue(backpack.selectItem("koupitelna").getCanBePickedUp());
 
 
     }

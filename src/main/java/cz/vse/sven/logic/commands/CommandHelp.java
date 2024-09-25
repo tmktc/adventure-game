@@ -9,18 +9,18 @@ package cz.vse.sven.logic.commands;
  */
 public class CommandHelp implements ICommand {
 
-    private static final String NAZEV = "napoveda";
-    private ListOfCommands platnePrikazy;
+    private static final String NAME = "help";
+    private ListOfCommands validCommands;
 
     /**
      * Konstruktor třídy
      *
-     * @param platnePrikazy seznam příkazů,
+     * @param validCommands seznam příkazů,
      *                      které je možné ve hře použít,
      *                      aby je nápověda mohla zobrazit uživateli.
      */
-    public CommandHelp(ListOfCommands platnePrikazy) {
-        this.platnePrikazy = platnePrikazy;
+    public CommandHelp(ListOfCommands validCommands) {
+        this.validCommands = validCommands;
     }
 
     /**
@@ -29,10 +29,10 @@ public class CommandHelp implements ICommand {
      * @return napoveda ke hre
      */
     @Override
-    public String provedPrikaz(String... parametry) {
+    public String executeCommand(String... parameters) {
         return "Hra má čtyři možné konce. Dva z nich jsou špatné, jeden dobrý a jeden perfektní.\n" +
                 "Průběh hry se vždy posune dál díky promluvení s nějakou postavou. Dávejte pozor, co postavy říkají.\n\n" +
-                "Možné příkazy: " + platnePrikazy.vratNazvyPrikazu();
+                "Možné příkazy: " + validCommands.returnCommandNames();
     }
 
     /**
@@ -41,7 +41,7 @@ public class CommandHelp implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

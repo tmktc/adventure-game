@@ -14,7 +14,7 @@ import cz.vse.sven.logic.objects.Area;
  */
 public class CommandReturn implements ICommand {
 
-    public static final String NAZEV = "vymen";
+    public static final String NAME = "return";
     private GamePlan plan;
     private Backpack backpack;
     private Money money;
@@ -38,23 +38,23 @@ public class CommandReturn implements ICommand {
      * dále zjistí, zda se jedná o láhev (zda je vyměnitelná)
      * dále věc vymění
      *
-     * @param parametry počet parametrů závisí na konkrétním příkazu.
+     * @param parameters počet parametrů závisí na konkrétním příkazu.
      * @return hlášení, zda se výměna povedla
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        if (parametry.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste název věci, kterou chcete vyměnit";
         }
 
-        String lahev = parametry[0];
-        Area aktualniArea = plan.getAktualniProstor();
-        if (aktualniArea.obsahujeVec("AutomatNaLahve")) {
-            if (backpack.obsahujeVec(lahev)) {
-                if (backpack.vyberVec(lahev).isVymenitelna()) {
-                    String l = backpack.vyberVec(lahev).getJmenoCele();
-                    backpack.odstranVec(lahev);
-                    money.pridejPenize(1);
+        String bottle = parameters[0];
+        Area currentArea = plan.getCurrentArea();
+        if (currentArea.containsItem("AutomatNaLahve")) {
+            if (backpack.containsItem(bottle)) {
+                if (backpack.selectItem(bottle).isReturnable()) {
+                    String l = backpack.selectItem(bottle).getFullName();
+                    backpack.removeItem(bottle);
+                    money.addMoney(1);
                     return "Vyměnili jste " + l + " a dostali jste 1 Euro";
                 } else {
                     return "Tuto věc nelze vyměnit";
@@ -73,7 +73,7 @@ public class CommandReturn implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

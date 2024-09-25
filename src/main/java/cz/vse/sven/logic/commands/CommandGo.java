@@ -14,7 +14,7 @@ import cz.vse.sven.logic.objects.Area;
  */
 public class CommandGo implements ICommand {
 
-    public static final String NAZEV = "jdi";
+    public static final String NAME = "go";
     private GamePlan plan;
     private Progress progress;
 
@@ -34,39 +34,39 @@ public class CommandGo implements ICommand {
      * existuje, vstoupí se do nového prostoru. Pokud zadaný sousední prostor
      * (východ) není, vypíše se chybové hlášení.
      *
-     * @param parametry - jako  parametr obsahuje jméno prostoru (východu),
+     * @param parameters - jako  parametr obsahuje jméno prostoru (východu),
      *                  do kterého se má jít.
      * @return zpráva, kterou vypíše hra hráči
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        if (parametry.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste místo, kam chcete jít";
         }
 
-        String smer = parametry[0];
+        String direction = parameters[0];
 
-        Area sousedniArea = plan.getAktualniProstor().vratSousedniProstor(smer);
-        Area aktualniArea = plan.getAktualniProstor();
+        Area neighboringArea = plan.getCurrentArea().returnNeighboringArea(direction);
+        Area currentArea = plan.getCurrentArea();
 
-        if (sousedniArea == null) {
+        if (neighboringArea == null) {
             return "Tam se odsud jít nedá";
         } else {
-            plan.setAktualniProstor(sousedniArea);
+            plan.setCurrentArea(neighboringArea);
             //Kim nás musí po určitý čas následovat, takže vždy z předchozího prostoru Kima odebereme a do dalšího přidáme
             if (progress.getProgress() == 4) {
-                aktualniArea.removePostava("Kim");
-                sousedniArea.addPostava(new NPC("Kim", "Kim"));
+                currentArea.removeNPC("Kim");
+                neighboringArea.addNPC(new NPC("Kim", "Kim"));
             }
             if (progress.getProgress() > 4) {
-                if (sousedniArea.getNazev().equals("jidelna")) {
-                    sousedniArea.addPostava(new NPC("Kim", "Kim"));
+                if (neighboringArea.getName().equals("jidelna")) {
+                    neighboringArea.addNPC(new NPC("Kim", "Kim"));
                 }
-                if (!(aktualniArea.getNazev().equals("jidelna"))) {
-                    aktualniArea.removePostava("Kim");
+                if (!(currentArea.getName().equals("jidelna"))) {
+                    currentArea.removeNPC("Kim");
                 }
             }
-            return sousedniArea.dlouhyPopis();
+            return neighboringArea.longDescription();
         }
     }
 
@@ -76,7 +76,7 @@ public class CommandGo implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

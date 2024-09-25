@@ -17,7 +17,7 @@ import cz.vse.sven.logic.objects.Item;
  */
 public class CommandTalk implements ICommand {
 
-    public static final String NAZEV = "promluv";
+    public static final String NAME = "talk";
     private GamePlan plan;
     private Backpack backpack;
     private Money money;
@@ -44,25 +44,25 @@ public class CommandTalk implements ICommand {
      * Metoda nejdříve zjistí, jestli se daná postava nachází v aktuálním prostoru
      * a pak odkáže na metodu dialogu s danou postavou
      *
-     * @param parametery - jméno postavy, se kterou chceme promluvit.
+     * @param parameters - jméno postavy, se kterou chceme promluvit.
      * @return metoda dialogu s danou postavou
      */
     @Override
-    public String provedPrikaz(String... parametery) {
-        if (parametery.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste název postavy, se kterou chcete promluvit.";
         }
 
-        String jmeno = parametery[0];
-        Area aktualniArea = plan.getAktualniProstor();
+        String name = parameters[0];
+        Area currentArea = plan.getCurrentArea();
 
-        if (aktualniArea.obsahujePostavu(jmeno)) {
-            return switch (jmeno) {
+        if (currentArea.containsNPC(name)) {
+            return switch (name) {
                 case "Pepa" -> dialogPepa();
                 case "Kim" -> dialogKim();
-                case "Podezrely" -> dialogPodezrely();
-                case "Prodavac" -> dialogProdavac();
-                case "Zastavarnik" -> dialogZastavarnik();
+                case "Suspect" -> dialogSuspect();
+                case "ShopAssistant" -> dialogShopAssistant();
+                case "Pawnbroker" -> dialogPawnbroker();
                 default -> "default";
             };
         } else {
@@ -76,17 +76,17 @@ public class CommandTalk implements ICommand {
      * @return dialog s Pepou
      */
     private String dialogPepa() {
-        if ((progress.getProgress() == 6) && (backpack.obsahujeVec("PsiGranule")) && ((backpack.obsahujeVec("Rohliky")) || backpack.obsahujeVec("BezlepkovyChleba"))) {
-            plan.setVyhra(true);
-            game.setKonecHry();
+        if ((progress.getProgress() == 6) && (backpack.containsItem("PsiGranule")) && ((backpack.containsItem("Rohliky")) || backpack.containsItem("BezlepkovyChleba"))) {
+            plan.setWin(true);
+            game.setGameEnd();
             return "";
-        } else if ((progress.getProgress() == 7) && backpack.obsahujeVec("Snus") && (backpack.obsahujeVec("PsiGranule")) && (backpack.obsahujeVec("Rohliky"))) {
-            plan.setPerfektniVyhra(true);
-            game.setKonecHry();
+        } else if ((progress.getProgress() == 7) && backpack.containsItem("Snus") && (backpack.containsItem("PsiGranule")) && (backpack.containsItem("Rohliky"))) {
+            plan.setPerfectWin(true);
+            game.setGameEnd();
             return "";
-        } else if (progress.getProgress() >= 6 && (!(backpack.obsahujeVec("PsiGranule")) || (!(backpack.obsahujeVec("Rohliky")) && !(backpack.obsahujeVec("BezlepkovyChleba"))))) {
-            plan.setProhra(true);
-            game.setKonecHry();
+        } else if (progress.getProgress() >= 6 && (!(backpack.containsItem("PsiGranule")) || (!(backpack.containsItem("Rohliky")) && !(backpack.containsItem("BezlepkovyChleba"))))) {
+            plan.setLoss(true);
+            game.setGameEnd();
             return "";
         }
 
@@ -109,10 +109,10 @@ public class CommandTalk implements ICommand {
             return "\nKim: \n\"Rád ti pomůžu, veď mě k tomu grázlovi.\"\n";
         } else if (progress.getProgress() == 4) {
             return "\nKim: \n\"Už tam budem?\"\n";
-        } else if (progress.getProgress() == 6 && backpack.obsahujeVec("BezlepkovyChleba")) {
+        } else if (progress.getProgress() == 6 && backpack.containsItem("BezlepkovyChleba")) {
             progress.addProgress();
             return "\nSven: \n\"Ještě jednou díky za pomoc Kime, tady máš ode mě překvapení.\"\n" +
-                    backpack.odstranVec("BezlepkovyChleba") + "\n";
+                    backpack.removeItem("BezlepkovyChleba") + "\n";
         }
 
         return "\nKim: \n\"Čau Svene\"\n";
@@ -123,24 +123,24 @@ public class CommandTalk implements ICommand {
      *
      * @return dialog s Podezřelým
      */
-    private String dialogPodezrely() {
+    private String dialogSuspect() {
         if (progress.getProgress() == 2) {
             progress.addProgress();
             return "\nSven: \n\"Sám ho nepřemůžu, musím si vzít na pomoc Kima, ten by měl být stále u jídelny.\n" +
                     "Ten chudák tam asi pořád čeká na ty jeho oblíbené bezlepkové nudle.\"\n";
         } else if (progress.getProgress() == 3) {
-            plan.getAktualniProstor().removePostava("Podezrely");
-            plan.setProhra(true);
-            game.setKonecHry();
+            plan.getCurrentArea().removeNPC("Podezrely");
+            plan.setLoss(true);
+            game.setGameEnd();
             return "";
         } else if (progress.getProgress() == 4) {
             progress.addProgress();
 
-            plan.getAktualniProstor().addVec(new Item("CervenaBunda", "Červená bunda", true, false, false, 0));
-            plan.getAktualniProstor().addVec(new Item("ZelenaCepice", "Zelená čepice", true, false, false, 0));
+            plan.getCurrentArea().addItem(new Item("CervenaBunda", "Červená bunda", true, false, false, 0));
+            plan.getCurrentArea().addItem(new Item("ZelenaCepice", "Zelená čepice", true, false, false, 0));
 
-            plan.getAktualniProstor().removePostava("Podezrely");
-            plan.getAktualniProstor().removePostava("Kim");
+            plan.getCurrentArea().removeNPC("Podezrely");
+            plan.getCurrentArea().removeNPC("Kim");
 
             return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. Červená bunda a Zelená čepice upadly na zem.\n" +
                     "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
@@ -154,7 +154,7 @@ public class CommandTalk implements ICommand {
      *
      * @return dialog s Prodavačem
      */
-    private String dialogProdavac() {
+    private String dialogShopAssistant() {
         if (progress.getProgress() == 1) {
             progress.addProgress();
             return "\nProdavač: \n\"Před chvílí sem vtrhl nějaký grázl a sebral mi oblečení.\n" +
@@ -162,12 +162,12 @@ public class CommandTalk implements ICommand {
                     "Byla to červená bunda a zelená čepice.\n" +
                     "Utíkal směrem k pracáku. Pokud si pospíšíš, možná ho tam ještě zastihneš.\"\n";
         } else if (progress.getProgress() == 5) {
-            if (backpack.obsahujeVec("CervenaBunda") && backpack.obsahujeVec("ZelenaCepice")) {
+            if (backpack.containsItem("CervenaBunda") && backpack.containsItem("ZelenaCepice")) {
                 progress.addProgress();
                 return "\nProdavač: \n\"Já věděl, že to dokážeš. Tady máš zaslouženou odměnu.\"\n" +
-                        backpack.odstranVec("CervenaBunda") + "\n" +
-                        backpack.odstranVec("ZelenaCepice") + "\n" +
-                        money.pridejPenize(4.5) +
+                        backpack.removeItem("CervenaBunda") + "\n" +
+                        backpack.removeItem("ZelenaCepice") + "\n" +
+                        money.addMoney(4.5) +
                         "\n\nSven: \n\"Už bych měl mít dostatek peněz na jídlo. Doufám, že v Lidlu budou slevy.\n" +
                         "Měl bych si pospíšit, za chvíli budou zavírat.\"\n";
             }
@@ -183,13 +183,13 @@ public class CommandTalk implements ICommand {
      *
      * @return dialog se Zastavárníkem
      */
-    private String dialogZastavarnik() {
-        if (backpack.obsahujeVec("StareHodiny")) {
+    private String dialogPawnbroker() {
+        if (backpack.containsItem("StareHodiny")) {
             if (progress.getProgress() == 0) {
                 progress.addProgress();
                 return "\nZastavárník: \n\"Za takovéhle hodiny ti dám maximálně tak 50 centů.\"\n" +
-                        backpack.odstranVec("StareHodiny") + "\n" +
-                        money.pridejPenize(0.5) +
+                        backpack.removeItem("StareHodiny") + "\n" +
+                        money.addMoney(0.5) +
                         "\n\nZastavárník: \n\"Potrebuješ víc peněz? Můj kámoš ze sekáče by pro tebe možná měl nějakej kšeft.\"\n";
             }
         }
@@ -203,7 +203,7 @@ public class CommandTalk implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

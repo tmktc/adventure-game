@@ -25,22 +25,22 @@ public class MoneyTest {
      * Otestuje spránvé fungování metody
      */
     @Test
-    public void pridejPenize() {
+    public void addMoney() {
 
-        assertEquals(0, money.getPenize(), 0.0001);
-        assertEquals(" - Dostali jste 1.0 Euro", money.pridejPenize(1));
-        assertEquals(1, money.getPenize(), 0.0001);
+        assertEquals(0, money.getMoney(), 0.0001);
+        assertEquals(" - Dostali jste 1.0 Euro", money.addMoney(1));
+        assertEquals(1, money.getMoney(), 0.0001);
     }
 
     /**
      * Otestuje spránvé fungování metody
      */
     @Test
-    public void odectiPenize() {
-        assertEquals(0, money.getPenize(), 0.0001);
-        money.pridejPenize(20);
-        money.odectiPenize(15);
-        assertEquals(5, money.getPenize(), 0.0001);
+    public void subtractMoney() {
+        assertEquals(0, money.getMoney(), 0.0001);
+        money.addMoney(20);
+        money.subtractMoney(15);
+        assertEquals(5, money.getMoney(), 0.0001);
 
     }
 }

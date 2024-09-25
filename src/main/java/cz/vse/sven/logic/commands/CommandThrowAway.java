@@ -15,7 +15,7 @@ import cz.vse.sven.logic.objects.Item;
 
 public class CommandThrowAway implements ICommand {
 
-    public static final String NAZEV = "vyndej";
+    public static final String NAME = "throwaway";
     private GamePlan plan;
     private Backpack backpack;
 
@@ -35,24 +35,24 @@ public class CommandThrowAway implements ICommand {
      * pak zkontroluje, jestli se hráč nenachází v lidlu nebo trafice,
      * pak ji odstraní z batohu a vloží ji do aktuálního prostoru
      *
-     * @param parametry počet parametrů závisí na konkrétním příkazu.
+     * @param parameters počet parametrů závisí na konkrétním příkazu.
      * @return zpráva, zda se vyndání zdařilo nebo ne
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        if (parametry.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste název věci, kterou chcete vyndat z batohu";
         }
 
-        String jmenoVeci = parametry[0];
-        Area aktualniArea = plan.getAktualniProstor();
-        if (backpack.obsahujeVec(jmenoVeci)) {
+        String itemName = parameters[0];
+        Area currentArea = plan.getCurrentArea();
+        if (backpack.containsItem(itemName)) {
 
-            if (!(plan.getAktualniProstor().getNazev().equals("lidl") || plan.getAktualniProstor().getNazev().equals("trafika"))) {
-                Item item = backpack.vyberVec(jmenoVeci);
-                backpack.odstranVec(jmenoVeci);
-                aktualniArea.addVec(item);
-                return item.getJmenoCele() + " nyní leží na zemi";
+            if (!(currentArea.getName().equals("lidl") || currentArea.getName().equals("trafika"))) {
+                Item item = backpack.selectItem(itemName);
+                backpack.removeItem(itemName);
+                currentArea.addItem(item);
+                return item.getFullName() + " nyní leží na zemi";
             }
             return "V tomto prostoru nelze odkládat věci";
 
@@ -67,7 +67,7 @@ public class CommandThrowAway implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

@@ -25,15 +25,15 @@ public class CommandMoneyTest {
      * Otestuje správné fungování příkazu
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandMoney prikazPenize = new CommandMoney(money);
 
         // nemáme žádné peníze
-        assertEquals("V kapse máte 0.0 Euro", prikazPenize.provedPrikaz());
+        assertEquals("V kapse máte 0.0 Euro", prikazPenize.executeCommand());
 
         // Přidání peněz a testování znovu
-        money.pridejPenize(1.0);
-        assertEquals("V kapse máte 1.0 Euro", prikazPenize.provedPrikaz());
+        money.addMoney(1.0);
+        assertEquals("V kapse máte 1.0 Euro", prikazPenize.executeCommand());
 
     }
 }

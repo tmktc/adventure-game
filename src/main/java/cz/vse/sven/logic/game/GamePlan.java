@@ -27,19 +27,19 @@ import java.util.Set;
  */
 public class GamePlan implements Observable {
 
-    private Area aktualniArea;
-    private boolean vyhra = false;
-    private boolean prohra = false;
-    private boolean perfektniVyhra = false;
-    private Map<GameChange, Set<Observer>> seznamPozorovatelu = new HashMap<>();
+    private Area currentArea;
+    private boolean win = false;
+    private boolean loss = false;
+    private boolean perfectWin = false;
+    private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
      * Konstruktor
      */
     public GamePlan() {
-        zalozProstoryHry();
+        setUpGame();
         for (GameChange gameChange : GameChange.values()) {
-            seznamPozorovatelu.put(gameChange, new HashSet<>());
+            listOfObservers.put(gameChange, new HashSet<>());
         }
     }
 
@@ -48,81 +48,81 @@ public class GamePlan implements Observable {
      * Dále vytváří věci a postavy a vkládá je do prostorů
      * Jako výchozí aktuální prostor nastaví domeček.
      */
-    private void zalozProstoryHry() {
+    private void setUpGame() {
         // vytvářejí se jednotlivé prostory
-        Area domov = new Area("domov", "Domov", "pod mostem, kde Sven bydlí.");
-        Area jidelna = new Area("jidelna", "Jídelna", "u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.");
-        Area smetiste = new Area("smetiste", "Smetiště", "na smetišti.");
-        Area pracak = new Area("pracak", "Pracák", "u pracáku.");
-        Area sekac = new Area("sekac", "Sekáč", "v sekáči.");
-        Area zastavarna = new Area("zastavarna", "Zastavárna", "v zastavárně.");
+        Area home = new Area("home", "Home", "pod mostem, kde Sven bydlí.");
+        Area soupKitchen = new Area("soupKitchen", "Soup kitchen", "u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.");
+        Area junkyard = new Area("junkyard", "Junkyard", "na smetišti.");
+        Area jobCenter = new Area("jobCenter", "Job center", "u pracáku.");
+        Area thriftShop = new Area("thriftShop", "Thrift Shop", "v sekáči.");
+        Area pawnshop = new Area("pawnshop", "Pawnshop", "v zastavárně.");
         Area lidl = new Area("lidl", "Lidl", "v Lidlu, ceník: \nRohlíky - 1   \nPsí granule - 4   \nBezlepkový chleba - 2");
-        Area trafika = new Area("trafika", "Trafika", "v trafice, ceník: \nSnus - 1");
+        Area kiosk = new Area("kiosk", "Kiosk", "v trafice, ceník: \nSnus - 1");
 
         //vytváření jednotlivých věcí
-        Item stareHodiny = new Item("StareHodiny", "Staré hodiny", true, false, false, 0);
-        Item lahevBranik = new Item("LahevOdBranika", "Láhev od Braníka", true, false, true, 0);
-        Item lahevSvijany = new Item("LahevOdSvijan", "Láhev od Svijan", true, false, true, 0);
-        Item lahevPlzen = new Item("LahevOdPlzne", "Láhev od Plzně", true, false, true, 0);
-        Item automatLahve = new Item("AutomatNaLahve", "Automat na láhve", false, false, false, 0);
+        Item oldClock = new Item("oldClock", "Old clock", true, false, false, 0);
+        Item branikBottle = new Item("branikBottle", "Branik bottle", true, false, true, 0);
+        Item svijanyBottle = new Item("svijanyBottle", "Svijany bottle", true, false, true, 0);
+        Item pilsnerBottle = new Item("pilsnerBottle", "Pilsner bottle", true, false, true, 0);
+        Item bottleMachine = new Item("botleMachine", "Bottle machine", false, false, false, 0);
 
-        Item snus = new Item("Snus", "Snus", false, true, false, 1);
-        Item bezlepkovyChleba = new Item("BezlepkovyChleba", "Bezlepkový chleba", false, true, false, 2);
-        Item granule = new Item("PsiGranule", "Psí granule", false, true, false, 4);
-        Item rohliky = new Item("Rohliky", "Rohlíky", false, true, false, 1);
+        Item snus = new Item("snus", "Snus", false, true, false, 1);
+        Item glutenFreeBread = new Item("glutenFreeBread", "Gluten-free bread", false, true, false, 2);
+        Item dogFood = new Item("dogFood", "Dog Food", false, true, false, 4);
+        Item bagels = new Item("bagels", "Bagels", false, true, false, 1);
 
 
         //vytvareni jednotlivych postav
-        NPC pepa = new NPC("Pepa", "Pepa");
-        NPC kim = new NPC("Kim", "Kim");
-        NPC lupic = new NPC("Podezrely", "Podezřelý");
-        NPC prodavac = new NPC("Prodavac", "Prodavač");
-        NPC zastavarnik = new NPC("Zastavarnik", "Zastavárník");
+        NPC pepa = new NPC("pepa", "Pepa");
+        NPC kim = new NPC("kim", "Kim");
+        NPC suspect = new NPC("suspect", "Suspect");
+        NPC shopAssistant = new NPC("shopAssistant", "Shop assistant");
+        NPC pawnbroker = new NPC("pawnbroker", "Pawnbroker");
 
 
         // přiřazují se průchody mezi prostory (sousedící prostory)
-        domov.setVychod(jidelna);
-        jidelna.setVychod(domov);
-        jidelna.setVychod(smetiste);
-        jidelna.setVychod(lidl);
-        jidelna.setVychod(trafika);
-        smetiste.setVychod(jidelna);
-        smetiste.setVychod(pracak);
-        smetiste.setVychod(sekac);
-        smetiste.setVychod(zastavarna);
-        pracak.setVychod(smetiste);
-        pracak.setVychod(sekac);
-        pracak.setVychod(zastavarna);
-        sekac.setVychod(smetiste);
-        sekac.setVychod(pracak);
-        sekac.setVychod(zastavarna);
-        zastavarna.setVychod(smetiste);
-        zastavarna.setVychod(pracak);
-        zastavarna.setVychod(sekac);
-        trafika.setVychod(jidelna);
-        trafika.setVychod(lidl);
-        lidl.setVychod(jidelna);
-        lidl.setVychod(trafika);
+        home.setExit(soupKitchen);
+        soupKitchen.setExit(home);
+        soupKitchen.setExit(junkyard);
+        soupKitchen.setExit(lidl);
+        soupKitchen.setExit(kiosk);
+        junkyard.setExit(soupKitchen);
+        junkyard.setExit(jobCenter);
+        junkyard.setExit(thriftShop);
+        junkyard.setExit(pawnshop);
+        jobCenter.setExit(junkyard);
+        jobCenter.setExit(thriftShop);
+        jobCenter.setExit(pawnshop);
+        thriftShop.setExit(junkyard);
+        thriftShop.setExit(jobCenter);
+        thriftShop.setExit(pawnshop);
+        pawnshop.setExit(junkyard);
+        pawnshop.setExit(jobCenter);
+        pawnshop.setExit(thriftShop);
+        kiosk.setExit(soupKitchen);
+        kiosk.setExit(lidl);
+        lidl.setExit(soupKitchen);
+        lidl.setExit(kiosk);
 
-        aktualniArea = domov;  // hra začíná u Svena doma
+        currentArea = home;  // hra začíná u Svena doma
 
         // davame veci do prostoru
-        smetiste.addVec(stareHodiny);
-        smetiste.addVec(lahevBranik);
-        smetiste.addVec(lahevSvijany);
-        smetiste.addVec(lahevPlzen);
-        trafika.addVec(snus);
-        lidl.addVec(automatLahve);
-        lidl.addVec(bezlepkovyChleba);
-        lidl.addVec(granule);
-        lidl.addVec(rohliky);
+        junkyard.addItem(oldClock);
+        junkyard.addItem(branikBottle);
+        junkyard.addItem(svijanyBottle);
+        junkyard.addItem(pilsnerBottle);
+        kiosk.addItem(snus);
+        lidl.addItem(bottleMachine);
+        lidl.addItem(glutenFreeBread);
+        lidl.addItem(dogFood);
+        lidl.addItem(bagels);
 
         // davame postavy do prostoru
-        domov.addPostava(pepa);
-        jidelna.addPostava(kim);
-        pracak.addPostava(lupic);
-        sekac.addPostava(prodavac);
-        zastavarna.addPostava(zastavarnik);
+        home.addNPC(pepa);
+        soupKitchen.addNPC(kim);
+        jobCenter.addNPC(suspect);
+        thriftShop.addNPC(shopAssistant);
+        pawnshop.addNPC(pawnbroker);
     }
 
     /**
@@ -130,8 +130,8 @@ public class GamePlan implements Observable {
      *
      * @return aktuální prostor
      */
-    public Area getAktualniProstor() {
-        return aktualniArea;
+    public Area getCurrentArea() {
+        return currentArea;
     }
 
     /**
@@ -140,9 +140,9 @@ public class GamePlan implements Observable {
      *
      * @param area nový aktuální prostor
      */
-    public void setAktualniProstor(Area area) {
-        aktualniArea = area;
-        upozorniPozorovatele(GameChange.ZMENA_PROSTORU);
+    public void setCurrentArea(Area area) {
+        currentArea = area;
+        notifyObserver(GameChange.AREA_CHANGE);
     }
 
     /**
@@ -150,8 +150,8 @@ public class GamePlan implements Observable {
      *
      * @return stav prohry
      */
-    public boolean isProhra() {
-        return prohra;
+    public boolean isLoss() {
+        return loss;
     }
 
     /**
@@ -159,8 +159,8 @@ public class GamePlan implements Observable {
      *
      * @param stav na který se má prohra změnit
      */
-    public void setProhra(boolean stav) {
-        this.prohra = stav;
+    public void setLoss(boolean stav) {
+        this.loss = stav;
     }
 
     /**
@@ -168,8 +168,8 @@ public class GamePlan implements Observable {
      *
      * @return stav výhry
      */
-    public boolean isVyhra() {
-        return vyhra;
+    public boolean isWin() {
+        return win;
     }
 
     /**
@@ -177,8 +177,8 @@ public class GamePlan implements Observable {
      *
      * @param stav na který se má výhra změnit
      */
-    public void setVyhra(boolean stav) {
-        this.vyhra = stav;
+    public void setWin(boolean stav) {
+        this.win = stav;
     }
 
     /**
@@ -186,8 +186,8 @@ public class GamePlan implements Observable {
      *
      * @return stav perfektní prohry
      */
-    public boolean isPerfektniVyhra() {
-        return perfektniVyhra;
+    public boolean isPerfectWin() {
+        return perfectWin;
     }
 
     /**
@@ -195,8 +195,8 @@ public class GamePlan implements Observable {
      *
      * @param stav na který se má perfektní výhra změnit
      */
-    public void setPerfektniVyhra(boolean stav) {
-        this.perfektniVyhra = stav;
+    public void setPerfectWin(boolean stav) {
+        this.perfectWin = stav;
     }
 
     /**
@@ -205,16 +205,16 @@ public class GamePlan implements Observable {
      * @param observer který má být přidán
      */
     @Override
-    public void registruj(GameChange gameChange, Observer observer) {
-        seznamPozorovatelu.get(gameChange).add(observer);
+    public void register(GameChange gameChange, Observer observer) {
+        listOfObservers.get(gameChange).add(observer);
     }
 
     /**
      * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
      */
-    private void upozorniPozorovatele(GameChange gameChange) {
-        for (Observer observer : seznamPozorovatelu.get(gameChange)) {
-            observer.aktualizuj();
+    private void notifyObserver(GameChange gameChange) {
+        for (Observer observer : listOfObservers.get(gameChange)) {
+            observer.update();
         }
     }
 }

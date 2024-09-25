@@ -32,26 +32,26 @@ public class CommandReturnTest {
      * Otestuje všechny možné případy
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandReturn prikazVymen = new CommandReturn(plan, backpack, money);
 
         // bez parametru
-        assertEquals("Nezadali jste název věci, kterou chcete vyměnit", prikazVymen.provedPrikaz());
+        assertEquals("Nezadali jste název věci, kterou chcete vyměnit", prikazVymen.executeCommand());
 
         // nenacházíme se u automatu na výměnu lahví
-        assertEquals("Nejsi u automatu na výměnu lahví", prikazVymen.provedPrikaz("test"));
+        assertEquals("Nejsi u automatu na výměnu lahví", prikazVymen.executeCommand("test"));
 
         // věc, kterou chceme vyměnit, u sebe nemáme
-        plan.getAktualniProstor().addVec(new Item("AutomatNaLahve", "Automat na láhve", false, false, false, 0));
-        assertEquals("Takovou věc u sebe nemáš", prikazVymen.provedPrikaz("test"));
+        plan.getCurrentArea().addItem(new Item("AutomatNaLahve", "Automat na láhve", false, false, false, 0));
+        assertEquals("Takovou věc u sebe nemáš", prikazVymen.executeCommand("test"));
 
         // věc, kterou u sebe máme a chceme vyměnit, není vyměnitelná
-        backpack.vlozVec(new Item("nevymenitelna", "Nevyměnitelná", false, true, false, 1));
-        assertEquals("Tuto věc nelze vyměnit", prikazVymen.provedPrikaz("nevymenitelna"));
+        backpack.putItem(new Item("nevymenitelna", "Nevyměnitelná", false, true, false, 1));
+        assertEquals("Tuto věc nelze vyměnit", prikazVymen.executeCommand("nevymenitelna"));
 
         // všechno správně
-        backpack.vlozVec(new Item("vymenitelna", "Vyměnitelná", true, false, true, 0));
-        assertEquals("Vyměnili jste Vyměnitelná a dostali jste 1 Euro", prikazVymen.provedPrikaz("vymenitelna"));
+        backpack.putItem(new Item("vymenitelna", "Vyměnitelná", true, false, true, 0));
+        assertEquals("Vyměnili jste Vyměnitelná a dostali jste 1 Euro", prikazVymen.executeCommand("vymenitelna"));
 
 
     }

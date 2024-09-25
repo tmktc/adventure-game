@@ -8,5 +8,5 @@ package cz.vse.sven.main.Observer;
  */
 public interface Observable {
 
-    void registruj(GameChange gameChange, Observer observer);
+    void register(GameChange gameChange, Observer observer);
 }

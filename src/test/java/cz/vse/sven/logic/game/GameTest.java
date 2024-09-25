@@ -25,15 +25,15 @@ public class GameTest {
      */
     @Test
     public void zakladniPrubehHry() {
-        assertEquals("domov", game.getHerniPlan().getAktualniProstor().getNazev());
-        game.zpracujPrikaz("jdi jidelna");
-        assertFalse(game.konecHry());
-        assertEquals("jidelna", game.getHerniPlan().getAktualniProstor().getNazev());
-        game.zpracujPrikaz("jdi smetiste");
-        assertFalse(game.konecHry());
-        assertEquals("smetiste", game.getHerniPlan().getAktualniProstor().getNazev());
-        game.zpracujPrikaz("konec");
-        assertTrue(game.konecHry());
+        assertEquals("domov", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("jdi jidelna");
+        assertFalse(game.gameEnd());
+        assertEquals("jidelna", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("jdi smetiste");
+        assertFalse(game.gameEnd());
+        assertEquals("smetiste", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("konec");
+        assertTrue(game.gameEnd());
     }
 
     /**
@@ -41,17 +41,17 @@ public class GameTest {
      */
     @Test
     public void prubehHryProhra1() {
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("seber StareHodiny");
-        game.zpracujPrikaz("jdi zastavarna");
-        game.zpracujPrikaz("promluv Zastavarnik");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("promluv Podezrely");
-        assertTrue(game.getHerniPlan().isProhra());
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi smetiste");
+        game.processCommand("seber StareHodiny");
+        game.processCommand("jdi zastavarna");
+        game.processCommand("promluv Zastavarnik");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("promluv Podezrely");
+        assertTrue(game.getGamePlan().isLoss());
     }
 
     /**
@@ -59,30 +59,30 @@ public class GameTest {
      */
     @Test
     public void prubehHryProhra2() {
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("seber StareHodiny");
-        game.zpracujPrikaz("jdi zastavarna");
-        game.zpracujPrikaz("promluv Zastavarnik");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("promluv Kim");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("seber CervenaBunda");
-        game.zpracujPrikaz("seber ZelenaCepice");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi domov");
-        game.zpracujPrikaz("promluv Pepa");
-        assertTrue(game.getHerniPlan().isProhra());
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi smetiste");
+        game.processCommand("seber StareHodiny");
+        game.processCommand("jdi zastavarna");
+        game.processCommand("promluv Zastavarnik");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("promluv Kim");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("seber CervenaBunda");
+        game.processCommand("seber ZelenaCepice");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi domov");
+        game.processCommand("promluv Pepa");
+        assertTrue(game.getGamePlan().isLoss());
     }
 
     /**
@@ -90,34 +90,34 @@ public class GameTest {
      */
     @Test
     public void prubehHryVyhra() {
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("seber StareHodiny");
-        game.zpracujPrikaz("jdi zastavarna");
-        game.zpracujPrikaz("promluv Zastavarnik");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("promluv Kim");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("seber CervenaBunda");
-        game.zpracujPrikaz("seber ZelenaCepice");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi lidl");
-        game.zpracujPrikaz("kup Rohliky");
-        game.zpracujPrikaz("kup PsiGranule");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi domov");
-        game.zpracujPrikaz("promluv Pepa");
-        assertTrue(game.getHerniPlan().isVyhra());
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi smetiste");
+        game.processCommand("seber StareHodiny");
+        game.processCommand("jdi zastavarna");
+        game.processCommand("promluv Zastavarnik");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("promluv Kim");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("seber CervenaBunda");
+        game.processCommand("seber ZelenaCepice");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi lidl");
+        game.processCommand("kup Rohliky");
+        game.processCommand("kup PsiGranule");
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi domov");
+        game.processCommand("promluv Pepa");
+        assertTrue(game.getGamePlan().isWin());
     }
 
     /**
@@ -125,78 +125,78 @@ public class GameTest {
      */
     @Test
     public void prubehHryPerfektniVyhra() {
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("seber StareHodiny");
-        game.zpracujPrikaz("seber LahevOdSvijan");
-        game.zpracujPrikaz("seber LahevOdPlzne");
-        game.zpracujPrikaz("seber LahevOdBranika");
-        game.zpracujPrikaz("jdi zastavarna");
-        game.zpracujPrikaz("promluv Zastavarnik");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("promluv Kim");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi pracak");
-        game.zpracujPrikaz("promluv Podezrely");
-        game.zpracujPrikaz("seber CervenaBunda");
-        game.zpracujPrikaz("seber ZelenaCepice");
-        game.zpracujPrikaz("jdi sekac");
-        game.zpracujPrikaz("promluv Prodavac");
-        game.zpracujPrikaz("jdi smetiste");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("jdi lidl");
-        game.zpracujPrikaz("vymen LahevOdSvijan");
-        game.zpracujPrikaz("vymen LahevOdPlzne");
-        game.zpracujPrikaz("vymen LahevOdBranika");
-        game.zpracujPrikaz("kup Rohliky");
-        game.zpracujPrikaz("kup PsiGranule");
-        game.zpracujPrikaz("kup BezlepkovyChleba");
-        game.zpracujPrikaz("jdi trafika");
-        game.zpracujPrikaz("kup Snus");
-        game.zpracujPrikaz("jdi jidelna");
-        game.zpracujPrikaz("promluv Kim");
-        game.zpracujPrikaz("jdi domov");
-        game.zpracujPrikaz("promluv Pepa");
-        assertTrue(game.getHerniPlan().isPerfektniVyhra());
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi smetiste");
+        game.processCommand("seber StareHodiny");
+        game.processCommand("seber LahevOdSvijan");
+        game.processCommand("seber LahevOdPlzne");
+        game.processCommand("seber LahevOdBranika");
+        game.processCommand("jdi zastavarna");
+        game.processCommand("promluv Zastavarnik");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("promluv Kim");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi pracak");
+        game.processCommand("promluv Podezrely");
+        game.processCommand("seber CervenaBunda");
+        game.processCommand("seber ZelenaCepice");
+        game.processCommand("jdi sekac");
+        game.processCommand("promluv Prodavac");
+        game.processCommand("jdi smetiste");
+        game.processCommand("jdi jidelna");
+        game.processCommand("jdi lidl");
+        game.processCommand("vymen LahevOdSvijan");
+        game.processCommand("vymen LahevOdPlzne");
+        game.processCommand("vymen LahevOdBranika");
+        game.processCommand("kup Rohliky");
+        game.processCommand("kup PsiGranule");
+        game.processCommand("kup BezlepkovyChleba");
+        game.processCommand("jdi trafika");
+        game.processCommand("kup Snus");
+        game.processCommand("jdi jidelna");
+        game.processCommand("promluv Kim");
+        game.processCommand("jdi domov");
+        game.processCommand("promluv Pepa");
+        assertTrue(game.getGamePlan().isPerfectWin());
     }
 
     /**
      * Otestuje různé konce hry
      */
     @Test
-    public void konecHryProhra() {
-        game.getHerniPlan().setProhra(true);
+    public void gameEndProhra() {
+        game.getGamePlan().setLoss(true);
         String spravnyText = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
                 "\nProhra, hodně štěstí příště.\n";
-        assertEquals(spravnyText, game.vratEpilog());
+        assertEquals(spravnyText, game.returnEpilogue());
 
 
         game.getProgressInstance().setProgress(3);
         String spravnyText2 = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
                 "\nProhra, hodně štěstí příště.\n";
-        assertEquals(spravnyText2, game.vratEpilog());
+        assertEquals(spravnyText2, game.returnEpilogue());
     }
 
     @Test
-    public void konecHryVyhra() {
-        game.getHerniPlan().setVyhra(true);
+    public void gameEndVyhra() {
+        game.getGamePlan().setWin(true);
         String spravnyText = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
                 "Kim ale dneska bude o hladu - příště by jste to mohli napravit.\n" +
                 "Výhra, dobrá práce.\n";
-        assertEquals(spravnyText, game.vratEpilog());
+        assertEquals(spravnyText, game.returnEpilogue());
 
     }
 
     @Test
-    public void konecHryPerfektniVyhra() {
-        game.getHerniPlan().setPerfektniVyhra(true);
+    public void gameEndPerfektniVyhra() {
+        game.getGamePlan().setPerfectWin(true);
         String spravnyText = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
                 "Perfektni výhra, gratuluji.\n";
-        assertEquals(spravnyText, game.vratEpilog());
+        assertEquals(spravnyText, game.returnEpilogue());
     }
 }

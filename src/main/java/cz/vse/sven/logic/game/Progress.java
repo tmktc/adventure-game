@@ -30,10 +30,10 @@ public class Progress {
     /**
      * Metoda nastaví hodnotu progressu - využito v testech
      *
-     * @param cislo hodonta na kterou se má progress nastavit
+     * @param number hodonta na kterou se má progress nastavit
      */
-    public void setProgress(int cislo) {
-        this.progress = cislo;
+    public void setProgress(int number) {
+        this.progress = number;
     }
 
     /**

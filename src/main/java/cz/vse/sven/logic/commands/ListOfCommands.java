@@ -15,44 +15,44 @@ import java.util.*;
  * @version pro školní rok 2016/2017
  */
 public class ListOfCommands {
-    private Map<String, ICommand> mapaSPrikazy;
+    private Map<String, ICommand> CommandMap;
 
     /**
      * Konstruktor
      */
     public ListOfCommands() {
-        mapaSPrikazy = new HashMap<>();
+        CommandMap = new HashMap<>();
     }
 
     /**
      * Vkládá nový příkaz.
      *
-     * @param prikaz Instance třídy implementující rozhraní IPrikaz
+     * @param command Instance třídy implementující rozhraní IPrikaz
      */
-    public void vlozPrikaz(ICommand prikaz) {
-        mapaSPrikazy.put(prikaz.getNazev(), prikaz);
+    public void insertCommand(ICommand command) {
+        CommandMap.put(command.getName(), command);
     }
 
     /**
      * Vrací odkaz na instanci třídy implementující rozhraní IPrikaz,
      * která provádí příkaz uvedený jako parametr.
      *
-     * @param retezec klíčové slovo příkazu, který chce hráč zavolat
+     * @param string klíčové slovo příkazu, který chce hráč zavolat
      * @return instance třídy, která provede požadovaný příkaz
      */
-    public ICommand vratPrikaz(String retezec) {
-        return mapaSPrikazy.getOrDefault(retezec, null);
+    public ICommand returnCommand(String string) {
+        return CommandMap.getOrDefault(string, null);
     }
 
     /**
      * Kontroluje, zda zadaný řetězec je přípustný příkaz.
      *
-     * @param retezec Řetězec, který se má otestovat, zda je přípustný příkaz
+     * @param string Řetězec, který se má otestovat, zda je přípustný příkaz
      * @return Vrací hodnotu true, pokud je zadaný
      * řetězec přípustný příkaz
      */
-    public boolean jePlatnyPrikaz(String retezec) {
-        return mapaSPrikazy.containsKey(retezec);
+    public boolean isValidCommand(String string) {
+        return CommandMap.containsKey(string);
     }
 
     /**
@@ -60,15 +60,15 @@ public class ListOfCommands {
      *
      * @return Řetězec, který obsahuje seznam přípustných příkazů
      */
-    public String vratNazvyPrikazu() {
-        List<String> prikazy = new ArrayList<>(mapaSPrikazy.keySet());
-        Collections.sort(prikazy);
+    public String returnCommandNames() {
+        List<String> commands = new ArrayList<>(CommandMap.keySet());
+        Collections.sort(commands);
 
-        String seznam = "";
-        for (String slovoPrikazu : prikazy) {
-            seznam += slovoPrikazu + " ";
+        String list = "";
+        for (String commandWord : commands) {
+            list += commandWord + " ";
         }
-        return seznam;
+        return list;
 
     }
 }

@@ -16,28 +16,28 @@ import java.util.*;
  */
 public class Area {
 
-    private String nazev;
-    private String nazevCely;
-    private String popis;
-    private Set<Area> vychody;    // obsahuje sousedni mistnosti
-    private Map<String, Item> seznamVeci;
-    private Map<String, NPC> seznamPostav;
+    private String name;
+    private String fullName;
+    private String description;
+    private Set<Area> exits;    // obsahuje sousedni mistnosti
+    private Map<String, Item> itemList;
+    private Map<String, NPC> NPCList;
 
     /**
      * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
      * před domem"
      *
-     * @param nazev nazev prostoru, jednoznačný identifikátor, jedno slovo nebo
+     * @param name nazev prostoru, jednoznačný identifikátor, jedno slovo nebo
      *              víceslovný název bez mezer.
-     * @param popis Popis prostoru.
+     * @param description Popis prostoru.
      */
-    public Area(String nazev, String nazevCely, String popis) {
-        this.nazev = nazev;
-        this.nazevCely = nazevCely;
-        this.popis = popis;
-        vychody = new HashSet<>();
-        seznamVeci = new HashMap<>();
-        seznamPostav = new HashMap<>();
+    public Area(String name, String fullName, String description) {
+        this.name = name;
+        this.fullName = fullName;
+        this.description = description;
+        exits = new HashSet<>();
+        itemList = new HashMap<>();
+        NPCList = new HashMap<>();
     }
 
     /**
@@ -47,10 +47,10 @@ public class Area {
      * Druhé zadání stejného prostoru tiše přepíše předchozí zadání (neobjeví se
      * žádné chybové hlášení). Lze zadat též cestu ze do sebe sama.
      *
-     * @param vedlejsi prostor, který sousedi s aktualnim prostorem.
+     * @param area prostor, který sousedi s aktualnim prostorem.
      */
-    public void setVychod(Area vedlejsi) {
-        vychody.add(vedlejsi);
+    public void setExit(Area area) {
+        exits.add(area);
     }
 
     /**
@@ -75,13 +75,13 @@ public class Area {
             return false; // pokud parametr není typu Prostor, vrátíme false
         }
         // přetypujeme parametr na typ Prostor
-        Area druhy = (Area) o;
+        Area second = (Area) o;
 
         //metoda equals třídy java.util.Objects porovná hodnoty obou názvů.
         //Vrátí true pro stejné názvy a i v případě, že jsou oba názvy null,
         //jinak vrátí false.
 
-        return (java.util.Objects.equals(this.nazev, druhy.nazev));
+        return (java.util.Objects.equals(this.name, second.name));
     }
 
     /**
@@ -93,10 +93,10 @@ public class Area {
      */
     @Override
     public int hashCode() {
-        int vysledek = 3;
-        int hashNazvu = java.util.Objects.hashCode(this.nazev);
-        vysledek = 37 * vysledek + hashNazvu;
-        return vysledek;
+        int result = 3;
+        int nameHash = java.util.Objects.hashCode(this.name);
+        result = 37 * result + nameHash;
+        return result;
     }
 
     /**
@@ -105,8 +105,8 @@ public class Area {
      *
      * @return název prostoru
      */
-    public String getNazev() {
-        return nazev;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -114,8 +114,8 @@ public class Area {
      *
      * @return název s mezerami a diakritikou
      */
-    public String getNazevCely() {
-        return nazevCely;
+    public String getFullName() {
+        return fullName;
     }
 
     /**
@@ -123,11 +123,11 @@ public class Area {
      *
      * @return Dlouhý popis prostoru
      */
-    public String dlouhyPopis() {
-        return "\n\nNacházíš se " + popis + "\n\n"
-                + popisVychodu() + "\n"
-                + seznamVeci() + "\n"
-                + seznamPostav() + "\n";
+    public String longDescription() {
+        return "\n\nNacházíš se " + description + "\n\n"
+                + exitDescription() + "\n"
+                + itemList() + "\n"
+                + NPCList() + "\n";
     }
 
     /**
@@ -136,12 +136,12 @@ public class Area {
      *
      * @return Popis východů - názvů sousedních prostorů
      */
-    public String popisVychodu() {
-        String vracenyText = "východy: ";
-        for (Area sousedni : vychody) {
-            vracenyText += sousedni.getNazev() + "  ";
+    public String exitDescription() {
+        String returnedText = "východy: ";
+        for (Area neighbor : exits) {
+            returnedText += neighbor.getName() + "  ";
         }
-        return vracenyText;
+        return returnedText;
     }
 
     /**
@@ -149,20 +149,20 @@ public class Area {
      * jako parametr. Pokud prostor s udaným jménem nesousedí s aktuálním
      * prostorem, vrací se hodnota null.
      *
-     * @param nazevSouseda Jméno sousedního prostoru (východu)
+     * @param neighborName Jméno sousedního prostoru (východu)
      * @return Prostor, který se nachází za příslušným východem, nebo hodnota
      * null, pokud prostor zadaného jména není sousedem.
      */
 
-    public Area vratSousedniProstor(String nazevSouseda) {
-        List<Area> hledaneProstory =
-                vychody.stream()
-                        .filter(sousedni -> sousedni.getNazev().equals(nazevSouseda))
+    public Area returnNeighboringArea(String neighborName) {
+        List<Area> searchedAreas =
+                exits.stream()
+                        .filter(neighbor -> neighbor.getName().equals(neighborName))
                         .toList();
-        if (hledaneProstory.isEmpty()) {
+        if (searchedAreas.isEmpty()) {
             return null;
         } else {
-            return hledaneProstory.getFirst();
+            return searchedAreas.getFirst();
         }
     }
 
@@ -175,8 +175,8 @@ public class Area {
      * @return Nemodifikovatelná kolekce prostorů (východů), se kterými tento
      * prostor sousedí.
      */
-    public Collection<Area> getVychody() {
-        return Collections.unmodifiableCollection(vychody);
+    public Collection<Area> getExits() {
+        return Collections.unmodifiableCollection(exits);
     }
 
     /**
@@ -184,8 +184,8 @@ public class Area {
      *
      * @return kolekce věcí nacházejících se v prostoru
      */
-    public Collection<Item> getSeznamVeci() {
-        return Collections.unmodifiableCollection(seznamVeci.values());
+    public Collection<Item> getItemList() {
+        return Collections.unmodifiableCollection(itemList.values());
     }
 
     /**
@@ -193,8 +193,8 @@ public class Area {
      *
      * @return kolekce postav nacházejících se v prostoru
      */
-    public Collection<NPC> getSeznamPostav() {
-        return Collections.unmodifiableCollection(seznamPostav.values());
+    public Collection<NPC> getNPCList() {
+        return Collections.unmodifiableCollection(NPCList.values());
     }
 
     /**
@@ -202,40 +202,40 @@ public class Area {
      *
      * @param item k přidání
      */
-    public void addVec(Item item) {
-        seznamVeci.put(item.getJmeno(), item);
+    public void addItem(Item item) {
+        itemList.put(item.getName(), item);
     }
 
     /**
      * Odebere věc z prostoru
      *
-     * @param vec k odebrání
+     * @param item k odebrání
      */
-    public void removeVec(String vec) {
-        seznamVeci.remove(vec);
+    public void removeItem(String item) {
+        itemList.remove(item);
     }
 
     /**
      * Zkontroluje, zda prostor obsahuje danou věc
      *
-     * @param jmenoVeci ke zkontrolování
+     * @param itemName ke zkontrolování
      * @return true/false
      */
-    public boolean obsahujeVec(String jmenoVeci) {
-        return seznamVeci.containsKey(jmenoVeci);
+    public boolean containsItem(String itemName) {
+        return itemList.containsKey(itemName);
     }
 
     /**
      * Zkontroluje, zda daná věc nacházejíci se v prostoru je sebratelná
      *
-     * @param jmenoVeci ke zkontrolovaní
+     * @param itemName ke zkontrolovaní
      * @return Pokud je sebratelná, tak věc vrátí, pokud ne, vrátí null
      */
-    public Item jeVecSebratelna(String jmenoVeci) {
+    public Item canItemBePickedUp(String itemName) {
         Item item;
-        if (seznamVeci.containsKey(jmenoVeci)) {
-            item = seznamVeci.get(jmenoVeci);
-            if (item.isSebratelna()) {
+        if (itemList.containsKey(itemName)) {
+            item = itemList.get(itemName);
+            if (item.getCanBePickedUp()) {
                 return item;
             }
             return null;
@@ -246,14 +246,14 @@ public class Area {
     /**
      * Zkontroluje, zda daná věc nacházejíci se v prostoru je koupitelná
      *
-     * @param jmenoVeci ke zkontrolovaní
+     * @param itemName ke zkontrolovaní
      * @return Pokud je koupitelná, tak věc vrátí, pokud ne, vrátí null
      */
-    public Item jeVecKoupitelna(String jmenoVeci) {
+    public Item isItemPurchasable(String itemName) {
         Item item;
-        if (seznamVeci.containsKey(jmenoVeci)) {
-            item = seznamVeci.get(jmenoVeci);
-            if (item.isKoupitelna()) {
+        if (itemList.containsKey(itemName)) {
+            item = itemList.get(itemName);
+            if (item.isPurchasable()) {
                 return item;
             }
             return null;
@@ -266,15 +266,15 @@ public class Area {
      *
      * @return seznam věcí
      */
-    public String seznamVeci() {
-        List<String> veci = new ArrayList<>(seznamVeci.keySet());
-        Collections.sort(veci);
+    public String itemList() {
+        List<String> items = new ArrayList<>(itemList.keySet());
+        Collections.sort(items);
 
-        String nazvy = "věci: ";
-        for (String jmenoVeci : veci) {
-            nazvy += jmenoVeci + "  ";
+        String itemList = "věci: ";
+        for (String item : items) {
+            itemList += item + "  ";
         }
-        return nazvy;
+        return itemList;
     }
 
     /**
@@ -282,29 +282,29 @@ public class Area {
      *
      * @param NPC k vložení
      */
-    public void addPostava(NPC NPC) {
-        if (!(seznamPostav.containsKey(NPC.getJmeno()))) {
-            seznamPostav.put(NPC.getJmeno(), NPC);
+    public void addNPC(NPC NPC) {
+        if (!(NPCList.containsKey(NPC.getName()))) {
+            NPCList.put(NPC.getName(), NPC);
         }
     }
 
     /**
      * Odebere věc z prostoru
      *
-     * @param jmenoPostavy k odebrání
+     * @param NPCName k odebrání
      */
-    public void removePostava(String jmenoPostavy) {
-        seznamPostav.remove(jmenoPostavy);
+    public void removeNPC(String NPCName) {
+        NPCList.remove(NPCName);
     }
 
     /**
      * zjistí, zda se postava v prostoru nachází
      *
-     * @param jmeno ke kontrole
+     * @param NPCName ke kontrole
      * @return true - postava se v prostoru nachazi, false - nenachazi
      */
-    public boolean obsahujePostavu(String jmeno) {
-        return seznamPostav.containsKey(jmeno);
+    public boolean containsNPC(String NPCName) {
+        return NPCList.containsKey(NPCName);
     }
 
     /**
@@ -312,15 +312,15 @@ public class Area {
      *
      * @return seznam postav
      */
-    public String seznamPostav() {
-        List<String> postavy = new ArrayList<>(seznamPostav.keySet());
-        Collections.sort(postavy);
+    public String NPCList() {
+        List<String> NPCs = new ArrayList<>(NPCList.keySet());
+        Collections.sort(NPCs);
 
-        String nazvy = "postavy: ";
-        for (String jmenoPostavy : postavy) {
-            nazvy += jmenoPostavy + "  ";
+        String NPCList = "postavy: ";
+        for (String NPCName : NPCs) {
+            NPCList += NPCName + "  ";
         }
-        return nazvy;
+        return NPCList;
     }
 
     /**
@@ -328,8 +328,8 @@ public class Area {
      *
      * @return popis prostoru
      */
-    public String getPopis() {
-        return popis;
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -339,6 +339,6 @@ public class Area {
      */
     @Override
     public String toString() {
-        return nazev;
+        return name;
     }
 }

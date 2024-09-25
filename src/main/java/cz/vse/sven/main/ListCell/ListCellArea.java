@@ -26,10 +26,10 @@ public class ListCellArea extends ListCell<Area> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(area.getNazevCely());
+            setText(area.getFullName());
             setFont(Font.font(13));
-            String cesta = getClass().getResource("/cz/vse/sven/main/areas/" + area.getNazev() + ".png").toExternalForm();
-            ImageView iw = new ImageView(cesta);
+            String path = getClass().getResource("/cz/vse/sven/main/areas/" + area.getName() + ".png").toExternalForm();
+            ImageView iw = new ImageView(path);
             iw.setFitWidth(35);
             iw.setPreserveRatio(true);
             setGraphic(iw);

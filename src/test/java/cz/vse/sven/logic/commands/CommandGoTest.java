@@ -28,14 +28,14 @@ public class CommandGoTest {
      * Otestuje, zda se příkaz správně vypořádá se zadaným parametrem
      */
     @Test
-    public void provedPrikaz() {
-        CommandGo prikazJdi = new CommandGo(game.getHerniPlan(), progress);
+    public void executeCommand() {
+        CommandGo prikazJdi = new CommandGo(game.getGamePlan(), progress);
 
         // Parametr chybí
-        assertEquals("Nezadali jste místo, kam chcete jít", prikazJdi.provedPrikaz());
+        assertEquals("Nezadali jste místo, kam chcete jít", prikazJdi.executeCommand());
 
         // Není platný sousední prostor
-        assertEquals("Tam se odsud jít nedá", prikazJdi.provedPrikaz("smetiste"));
+        assertEquals("Tam se odsud jít nedá", prikazJdi.executeCommand("smetiste"));
 
         String spravnyText =
                 "\n\nNacházíš se u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.\n" +
@@ -45,6 +45,6 @@ public class CommandGoTest {
                         "postavy: Kim  \n";
 
         // Platný sousední prostor
-        assertEquals(spravnyText, prikazJdi.provedPrikaz("jidelna"));
+        assertEquals(spravnyText, prikazJdi.executeCommand("jidelna"));
     }
 }

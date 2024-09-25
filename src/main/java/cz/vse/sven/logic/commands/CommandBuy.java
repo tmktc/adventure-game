@@ -15,7 +15,7 @@ import cz.vse.sven.logic.objects.Item;
  */
 public class CommandBuy implements ICommand {
 
-    public static final String NAZEV = "kup";
+    public static final String NAME = "kup";
     private GamePlan plan;
     private Backpack backpack;
     private Money money;
@@ -40,30 +40,30 @@ public class CommandBuy implements ICommand {
      * dále nastaví koupitelnost věci na false, protože věc již vlastníme
      * a sebratelnost na true, kdybom věc chtěli odložit
      *
-     * @param parametry - věc, kterou chceme koupit.
+     * @param parameters - věc, kterou chceme koupit.
      * @return hlášení, zda se nákup povedl
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        if (parametry.length == 0) {
+    public String executeCommand(String... parameters) {
+        if (parameters.length == 0) {
             return "Nezadali jste název položky, kterou chcete koupit";
         }
 
-        String jmenoVeci = parametry[0];
-        Area aktualniArea = plan.getAktualniProstor();
+        String itemName = parameters[0];
+        Area currentArea = plan.getCurrentArea();
 
-        if (aktualniArea.obsahujeVec(jmenoVeci)) {
-            Item item = aktualniArea.jeVecKoupitelna(jmenoVeci);
+        if (currentArea.containsItem(itemName)) {
+            Item item = currentArea.isItemPurchasable(itemName);
             if (item == null) {
                 return "Taková věc není koupitelná";
             } else {
-                if (money.getPenize() >= item.getCena()) {
-                    if (backpack.vlozVec(item)) {
-                        aktualniArea.removeVec(jmenoVeci);
-                        money.odectiPenize(item.getCena());
-                        item.setSebratelna(true);
-                        item.setKoupitelna(false);
-                        return "Koupili jste " + item.getJmenoCele() + " za " + item.getCena() + " Euro";
+                if (money.getMoney() >= item.getPrice()) {
+                    if (backpack.putItem(item)) {
+                        currentArea.removeItem(itemName);
+                        money.subtractMoney(item.getPrice());
+                        item.setCanBePickedUp(true);
+                        item.setPurchasable(false);
+                        return "Koupili jste " + item.getFullName() + " za " + item.getPrice() + " Euro";
                     } else {
                         return "Nemáte dostatek místa v batohu";
                     }
@@ -81,7 +81,7 @@ public class CommandBuy implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

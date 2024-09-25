@@ -34,58 +34,58 @@ import java.util.Optional;
 public class HomeController {
 
     @FXML
-    private Label hlaseniPriInterakciSVecmi;
+    private Label labelItemInteractionInfo;
 
     @FXML
-    private Label popisProstoru;
+    private Label labelAreaDescription;
 
     @FXML
-    private Label labelPenizeVKapse;
+    private Label labelMoneyStatus;
 
     @FXML
-    private Label ukazatelPenez;
+    private Label labelCurrentMoney;
 
     @FXML
-    private Label labelVeciVProstoru;
+    private Label labelItemsInArea;
 
     @FXML
-    private Label labelPostavyVProstoru;
+    private Label labelNPCsInArea;
 
     @FXML
-    private Label labelVeciVBatohu;
+    private Label labelItemsInBackpack;
 
     @FXML
-    private Label labelVychody;
+    private Label labelExits;
 
     @FXML
-    private ListView<NPC> panelPostavVProstoru;
+    private ListView<NPC> panelNPCsInArea;
 
     @FXML
-    private ListView<Item> panelVeciVBatohu;
+    private ListView<Item> panelItemsInBackpack;
 
     @FXML
-    private ListView<Item> panelVeciVProstoru;
+    private ListView<Item> panelItemsInArea;
 
     @FXML
-    private ImageView hrac;
+    private ImageView player;
 
     @FXML
-    private ListView<Area> panelVychodu;
+    private ListView<Area> panelExits;
 
     @FXML
-    private Button tlacitkoNapoveda;
+    private Button buttonHelp;
 
-    private IGame hra = new Game();
+    private IGame game = new Game();
 
-    private ObservableList<Area> seznamVychodu = FXCollections.observableArrayList();
+    private ObservableList<Area> listOfExits = FXCollections.observableArrayList();
 
-    private ObservableList<Item> seznamVeciVProstoru = FXCollections.observableArrayList();
+    private ObservableList<Item> listOfItemsInArea = FXCollections.observableArrayList();
 
-    private ObservableList<Item> seznamVeciVBatohu = FXCollections.observableArrayList();
+    private ObservableList<Item> listOfItemsInBackpack = FXCollections.observableArrayList();
 
-    private ObservableList<NPC> seznamPostavVProstoru = FXCollections.observableArrayList();
+    private ObservableList<NPC> listOfNPCsInArea = FXCollections.observableArrayList();
 
-    private Map<String, Point2D> souradniceProstoru = new HashMap<>();
+    private Map<String, Point2D> AreaCoordinates = new HashMap<>();
 
     /**
      * Metoda na začátku hry:
@@ -94,102 +94,102 @@ public class HomeController {
      */
     @FXML
     private void initialize() {
-        ukazatelPenez.setText(hra.getPenize());
-        panelVychodu.setItems(seznamVychodu);
-        panelVeciVProstoru.setItems(seznamVeciVProstoru);
-        panelVeciVBatohu.setItems(seznamVeciVBatohu);
-        panelPostavVProstoru.setItems(seznamPostavVProstoru);
-        hra.getHerniPlan().registruj(GameChange.ZMENA_PROSTORU, () -> {
-            aktualizujSeznamVychodu();
-            aktualizujPolohuHrace();
+        labelCurrentMoney.setText(game.getMoney());
+        panelExits.setItems(listOfExits);
+        panelItemsInArea.setItems(listOfItemsInArea);
+        panelItemsInBackpack.setItems(listOfItemsInBackpack);
+        panelNPCsInArea.setItems(listOfNPCsInArea);
+        game.getGamePlan().register(GameChange.AREA_CHANGE, () -> {
+            updateListOfExits();
+            updatePlayerLocation();
         });
-        hra.registruj(GameChange.KONEC_HRY, () -> aktualizujKonecHry());
-        hra.registruj(GameChange.ZMENA_VECI, () -> {
-            aktualizujSeznamVeciVProstoru();
-            aktualizujSeznamVeciVBatohu();
+        game.register(GameChange.GAME_END, () -> updateGameEnd());
+        game.register(GameChange.ITEM_CHANGE, () -> {
+            updateListOfItemsInArea();
+            updateListOfItemsInBackpack();
         });
-        hra.registruj(GameChange.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
-        hra.registruj(GameChange.ZMENA_PENEZ, () -> aktualizujPenize());
-        vlozSouradnice();
-        aktualizujSeznamVychodu();
-        aktualizujSeznamVeciVBatohu();
-        aktualizujSeznamVeciVProstoru();
-        aktualizujSeznamPostavVProstoru();
-        aktualizujPolohuHrace();
-        aktualizujKonecHry();
-        panelVychodu.setCellFactory(param -> new ListCellArea());
-        panelVeciVProstoru.setCellFactory(param -> new ListCellItem());
-        panelVeciVBatohu.setCellFactory(param -> new ListCellItem());
-        panelPostavVProstoru.setCellFactory(param -> new ListCellNPC());
+        game.register(GameChange.NPC_CHANGE, () -> updateListOfNPCsInArea());
+        game.register(GameChange.MONEY_CHANGE, () -> updateMoney());
+        insertCoordinates();
+        updateListOfExits();
+        updateListOfItemsInBackpack();
+        updateListOfItemsInArea();
+        updateListOfNPCsInArea();
+        updatePlayerLocation();
+        updateGameEnd();
+        panelExits.setCellFactory(param -> new ListCellArea());
+        panelItemsInArea.setCellFactory(param -> new ListCellItem());
+        panelItemsInBackpack.setCellFactory(param -> new ListCellItem());
+        panelNPCsInArea.setCellFactory(param -> new ListCellNPC());
     }
 
     /**
      * Metoda nastaví souřadnice prostorů na mapě
      */
-    private void vlozSouradnice() {
-        souradniceProstoru.put("domov", new Point2D(380, 100));
-        souradniceProstoru.put("jidelna", new Point2D(435, 130));
-        souradniceProstoru.put("smetiste", new Point2D(260, 155));
-        souradniceProstoru.put("pracak", new Point2D(150, 60));
-        souradniceProstoru.put("sekac", new Point2D(10, 130));
-        souradniceProstoru.put("zastavarna", new Point2D(125, 205));
-        souradniceProstoru.put("trafika", new Point2D(590, 110));
-        souradniceProstoru.put("lidl", new Point2D(590, 170));
+    private void insertCoordinates() {
+        AreaCoordinates.put("domov", new Point2D(380, 100));
+        AreaCoordinates.put("jidelna", new Point2D(435, 130));
+        AreaCoordinates.put("smetiste", new Point2D(260, 155));
+        AreaCoordinates.put("pracak", new Point2D(150, 60));
+        AreaCoordinates.put("sekac", new Point2D(10, 130));
+        AreaCoordinates.put("zastavarna", new Point2D(125, 205));
+        AreaCoordinates.put("trafika", new Point2D(590, 110));
+        AreaCoordinates.put("lidl", new Point2D(590, 170));
     }
 
     /**
      * Metoda nejdříve vyčistí seznam východů v panelu východů (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
-    private void aktualizujSeznamVychodu() {
-        seznamVychodu.clear();
-        seznamVychodu.addAll(hra.getHerniPlan().getAktualniProstor().getVychody());
+    private void updateListOfExits() {
+        listOfExits.clear();
+        listOfExits.addAll(game.getGamePlan().getCurrentArea().getExits());
     }
 
     /**
      * Metoda nejdřívé vyčistí seznam věcí v prostoru (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
-    private void aktualizujSeznamVeciVProstoru() {
-        seznamVeciVProstoru.clear();
-        seznamVeciVProstoru.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamVeci());
+    private void updateListOfItemsInArea() {
+        listOfItemsInArea.clear();
+        listOfItemsInArea.addAll(game.getGamePlan().getCurrentArea().getItemList());
     }
 
     /**
      * Metoda nejdříve vyčistí seznam věcí v batohu (ListView) a vloží do něj aktualizovaný seznam
      */
     @FXML
-    private void aktualizujSeznamVeciVBatohu() {
-        seznamVeciVBatohu.clear();
-        seznamVeciVBatohu.addAll(hra.getBatoh().getObsahBatohu());
+    private void updateListOfItemsInBackpack() {
+        listOfItemsInBackpack.clear();
+        listOfItemsInBackpack.addAll(game.getBackpack().getBackpackContents());
     }
 
     /**
      * Metoda nejdříve vyčistí seznam postav v prostoru a vloží do něj aktualizovaný seznam
      */
     @FXML
-    private void aktualizujSeznamPostavVProstoru() {
-        seznamPostavVProstoru.clear();
-        seznamPostavVProstoru.addAll(hra.getHerniPlan().getAktualniProstor().getSeznamPostav());
+    private void updateListOfNPCsInArea() {
+        listOfNPCsInArea.clear();
+        listOfNPCsInArea.addAll(game.getGamePlan().getCurrentArea().getNPCList());
     }
 
     /**
      * Metoda aktualizuje polohu hráče na mapě, aktualizuje popis prostoru
      */
     @FXML
-    private void aktualizujPolohuHrace() {
-        String prostor = hra.getHerniPlan().getAktualniProstor().getNazev();
-        hrac.setLayoutX(souradniceProstoru.get(prostor).getX());
-        hrac.setLayoutY(souradniceProstoru.get(prostor).getY());
-        popisProstoru.setText("Nacházíš se " + hra.getHerniPlan().getAktualniProstor().getPopis().replaceAll("\n", ""));
+    private void updatePlayerLocation() {
+        String area = game.getGamePlan().getCurrentArea().getName();
+        player.setLayoutX(AreaCoordinates.get(area).getX());
+        player.setLayoutY(AreaCoordinates.get(area).getY());
+        labelAreaDescription.setText("Nacházíš se " + game.getGamePlan().getCurrentArea().getDescription().replaceAll("\n", ""));
     }
 
     /**
      * Metoda aktualizuje ukazatel peněz
      */
     @FXML
-    private void aktualizujPenize() {
-        ukazatelPenez.setText(hra.getPenize());
+    private void updateMoney() {
+        labelCurrentMoney.setText(game.getMoney());
     }
 
     /**
@@ -197,21 +197,21 @@ public class HomeController {
      * zamezí interakci s panely a tlačítkem, ukáže konečné okno
      */
     @FXML
-    private void aktualizujKonecHry() {
-        tlacitkoNapoveda.setDisable(hra.konecHry());
-        panelVychodu.setDisable(hra.konecHry());
-        panelVeciVProstoru.setDisable(hra.konecHry());
-        panelVeciVBatohu.setDisable(hra.konecHry());
-        panelPostavVProstoru.setDisable(hra.konecHry());
-        labelVychody.setDisable(hra.konecHry());
-        labelVeciVBatohu.setDisable(hra.konecHry());
-        labelPostavyVProstoru.setDisable(hra.konecHry());
-        labelVeciVProstoru.setDisable(hra.konecHry());
-        labelPenizeVKapse.setDisable(hra.konecHry());
-        ukazatelPenez.setDisable(hra.konecHry());
+    private void updateGameEnd() {
+        buttonHelp.setDisable(game.gameEnd());
+        panelExits.setDisable(game.gameEnd());
+        panelItemsInArea.setDisable(game.gameEnd());
+        panelItemsInBackpack.setDisable(game.gameEnd());
+        panelNPCsInArea.setDisable(game.gameEnd());
+        labelExits.setDisable(game.gameEnd());
+        labelItemsInBackpack.setDisable(game.gameEnd());
+        labelNPCsInArea.setDisable(game.gameEnd());
+        labelItemsInArea.setDisable(game.gameEnd());
+        labelMoneyStatus.setDisable(game.gameEnd());
+        labelCurrentMoney.setDisable(game.gameEnd());
 
-        if (hra.konecHry()) {
-            dohraniHry();
+        if (game.gameEnd()) {
+            gameFinish();
         }
     }
 
@@ -219,12 +219,12 @@ public class HomeController {
      * Metoda nechá zpracovat zadaný příkaz "jdi" metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
      * dále vymaže obsah hlášení při interakci s věcmi
      *
-     * @param prikaz který se má zpracovat
+     * @param command který se má zpracovat
      */
     @FXML
-    private void zpracujPrechodDoJinehoProstoru(String prikaz) {
-        hlaseniPriInterakciSVecmi.setText("");
-        hra.zpracujPrikaz(prikaz);
+    private void processAreaTransition(String command) {
+        labelItemInteractionInfo.setText("");
+        game.processCommand(command);
     }
 
     /**
@@ -234,43 +234,43 @@ public class HomeController {
      * @param prikaz který se má zpracovat
      */
     @FXML
-    private void zpracujInterakciSVeci(String prikaz) {
-        String hlaseni = hra.zpracujPrikaz(prikaz);
-        hlaseniPriInterakciSVecmi.setText(hlaseni);
+    private void processItemInteraction(String prikaz) {
+        String info = game.processCommand(prikaz);
+        labelItemInteractionInfo.setText(info);
     }
 
     /**
      * Metoda nechá zpracovat zadaný příkaz "promluv" metodou ve třídě "Hra" a výsledek vrátí v podobě vyskakovacího okna
      *
-     * @param prikaz který se má zpracovat
+     * @param command který se má zpracovat
      */
     @FXML
-    private void zpracujDialogOkno(String prikaz) {
-        String dialog = hra.zpracujPrikaz(prikaz);
-        Alert dialogOkno = new Alert(Alert.AlertType.INFORMATION);
-        dialogOkno.setTitle("Dialog");
-        dialogOkno.setHeaderText(dialog);
-        dialogOkno.show();
+    private void processDialogWindow(String command) {
+        String dialog = game.processCommand(command);
+        Alert dialogWindow = new Alert(Alert.AlertType.INFORMATION);
+        dialogWindow.setTitle("Dialog");
+        dialogWindow.setHeaderText(dialog);
+        dialogWindow.show();
     }
 
     /**
      * Metoda nechá zpracovat zadaný příkaz metodou ve třídě "Hra"
      *
-     * @param prikaz který se má zpracovat
+     * @param command který se má zpracovat
      */
-    private void zpracujDialog(String prikaz) {
-        hra.zpracujPrikaz(prikaz);
+    private void processDialog(String command) {
+        game.processCommand(command);
     }
 
     /**
      * Metoda zajistí, aby se po kliknutí na prostor v panelu východů (ListView) do daného prostoru přešlo
      */
     @FXML
-    private void klikPanelVychodu() {
-        Area cil = panelVychodu.getSelectionModel().getSelectedItem();
-        if (cil == null) return;
-        String prikaz = CommandGo.NAZEV + " " + cil.getNazev();
-        zpracujPrechodDoJinehoProstoru(prikaz);
+    private void clickExitsPanel() {
+        Area target = panelExits.getSelectionModel().getSelectedItem();
+        if (target == null) return;
+        String command = CommandGo.NAME + " " + target.getName();
+        processAreaTransition(command);
     }
 
     /**
@@ -278,16 +278,16 @@ public class HomeController {
      * věc buď sebrala nebo koupila (podle toho, kde se hráč nachází)
      */
     @FXML
-    private void klikPanelVeciVProstoru() {
-        Item cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
-        if (cil == null) return;
-        String prikaz;
-        if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl") || hra.getHerniPlan().getAktualniProstor().getNazev().equals("trafika")) {
-            prikaz = CommandBuy.NAZEV + " " + cil.getJmeno();
+    private void clickItemsInAreaPanel() {
+        Item target = panelItemsInArea.getSelectionModel().getSelectedItem();
+        if (target == null) return;
+        String command;
+        if (game.getGamePlan().getCurrentArea().getName().equals("lidl") || game.getGamePlan().getCurrentArea().getName().equals("kiosk")) {
+            command = CommandBuy.NAME + " " + target.getName();
         } else {
-            prikaz = CommandPickUp.NAZEV + " " + cil.getJmeno();
+            command = CommandPickUp.NAZEV + " " + target.getName();
         }
-        zpracujInterakciSVeci(prikaz);
+        processItemInteraction(command);
     }
 
     /**
@@ -295,16 +295,16 @@ public class HomeController {
      * věc buď vyndala nebo vyměnila (podle toho, kde se hráč nachází)
      */
     @FXML
-    private void klikPanelVeciVBatohu() {
-        Item cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
-        if (cil == null) return;
-        String prikaz;
-        if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl")) {
-            prikaz = CommandReturn.NAZEV + " " + cil.getJmeno();
+    private void clickItemsInBackpackPanel() {
+        Item target = panelItemsInBackpack.getSelectionModel().getSelectedItem();
+        if (target == null) return;
+        String command;
+        if (game.getGamePlan().getCurrentArea().getName().equals("lidl")) {
+            command = CommandReturn.NAME + " " + target.getName();
         } else {
-            prikaz = CommandThrowAway.NAZEV + " " + cil.getJmeno();
+            command = CommandThrowAway.NAME + " " + target.getName();
         }
-        zpracujInterakciSVeci(prikaz);
+        processItemInteraction(command);
     }
 
     /**
@@ -315,18 +315,18 @@ public class HomeController {
      * (protože se již ukazuje okno s epilogem, tak by se dané okno s dialogem ukázalo až v případné nové hře - což nechceme)
      */
     @FXML
-    private void klikPanelPostavVProstoru() {
-        NPC cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
-        if (cil == null) return;
-        String prikaz = CommandTalk.NAZEV + " " + cil.getJmeno();
+    private void clickNPCsInAreaPanel() {
+        NPC target = panelNPCsInArea.getSelectionModel().getSelectedItem();
+        if (target == null) return;
+        String command = CommandTalk.NAME + " " + target.getName();
 
         if (
-                (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Pepa") && (hra.getProgressInstance().getProgress() >= 6))
-                        || (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Podezrely") && hra.getProgressInstance().getProgress() == 3)
+                (game.getGamePlan().getCurrentArea().containsNPC("Pepa") && (game.getProgressInstance().getProgress() >= 6))
+                        || (game.getGamePlan().getCurrentArea().containsNPC("Suspect") && game.getProgressInstance().getProgress() == 3)
         ) {
-            zpracujDialog(prikaz);
+            processDialog(command);
         } else {
-            zpracujDialogOkno(prikaz);
+            processDialogWindow(command);
         }
     }
 
@@ -335,12 +335,12 @@ public class HomeController {
      * se zobrazí nápověda v podobě vyskakovacího okna (WevView) z html souboru
      */
     @FXML
-    private void klikNapoveda() {
-        Stage napovedaStage = new Stage();
+    private void clickHelp() {
+        Stage helpStage = new Stage();
         WebView wv = new WebView();
-        Scene napovedaScena = new Scene(wv);
-        napovedaStage.setScene(napovedaScena);
-        napovedaStage.show();
+        Scene helpScene = new Scene(wv);
+        helpStage.setScene(helpScene);
+        helpStage.show();
         wv.getEngine().load(getClass().getResource("help.html").toExternalForm());
     }
 
@@ -348,21 +348,21 @@ public class HomeController {
      * Metoda zobrazí okno s epilogem a nabídne buď ukončení hry nebo spuštění nové
      */
     @FXML
-    private void dohraniHry() {
-        Alert konec = new Alert(Alert.AlertType.CONFIRMATION);
-        konec.setTitle("Konec hry");
-        konec.setContentText("Toto je konec hry, díky za zahrání!");
-        konec.setHeaderText(hra.vratEpilog());
+    private void gameFinish() {
+        Alert end = new Alert(Alert.AlertType.CONFIRMATION);
+        end.setTitle("Konec hry");
+        end.setContentText("Toto je konec hry, díky za zahrání!");
+        end.setHeaderText(game.returnEpilogue());
 
-        ButtonType novaHra = new ButtonType("Nová hra");
-        ButtonType ukoncit = new ButtonType("Ukončit");
-        konec.getButtonTypes().setAll(novaHra, ukoncit);
+        ButtonType newGame = new ButtonType("Nová hra");
+        ButtonType exit = new ButtonType("Ukončit");
+        end.getButtonTypes().setAll(newGame, exit);
 
-        Optional<ButtonType> result = konec.showAndWait();
-        if (result.isPresent() && result.get() == ukoncit) {
-            ukoncitHru();
-        } else if (result.isPresent() && result.get() == novaHra) {
-            novaHra();
+        Optional<ButtonType> result = end.showAndWait();
+        if (result.isPresent() && result.get() == exit) {
+            exitGame();
+        } else if (result.isPresent() && result.get() == newGame) {
+            newGame();
         }
     }
 
@@ -370,7 +370,7 @@ public class HomeController {
      * Metoda zajistí, že po kliknutí na "Ukončit" se hra zavře
      */
     @FXML
-    private void ukoncitHru() {
+    private void exitGame() {
         Platform.exit();
     }
 
@@ -378,8 +378,8 @@ public class HomeController {
      * Metoda zajistí, že po kliknutí na položku "Nová hra" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
      */
     @FXML
-    private void novaHra() {
-        hra = new Game();
+    private void newGame() {
+        game = new Game();
         initialize();
     }
 }

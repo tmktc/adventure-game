@@ -10,30 +10,30 @@ import java.util.Objects;
  */
 public class Item {
 
-    private final String jmeno;
-    private final String jmenoCele;
-    private final boolean vymenitelna;
-    private final int cena;
-    private boolean sebratelna;
-    private boolean koupitelna;
+    private final String name;
+    private final String fullName;
+    private final boolean returnable;
+    private final int price;
+    private boolean canBePickedUp;
+    private boolean purchasable;
 
 
     /**
      * Konstruktor
      *
-     * @param jmeno       veci
-     * @param sebratelna  jestli jde sebrat
-     * @param koupitelna  jestli jde koupit
-     * @param vymenitelna jestli jde vymenit
-     * @param cena        veci
+     * @param name       veci
+     * @param canBePickedUp  jestli jde sebrat
+     * @param purchasable  jestli jde koupit
+     * @param returnable jestli jde vymenit
+     * @param price        veci
      */
-    public Item(String jmeno, String jmenoCele, boolean sebratelna, boolean koupitelna, boolean vymenitelna, int cena) {
-        this.jmeno = jmeno;
-        this.jmenoCele = jmenoCele;
-        this.sebratelna = sebratelna;
-        this.koupitelna = koupitelna;
-        this.vymenitelna = vymenitelna;
-        this.cena = cena;
+    public Item(String name, String fullName, boolean canBePickedUp, boolean purchasable, boolean returnable, int price) {
+        this.name = name;
+        this.fullName = fullName;
+        this.canBePickedUp = canBePickedUp;
+        this.purchasable = purchasable;
+        this.returnable = returnable;
+        this.price = price;
     }
 
     /**
@@ -41,8 +41,8 @@ public class Item {
      *
      * @return jméno věci
      */
-    public String getJmeno() {
-        return jmeno;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -50,8 +50,8 @@ public class Item {
      *
      * @return jméno s mezerami a diakritikou
      */
-    public String getJmenoCele() {
-        return jmenoCele;
+    public String getFullName() {
+        return fullName;
     }
 
     /**
@@ -59,8 +59,8 @@ public class Item {
      *
      * @return true/false
      */
-    public boolean isSebratelna() {
-        return sebratelna;
+    public boolean getCanBePickedUp() {
+        return canBePickedUp;
     }
 
     /**
@@ -68,8 +68,8 @@ public class Item {
      *
      * @param s hodnota boolean, která se má nastavit
      */
-    public void setSebratelna(boolean s) {
-        this.sebratelna = s;
+    public void setCanBePickedUp(boolean s) {
+        this.canBePickedUp = s;
     }
 
     /**
@@ -77,8 +77,8 @@ public class Item {
      *
      * @return true/false
      */
-    public boolean isKoupitelna() {
-        return koupitelna;
+    public boolean isPurchasable() {
+        return purchasable;
     }
 
     /**
@@ -86,8 +86,8 @@ public class Item {
      *
      * @param k hodnota boolean, která se má nastavit
      */
-    public void setKoupitelna(boolean k) {
-        this.koupitelna = k;
+    public void setPurchasable(boolean k) {
+        this.purchasable = k;
     }
 
     /**
@@ -95,8 +95,8 @@ public class Item {
      *
      * @return true/false
      */
-    public boolean isVymenitelna() {
-        return vymenitelna;
+    public boolean isReturnable() {
+        return returnable;
     }
 
     /**
@@ -104,8 +104,8 @@ public class Item {
      *
      * @return cena věci
      */
-    public int getCena() {
-        return cena;
+    public int getPrice() {
+        return price;
     }
 
     /**
@@ -119,7 +119,7 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(jmeno, item.jmeno);
+        return Objects.equals(name, item.name);
     }
 
     /**
@@ -129,7 +129,7 @@ public class Item {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(jmeno);
+        return Objects.hash(name);
     }
 
     /**
@@ -139,6 +139,6 @@ public class Item {
      */
     @Override
     public String toString() {
-        return getJmeno();
+        return getName();
     }
 }

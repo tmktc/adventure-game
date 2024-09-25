@@ -13,14 +13,14 @@ import java.util.Map;
  */
 public class Backpack {
 
-    private int kapacita = 5;
-    private Map<String, Item> seznamVeci;
+    private int capacity = 5;
+    private Map<String, Item> itemList;
 
     /**
      * Konstruktor
      */
     public Backpack() {
-        seznamVeci = new HashMap<>();
+        itemList = new HashMap<>();
     }
 
     /**
@@ -29,9 +29,9 @@ public class Backpack {
      * @param item, kterou chceme do batohu vložit
      * @return true, pokud byla věc do batohu vložena, false, pokud nikoliv
      */
-    public boolean vlozVec(Item item) {
-        if (seznamVeci.size() < kapacita) {
-            seznamVeci.put(item.getJmeno(), item);
+    public boolean putItem(Item item) {
+        if (itemList.size() < capacity) {
+            itemList.put(item.getName(), item);
             return true;
         }
         return false;
@@ -40,13 +40,13 @@ public class Backpack {
     /**
      * Metoda odstraní věc z batohu - používána při předávání věcí jiným postavám
      *
-     * @param vec, kterou chceme z batohu odstranit
+     * @param item, kterou chceme z batohu odstranit
      * @return zpráva, že věc byla předána
      */
-    public String odstranVec(String vec) {
-        if (seznamVeci.containsKey(vec)) {
-            String v = vyberVec(vec).getJmenoCele();
-            seznamVeci.remove(vec);
+    public String removeItem(String item) {
+        if (itemList.containsKey(item)) {
+            String v = selectItem(item).getFullName();
+            itemList.remove(item);
             return " - Předali jste " + v;
         }
         return null;
@@ -55,25 +55,25 @@ public class Backpack {
     /**
      * Metoda zkontroluje, zda se daná věc v batohu nachází
      *
-     * @param jmenoVeci, kterou chceme zkontrolovat
+     * @param itemName, kterou chceme zkontrolovat
      * @return true, pokud ano, false, pokud ne
      */
-    public boolean obsahujeVec(String jmenoVeci) {
-        return seznamVeci.containsKey(jmenoVeci);
+    public boolean containsItem(String itemName) {
+        return itemList.containsKey(itemName);
     }
 
 
     /**
      * Metoda najde věc v batohu a vrátí ji
      *
-     * @param jmenoVeci, kterou chceme najít
+     * @param itemName, kterou chceme najít
      * @return danou věc, pokud v batohu je, null, pokud v batohu není
      */
-    public Item vyberVec(String jmenoVeci) {
-        Item itemVBatohu;
-        if (seznamVeci.containsKey(jmenoVeci)) {
-            itemVBatohu = seznamVeci.get(jmenoVeci);
-            return itemVBatohu;
+    public Item selectItem(String itemName) {
+        Item itemInBackpack;
+        if (itemList.containsKey(itemName)) {
+            itemInBackpack = itemList.get(itemName);
+            return itemInBackpack;
         }
         return null;
     }
@@ -83,12 +83,12 @@ public class Backpack {
      *
      * @return seznam věcí v batohu
      */
-    public String seznamVeci() {
-        String nazvy = "věci v batohu: ";
-        for (String jmenoVeci : seznamVeci.keySet()) {
-            nazvy += jmenoVeci + " ";
+    public String itemList() {
+        String itemList = "věci v batohu: ";
+        for (String item : this.itemList.keySet()) {
+            itemList += item + " ";
         }
-        return nazvy;
+        return itemList;
     }
 
     /**
@@ -96,16 +96,16 @@ public class Backpack {
      *
      * @return kolekce věcí v batohu
      */
-    public Collection<Item> getObsahBatohu() {
-        return Collections.unmodifiableCollection(seznamVeci.values());
+    public Collection<Item> getBackpackContents() {
+        return Collections.unmodifiableCollection(itemList.values());
     }
 
     /**
      * Nastavuje hodnotu kapacita - použito v testech
      *
-     * @param kapacita na kterou má být nastavena
+     * @param capacity na kterou má být nastavena
      */
-    public void setKapacita(int kapacita) {
-        this.kapacita = kapacita;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

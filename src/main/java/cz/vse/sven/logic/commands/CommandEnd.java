@@ -12,7 +12,7 @@ import cz.vse.sven.logic.game.Game;
 
 public class CommandEnd implements ICommand {
 
-    private static final String NAZEV = "konec";
+    private static final String NAME = "end";
 
     private Game game;
 
@@ -33,9 +33,9 @@ public class CommandEnd implements ICommand {
      */
 
     @Override
-    public String provedPrikaz(String... parametry) {
+    public String executeCommand(String... parameters) {
 
-        game.setKonecHry();
+        game.setGameEnd();
         return "Hra byla ukončena příkazem konec. Díky za zahrání.";
     }
 
@@ -45,7 +45,7 @@ public class CommandEnd implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

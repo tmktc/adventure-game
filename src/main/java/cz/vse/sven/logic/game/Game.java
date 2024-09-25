@@ -24,13 +24,13 @@ import java.util.Set;
 
 public class Game implements IGame {
 
-    private ListOfCommands platnePrikazy;    // obsahuje seznam přípustných příkazů
+    private ListOfCommands validCommands;    // obsahuje seznam přípustných příkazů
     private GamePlan gamePlan;
-    private boolean konecHry = false;
+    private boolean gameEnd = false;
     private Backpack backpack;
     private Money money;
     private Progress progress;
-    private Map<GameChange, Set<Observer>> seznamPozorovatelu = new HashMap<>();
+    private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
      * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan), seznam platných příkazů a seznam pozorovatelů.
@@ -40,26 +40,26 @@ public class Game implements IGame {
         backpack = new Backpack();
         money = new Money();
         progress = new Progress();
-        platnePrikazy = new ListOfCommands();
-        platnePrikazy.vlozPrikaz(new CommandHelp(platnePrikazy));
-        platnePrikazy.vlozPrikaz(new CommandGo(gamePlan, progress));
-        platnePrikazy.vlozPrikaz(new CommandEnd(this));
-        platnePrikazy.vlozPrikaz(new CommandPickUp(gamePlan, backpack));
-        platnePrikazy.vlozPrikaz(new CommandBuy(gamePlan, backpack, money));
-        platnePrikazy.vlozPrikaz(new CommandBackpack(backpack));
-        platnePrikazy.vlozPrikaz(new CommandTalk(gamePlan, backpack, money, progress, this));
-        platnePrikazy.vlozPrikaz(new CommandReturn(gamePlan, backpack, money));
-        platnePrikazy.vlozPrikaz(new CommandMoney(money));
-        platnePrikazy.vlozPrikaz(new CommandThrowAway(gamePlan, backpack));
+        validCommands = new ListOfCommands();
+        validCommands.insertCommand(new CommandHelp(validCommands));
+        validCommands.insertCommand(new CommandGo(gamePlan, progress));
+        validCommands.insertCommand(new CommandEnd(this));
+        validCommands.insertCommand(new CommandPickUp(gamePlan, backpack));
+        validCommands.insertCommand(new CommandBuy(gamePlan, backpack, money));
+        validCommands.insertCommand(new CommandBackpack(backpack));
+        validCommands.insertCommand(new CommandTalk(gamePlan, backpack, money, progress, this));
+        validCommands.insertCommand(new CommandReturn(gamePlan, backpack, money));
+        validCommands.insertCommand(new CommandMoney(money));
+        validCommands.insertCommand(new CommandThrowAway(gamePlan, backpack));
         for (GameChange gameChange : GameChange.values()) {
-            seznamPozorovatelu.put(gameChange, new HashSet<>());
+            listOfObservers.put(gameChange, new HashSet<>());
         }
     }
 
     /**
      * Vrátí úvodní zprávu pro hráče.
      */
-    public String vratUvitani() {
+    public String returnIntroduction() {
         return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
                 "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
                 "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
@@ -69,27 +69,27 @@ public class Game implements IGame {
     /**
      * Vrátí závěrečnou zprávu pro hráče.
      */
-    public String vratEpilog() {
-        String epilog = "";
-        if (gamePlan.isPerfektniVyhra()) {
-            epilog = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
+    public String returnEpilogue() {
+        String epilogue = "";
+        if (gamePlan.isPerfectWin()) {
+            epilogue = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
                     "Perfektni výhra, gratuluji.\n";
         }
-        if (gamePlan.isVyhra()) {
-            epilog = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
+        if (gamePlan.isWin()) {
+            epilogue = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
                     "Kim ale dneska bude o hladu - příště by jste to mohli napravit.\n" +
                     "Výhra, dobrá práce.\n";
         }
-        if (gamePlan.isProhra()) {
+        if (gamePlan.isLoss()) {
             if (progress.getProgress() == 3) {
-                epilog = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
+                epilogue = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
                         "\nProhra, hodně štěstí příště.\n";
             } else {
-                epilog = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
+                epilogue = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
                         "\nProhra, hodně štěstí příště.\n";
             }
         }
-        return epilog;
+        return epilogue;
     }
 
     /**
@@ -98,42 +98,42 @@ public class Game implements IGame {
      * Pokud ano spustí samotné provádění příkazu
      * a upozorní pozorovatele na kontrolu možné změny věcí a postav v prostoru.
      *
-     * @param radek text, který zadal uživatel jako příkaz do hry.
+     * @param line text, který zadal uživatel jako příkaz do hry.
      * @return vrací se řetězec, který se má vypsat na obrazovku
      */
-    public String zpracujPrikaz(String radek) {
-        String[] slova = radek.split("[ \t]+");
-        String slovoPrikazu = slova[0];
-        String[] parametry = new String[slova.length - 1];
-        for (int i = 0; i < parametry.length; i++) {
-            parametry[i] = slova[i + 1];
+    public String processCommand(String line) {
+        String[] words = line.split("[ \t]+");
+        String commandWord = words[0];
+        String[] parameters = new String[words.length - 1];
+        for (int i = 0; i < parameters.length; i++) {
+            parameters[i] = words[i + 1];
         }
-        String textKVypsani;
-        if (platnePrikazy.jePlatnyPrikaz(slovoPrikazu)) {
-            ICommand prikaz = platnePrikazy.vratPrikaz(slovoPrikazu);
-            textKVypsani = prikaz.provedPrikaz(parametry);
+        String textToShow;
+        if (validCommands.isValidCommand(commandWord)) {
+            ICommand command = validCommands.returnCommand(commandWord);
+            textToShow = command.executeCommand(parameters);
         } else {
-            textKVypsani = "Neznámý příkaz";
+            textToShow = "Neznámý příkaz";
         }
-        upozorniPozorovatele(GameChange.ZMENA_VECI);
-        upozorniPozorovatele(GameChange.ZMENA_POSTAV);
-        upozorniPozorovatele(GameChange.ZMENA_PENEZ);
-        return textKVypsani;
+        notifyObserver(GameChange.ITEM_CHANGE);
+        notifyObserver(GameChange.NPC_CHANGE);
+        notifyObserver(GameChange.MONEY_CHANGE);
+        return textToShow;
     }
 
     /**
      * Vrací true, pokud hra skončila.
      */
-    public boolean konecHry() {
-        return konecHry;
+    public boolean gameEnd() {
+        return gameEnd;
     }
 
     /**
      * Nastaví, že je konec hry a upozorní na to pozorovatele
      */
-    public void setKonecHry() {
-        this.konecHry = true;
-        upozorniPozorovatele(GameChange.KONEC_HRY);
+    public void setGameEnd() {
+        this.gameEnd = true;
+        notifyObserver(GameChange.GAME_END);
     }
 
     /**
@@ -142,7 +142,7 @@ public class Game implements IGame {
      *
      * @return odkaz na herní plán
      */
-    public GamePlan getHerniPlan() {
+    public GamePlan getGamePlan() {
         return gamePlan;
     }
 
@@ -151,7 +151,7 @@ public class Game implements IGame {
      *
      * @return odkaz na batoh
      */
-    public Backpack getBatoh() {
+    public Backpack getBackpack() {
         return backpack;
     }
 
@@ -169,7 +169,7 @@ public class Game implements IGame {
      *
      * @return hodnota peněz
      */
-    public String getPenize() {
+    public String getMoney() {
         return money.toString();
     }
 
@@ -179,16 +179,16 @@ public class Game implements IGame {
      * @param observer který má být přidán
      */
     @Override
-    public void registruj(GameChange gameChange, Observer observer) {
-        seznamPozorovatelu.get(gameChange).add(observer);
+    public void register(GameChange gameChange, Observer observer) {
+        listOfObservers.get(gameChange).add(observer);
     }
 
     /**
      * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
      */
-    private void upozorniPozorovatele(GameChange gameChange) {
-        for (Observer observer : seznamPozorovatelu.get(gameChange)) {
-            observer.aktualizuj();
+    private void notifyObserver(GameChange gameChange) {
+        for (Observer observer : listOfObservers.get(gameChange)) {
+            observer.update();
         }
     }
 }

@@ -26,10 +26,10 @@ public class ListCellItem extends ListCell<Item> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(item.getJmenoCele());
+            setText(item.getFullName());
             setFont(Font.font(13));
-            String cesta = getClass().getResource("/cz/vse/sven/main/items/" + item.getJmeno().toLowerCase() + ".png").toExternalForm();
-            ImageView iw = new ImageView(cesta);
+            String path = getClass().getResource("/cz/vse/sven/main/items/" + item.getName().toLowerCase() + ".png").toExternalForm();
+            ImageView iw = new ImageView(path);
             iw.setFitWidth(35);
             iw.setPreserveRatio(true);
             setGraphic(iw);

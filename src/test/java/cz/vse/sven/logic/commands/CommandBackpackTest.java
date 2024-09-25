@@ -23,17 +23,17 @@ public class CommandBackpackTest {
         backpack = new Backpack();
         Item item1 = new Item("Vec1", "Věc1", true, false, false, 0);
         Item item2 = new Item("Vec2", "Věc2", true, false, false, 0);
-        backpack.vlozVec(item1);
-        backpack.vlozVec(item2);
+        backpack.putItem(item1);
+        backpack.putItem(item2);
     }
 
     /**
      * Otestuje, zda příkaz správně vypíše obsah batohu
      */
     @Test
-    public void provedPrikaz() {
+    public void executeCommand() {
         CommandBackpack prikazBatoh = new CommandBackpack(backpack);
-        assertEquals("věci v batohu: Vec1 Vec2 ", prikazBatoh.provedPrikaz());
+        assertEquals("věci v batohu: Vec1 Vec2 ", prikazBatoh.executeCommand());
 
     }
 }

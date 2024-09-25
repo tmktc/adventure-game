@@ -10,29 +10,27 @@ import cz.vse.sven.main.Observer.Observable;
  * @version únor 2024
  */
 public interface IGame extends Observable {
-    //== VEŘEJNÉ KONSTANTY =====================================================
-    //== DEKLAROVANÉ METODY ====================================================
 
     /**
      * Vrátí úvodní zprávu pro hráče.
      *
      * @return vrací se řetězec, který se má vypsat na obrazovku
      */
-    String vratUvitani();
+    String returnIntroduction();
 
     /**
      * Vrátí závěrečnou zprávu pro hráče.
      *
      * @return vrací se řetězec, který se má vypsat na obrazovku
      */
-    String vratEpilog();
+    String returnEpilogue();
 
     /**
      * Vrací informaci o tom, zda hra již skončila, je jedno zda výhrou, prohrou nebo příkazem konec.
      *
      * @return vrací true, pokud hra skončila
      */
-    boolean konecHry();
+    boolean gameEnd();
 
     /**
      * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
@@ -42,7 +40,7 @@ public interface IGame extends Observable {
      * @param radek text, který zadal uživatel jako příkaz do hry.
      * @return vrací se řetězec, který se má vypsat na obrazovku
      */
-    String zpracujPrikaz(String radek);
+    String processCommand(String radek);
 
 
     /**
@@ -51,21 +49,21 @@ public interface IGame extends Observable {
      *
      * @return odkaz na herní plán
      */
-    GamePlan getHerniPlan();
+    GamePlan getGamePlan();
 
     /**
      * Metoda vrátí odkaz na batoh ve hře
      *
      * @return odkaz na batoh
      */
-    Backpack getBatoh();
+    Backpack getBackpack();
 
     /**
      * Vrátí hodnotu peněz
      *
      * @return hodnota peněz
      */
-    String getPenize();
+    String getMoney();
 
     /**
      * Vrátí instanci třídy peněz, která uchovává stav peněz v aktuální instanci hry
@@ -73,7 +71,4 @@ public interface IGame extends Observable {
      * @return instance peněz
      */
     Progress getProgressInstance();
-
-    //== ZDĚDĚNÉ METODY ========================================================
-    //== INTERNÍ DATOVÉ TYPY ===================================================
 }

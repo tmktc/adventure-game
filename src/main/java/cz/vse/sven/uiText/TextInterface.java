@@ -32,17 +32,17 @@ public class TextInterface {
      * hodnotu true). Nakonec vypíše text epilogu a po 15 sekundách se automaticky zavře.
      */
     public void hraj() {
-        System.out.println(hra.vratUvitani() + hra.getHerniPlan().getAktualniProstor().dlouhyPopis());
+        System.out.println(hra.returnIntroduction() + hra.getGamePlan().getCurrentArea().longDescription());
 
         // základní cyklus programu - opakovaně se čtou příkazy a poté
         // se provádějí do konce hry.
 
-        while (!hra.konecHry()) {
+        while (!hra.gameEnd()) {
             String radek = prectiString();
-            System.out.println(hra.zpracujPrikaz(radek));
+            System.out.println(hra.processCommand(radek));
         }
 
-        System.out.println("\n--------------------------------------------------\n\n" + hra.vratEpilog());
+        System.out.println("\n--------------------------------------------------\n\n" + hra.returnEpilogue());
         System.out.println("Konec hry. Okno se automaticky zavře za 15 sekund.");
 
         try {

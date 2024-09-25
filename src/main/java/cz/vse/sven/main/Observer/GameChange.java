@@ -8,9 +8,9 @@ package cz.vse.sven.main.Observer;
  */
 public enum GameChange {
 
-    ZMENA_PROSTORU,
-    ZMENA_VECI,
-    ZMENA_POSTAV,
-    ZMENA_PENEZ,
-    KONEC_HRY
+    AREA_CHANGE,
+    ITEM_CHANGE,
+    NPC_CHANGE,
+    MONEY_CHANGE,
+    GAME_END
 }

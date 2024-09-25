@@ -11,7 +11,7 @@ import cz.vse.sven.logic.game.Money;
  */
 public class CommandMoney implements ICommand {
 
-    private static final String NAZEV = "penize";
+    private static final String NAME = "money";
     private Money money;
 
 
@@ -30,8 +30,8 @@ public class CommandMoney implements ICommand {
      * @return hlášku s početem peněz
      */
     @Override
-    public String provedPrikaz(String... parametry) {
-        return "V kapse máte " + money.getPenize() + " Euro";
+    public String executeCommand(String... parameters) {
+        return "V kapse máte " + money.getMoney() + " Euro";
     }
 
     /**
@@ -40,7 +40,7 @@ public class CommandMoney implements ICommand {
      * @ return nazev prikazu
      */
     @Override
-    public String getNazev() {
-        return NAZEV;
+    public String getName() {
+        return NAME;
     }
 }

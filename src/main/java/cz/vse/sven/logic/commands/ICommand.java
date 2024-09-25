@@ -16,14 +16,14 @@ public interface ICommand {
      * příkazy jdi, seber, polož mají jeden parametr
      * příkaz pouzij může mít dva parametry.
      *
-     * @param parametry počet parametrů závisí na konkrétním příkazu.
+     * @param parameters počet parametrů závisí na konkrétním příkazu.
      */
-    String provedPrikaz(String... parametry);
+    String executeCommand(String... parameters);
 
     /**
      * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
      *
      * @return nazev prikazu
      */
-    String getNazev();
+    String getName();
 }

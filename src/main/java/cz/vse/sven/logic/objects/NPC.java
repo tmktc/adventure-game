@@ -10,18 +10,18 @@ import java.util.Objects;
  */
 public class NPC {
 
-    private final String jmeno;
+    private final String name;
 
-    private final String jmenoCele;
+    private final String fullName;
 
     /**
      * Konstruktor
      *
-     * @param jmeno postavy
+     * @param name postavy
      */
-    public NPC(String jmeno, String jmenoCele) {
-        this.jmeno = jmeno;
-        this.jmenoCele = jmenoCele;
+    public NPC(String name, String fullName) {
+        this.name = name;
+        this.fullName = fullName;
     }
 
     /**
@@ -29,8 +29,8 @@ public class NPC {
      *
      * @return jméno postavy
      */
-    public String getJmeno() {
-        return jmeno;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -38,8 +38,8 @@ public class NPC {
      *
      * @return jméno s mezerami a diakritikou
      */
-    public String getJmenoCele() {
-        return jmenoCele;
+    public String getFullName() {
+        return fullName;
     }
 
     /**
@@ -53,7 +53,7 @@ public class NPC {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NPC NPC = (NPC) o;
-        return Objects.equals(jmeno, NPC.jmeno);
+        return Objects.equals(name, NPC.name);
     }
 
     /**
@@ -63,7 +63,7 @@ public class NPC {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(jmeno);
+        return Objects.hash(name);
     }
 
     /**
@@ -73,6 +73,6 @@ public class NPC {
      */
     @Override
     public String toString() {
-        return getJmeno();
+        return getName();
     }
 }
