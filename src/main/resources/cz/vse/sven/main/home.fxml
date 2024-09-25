@@ -21,7 +21,7 @@
     </rowConstraints>
     <MenuBar GridPane.columnSpan="2147483647">
         <Menu mnemonicParsing="false" text="Hra">
-            <MenuItem onAction="#novaHra" text="Nová hra"/>
+            <MenuItem onAction="#novaHra" text="Nová game"/>
             <MenuItem onAction="#ukoncitHru" text="Ukončit"/>
         </Menu>
     </MenuBar>
@@ -47,11 +47,11 @@
                 <Pane>
                     <ImageView fitHeight="332.0" fitWidth="710.0" pickOnBounds="true"
                                preserveRatio="true">
-                        <Image url="@mapa.PNG"/>
+                        <Image url="@map.PNG"/>
                     </ImageView>
                     <ImageView fx:id="hrac" fitHeight="40.0" fitWidth="40.0" layoutX="380.0"
                                layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@hrac.png"/>
+                        <Image url="@player.png"/>
                     </ImageView>
                 </Pane>
             </HBox>

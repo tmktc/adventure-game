@@ -1,8 +1,8 @@
 package cz.vse.sven.main;
 
-import cz.vse.sven.logika.hra.Hra;
-import cz.vse.sven.logika.hra.IHra;
-import cz.vse.sven.uiText.TextoveRozhrani;
+import cz.vse.sven.logic.game.Game;
+import cz.vse.sven.logic.game.IGame;
+import cz.vse.sven.uiText.TextInterface;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +28,8 @@ public class Start extends Application {
      */
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("text")) {
-            IHra hra = new Hra();
-            TextoveRozhrani ui = new TextoveRozhrani(hra);
+            IGame hra = new Game();
+            TextInterface ui = new TextInterface(hra);
             ui.hraj();
             Platform.exit();
         } else {

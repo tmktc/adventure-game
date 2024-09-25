@@ -1,15 +1,15 @@
 package cz.vse.sven.main;
 
-import cz.vse.sven.logika.hra.Hra;
-import cz.vse.sven.logika.hra.IHra;
-import cz.vse.sven.logika.objekty.Postava;
-import cz.vse.sven.logika.objekty.Prostor;
-import cz.vse.sven.logika.objekty.Vec;
-import cz.vse.sven.logika.prikazy.*;
-import cz.vse.sven.main.ListCell.ListCellPostavy;
-import cz.vse.sven.main.ListCell.ListCellProstor;
-import cz.vse.sven.main.ListCell.ListCellVeci;
-import cz.vse.sven.main.Observer.ZmenaHry;
+import cz.vse.sven.logic.game.Game;
+import cz.vse.sven.logic.game.IGame;
+import cz.vse.sven.logic.objects.NPC;
+import cz.vse.sven.logic.objects.Area;
+import cz.vse.sven.logic.objects.Item;
+import cz.vse.sven.logic.commands.*;
+import cz.vse.sven.main.ListCell.ListCellNPC;
+import cz.vse.sven.main.ListCell.ListCellArea;
+import cz.vse.sven.main.ListCell.ListCellItem;
+import cz.vse.sven.main.Observer.GameChange;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,32 +58,32 @@ public class HomeController {
     private Label labelVychody;
 
     @FXML
-    private ListView<Postava> panelPostavVProstoru;
+    private ListView<NPC> panelPostavVProstoru;
 
     @FXML
-    private ListView<Vec> panelVeciVBatohu;
+    private ListView<Item> panelVeciVBatohu;
 
     @FXML
-    private ListView<Vec> panelVeciVProstoru;
+    private ListView<Item> panelVeciVProstoru;
 
     @FXML
     private ImageView hrac;
 
     @FXML
-    private ListView<Prostor> panelVychodu;
+    private ListView<Area> panelVychodu;
 
     @FXML
     private Button tlacitkoNapoveda;
 
-    private IHra hra = new Hra();
+    private IGame hra = new Game();
 
-    private ObservableList<Prostor> seznamVychodu = FXCollections.observableArrayList();
+    private ObservableList<Area> seznamVychodu = FXCollections.observableArrayList();
 
-    private ObservableList<Vec> seznamVeciVProstoru = FXCollections.observableArrayList();
+    private ObservableList<Item> seznamVeciVProstoru = FXCollections.observableArrayList();
 
-    private ObservableList<Vec> seznamVeciVBatohu = FXCollections.observableArrayList();
+    private ObservableList<Item> seznamVeciVBatohu = FXCollections.observableArrayList();
 
-    private ObservableList<Postava> seznamPostavVProstoru = FXCollections.observableArrayList();
+    private ObservableList<NPC> seznamPostavVProstoru = FXCollections.observableArrayList();
 
     private Map<String, Point2D> souradniceProstoru = new HashMap<>();
 
@@ -99,17 +99,17 @@ public class HomeController {
         panelVeciVProstoru.setItems(seznamVeciVProstoru);
         panelVeciVBatohu.setItems(seznamVeciVBatohu);
         panelPostavVProstoru.setItems(seznamPostavVProstoru);
-        hra.getHerniPlan().registruj(ZmenaHry.ZMENA_PROSTORU, () -> {
+        hra.getHerniPlan().registruj(GameChange.ZMENA_PROSTORU, () -> {
             aktualizujSeznamVychodu();
             aktualizujPolohuHrace();
         });
-        hra.registruj(ZmenaHry.KONEC_HRY, () -> aktualizujKonecHry());
-        hra.registruj(ZmenaHry.ZMENA_VECI, () -> {
+        hra.registruj(GameChange.KONEC_HRY, () -> aktualizujKonecHry());
+        hra.registruj(GameChange.ZMENA_VECI, () -> {
             aktualizujSeznamVeciVProstoru();
             aktualizujSeznamVeciVBatohu();
         });
-        hra.registruj(ZmenaHry.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
-        hra.registruj(ZmenaHry.ZMENA_PENEZ, () -> aktualizujPenize());
+        hra.registruj(GameChange.ZMENA_POSTAV, () -> aktualizujSeznamPostavVProstoru());
+        hra.registruj(GameChange.ZMENA_PENEZ, () -> aktualizujPenize());
         vlozSouradnice();
         aktualizujSeznamVychodu();
         aktualizujSeznamVeciVBatohu();
@@ -117,10 +117,10 @@ public class HomeController {
         aktualizujSeznamPostavVProstoru();
         aktualizujPolohuHrace();
         aktualizujKonecHry();
-        panelVychodu.setCellFactory(param -> new ListCellProstor());
-        panelVeciVProstoru.setCellFactory(param -> new ListCellVeci());
-        panelVeciVBatohu.setCellFactory(param -> new ListCellVeci());
-        panelPostavVProstoru.setCellFactory(param -> new ListCellPostavy());
+        panelVychodu.setCellFactory(param -> new ListCellArea());
+        panelVeciVProstoru.setCellFactory(param -> new ListCellItem());
+        panelVeciVBatohu.setCellFactory(param -> new ListCellItem());
+        panelPostavVProstoru.setCellFactory(param -> new ListCellNPC());
     }
 
     /**
@@ -267,9 +267,9 @@ public class HomeController {
      */
     @FXML
     private void klikPanelVychodu() {
-        Prostor cil = panelVychodu.getSelectionModel().getSelectedItem();
+        Area cil = panelVychodu.getSelectionModel().getSelectedItem();
         if (cil == null) return;
-        String prikaz = PrikazJdi.NAZEV + " " + cil.getNazev();
+        String prikaz = CommandGo.NAZEV + " " + cil.getNazev();
         zpracujPrechodDoJinehoProstoru(prikaz);
     }
 
@@ -279,13 +279,13 @@ public class HomeController {
      */
     @FXML
     private void klikPanelVeciVProstoru() {
-        Vec cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
+        Item cil = panelVeciVProstoru.getSelectionModel().getSelectedItem();
         if (cil == null) return;
         String prikaz;
         if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl") || hra.getHerniPlan().getAktualniProstor().getNazev().equals("trafika")) {
-            prikaz = PrikazKup.NAZEV + " " + cil.getJmeno();
+            prikaz = CommandBuy.NAZEV + " " + cil.getJmeno();
         } else {
-            prikaz = PrikazSeber.NAZEV + " " + cil.getJmeno();
+            prikaz = CommandPickUp.NAZEV + " " + cil.getJmeno();
         }
         zpracujInterakciSVeci(prikaz);
     }
@@ -296,13 +296,13 @@ public class HomeController {
      */
     @FXML
     private void klikPanelVeciVBatohu() {
-        Vec cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
+        Item cil = panelVeciVBatohu.getSelectionModel().getSelectedItem();
         if (cil == null) return;
         String prikaz;
         if (hra.getHerniPlan().getAktualniProstor().getNazev().equals("lidl")) {
-            prikaz = PrikazVymen.NAZEV + " " + cil.getJmeno();
+            prikaz = CommandReturn.NAZEV + " " + cil.getJmeno();
         } else {
-            prikaz = PrikazVyndej.NAZEV + " " + cil.getJmeno();
+            prikaz = CommandThrowAway.NAZEV + " " + cil.getJmeno();
         }
         zpracujInterakciSVeci(prikaz);
     }
@@ -316,9 +316,9 @@ public class HomeController {
      */
     @FXML
     private void klikPanelPostavVProstoru() {
-        Postava cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
+        NPC cil = panelPostavVProstoru.getSelectionModel().getSelectedItem();
         if (cil == null) return;
-        String prikaz = PrikazPromluv.NAZEV + " " + cil.getJmeno();
+        String prikaz = CommandTalk.NAZEV + " " + cil.getJmeno();
 
         if (
                 (hra.getHerniPlan().getAktualniProstor().obsahujePostavu("Pepa") && (hra.getProgressInstance().getProgress() >= 6))
@@ -341,7 +341,7 @@ public class HomeController {
         Scene napovedaScena = new Scene(wv);
         napovedaStage.setScene(napovedaScena);
         napovedaStage.show();
-        wv.getEngine().load(getClass().getResource("napoveda.html").toExternalForm());
+        wv.getEngine().load(getClass().getResource("help.html").toExternalForm());
     }
 
     /**
@@ -379,7 +379,7 @@ public class HomeController {
      */
     @FXML
     private void novaHra() {
-        hra = new Hra();
+        hra = new Game();
         initialize();
     }
 }
