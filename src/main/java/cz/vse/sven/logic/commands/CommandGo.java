@@ -41,7 +41,7 @@ public class CommandGo implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste místo, kam chcete jít";
+            return "You must enter the area you want to go to.";
         }
 
         String direction = parameters[0];
@@ -50,7 +50,7 @@ public class CommandGo implements ICommand {
         Area currentArea = plan.getCurrentArea();
 
         if (neighboringArea == null) {
-            return "Tam se odsud jít nedá";
+            return "You can not go there from here.";
         } else {
             plan.setCurrentArea(neighboringArea);
             //Kim nás musí po určitý čas následovat, takže vždy z předchozího prostoru Kima odebereme a do dalšího přidáme
@@ -59,10 +59,10 @@ public class CommandGo implements ICommand {
                 neighboringArea.addNPC(new NPC("Kim", "Kim"));
             }
             if (progress.getProgress() > 4) {
-                if (neighboringArea.getName().equals("jidelna")) {
+                if (neighboringArea.getName().equals("soupKitchen")) {
                     neighboringArea.addNPC(new NPC("Kim", "Kim"));
                 }
-                if (!(currentArea.getName().equals("jidelna"))) {
+                if (!(currentArea.getName().equals("soupKitchen"))) {
                     currentArea.removeNPC("Kim");
                 }
             }

@@ -31,25 +31,25 @@ public class CommandPickUpTest {
      */
     @Test
     public void executeCommand() {
-        CommandPickUp prikazSeber = new CommandPickUp(plan, backpack);
+        CommandPickUp commandPickUp = new CommandPickUp(plan, backpack);
 
         // žádný parametr
-        assertEquals("Nezadali jste název věci, kterou chcete sebrat", prikazSeber.executeCommand());
+        assertEquals("You must name the item you want to pick up.", commandPickUp.executeCommand());
 
         // daná věc se v prostoru nenachází
-        assertEquals("Taková věc tu není", prikazSeber.executeCommand("test"));
+        assertEquals("There is no such item here.", commandPickUp.executeCommand("test"));
 
         //věc není sebratelná
         plan.getCurrentArea().addItem(new Item("test2", "Test2", false, false, false, 0));
-        assertEquals("Takovou věc nelze sebrat", prikazSeber.executeCommand("test2"));
+        assertEquals("You can not pick up this item.", commandPickUp.executeCommand("test2"));
 
         // nedostatek místa v batohu
         backpack.setCapacity(0);
         plan.getCurrentArea().addItem(new Item("test3", "Test3", true, false, false, 0));
-        assertEquals("Nemáte dostatek místa v batohu", prikazSeber.executeCommand("test3"));
+        assertEquals("Not enough space in the backpack.", commandPickUp.executeCommand("test3"));
 
         // všechno v pořádku
         backpack.setCapacity(1);
-        assertEquals("Sebrali jste Test3", prikazSeber.executeCommand("test3"));
+        assertEquals("You picked up Test3.", commandPickUp.executeCommand("test3"));
     }
 }

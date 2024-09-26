@@ -28,7 +28,7 @@ public class MoneyTest {
     public void addMoney() {
 
         assertEquals(0, money.getMoney(), 0.0001);
-        assertEquals(" - Dostali jste 1.0 Euro", money.addMoney(1));
+        assertEquals(" - You received 1.0 Euro.", money.addMoney(1));
         assertEquals(1, money.getMoney(), 0.0001);
     }
 

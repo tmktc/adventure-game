@@ -43,7 +43,7 @@ public class TextInterface {
         }
 
         System.out.println("\n--------------------------------------------------\n\n" + hra.returnEpilogue());
-        System.out.println("Konec hry. Okno se automaticky zavře za 15 sekund.");
+        System.out.println("End of the game. The windows will automatically close in 15 seconds.");
 
         try {
             TimeUnit.SECONDS.sleep(15);

@@ -19,7 +19,7 @@ public class BackpackTest {
     public void setUp() {
         backpack = new Backpack();
         backpack.setCapacity(1);
-        item = new Item("Vec", "Věc", true, false, false, 0);
+        item = new Item("item", "Item", true, false, false, 0);
     }
 
     /**
@@ -28,7 +28,7 @@ public class BackpackTest {
     @Test
     public void putItemDoBatohu() {
         assertTrue(backpack.putItem(item));
-        assertFalse(backpack.putItem(new Item("vec2", "Věc2", true, false, false, 0)));
+        assertFalse(backpack.putItem(new Item("item2", "Item2", true, false, false, 0)));
     }
 
     /**
@@ -38,7 +38,7 @@ public class BackpackTest {
     @Test
     public void removeItemZBatohu() {
         backpack.putItem(item);
-        assertEquals(" - Předali jste Věc", backpack.removeItem("Vec"));
+        assertEquals(" - You handed over Item", backpack.removeItem("item"));
         assertNull(backpack.removeItem("test"));
     }
 
@@ -48,7 +48,7 @@ public class BackpackTest {
     @Test
     public void containsItemVBatohu() {
         backpack.putItem(item);
-        assertTrue(backpack.containsItem("Vec"));
+        assertTrue(backpack.containsItem("item"));
         assertFalse(backpack.containsItem("test"));
     }
 
@@ -58,7 +58,7 @@ public class BackpackTest {
     @Test
     public void selectItemVBatohu() {
         backpack.putItem(item);
-        assertEquals(item, backpack.selectItem("Vec"));
+        assertEquals(item, backpack.selectItem("item"));
         assertNull(backpack.selectItem("test"));
     }
 
@@ -68,6 +68,6 @@ public class BackpackTest {
     @Test
     public void nazvyVeciVBatohu() {
         backpack.putItem(item);
-        assertEquals("věci v batohu: Vec ", backpack.itemList());
+        assertEquals("items in backpack: item ", backpack.itemList());
     }
 }

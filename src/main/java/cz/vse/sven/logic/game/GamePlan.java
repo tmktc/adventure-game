@@ -50,21 +50,21 @@ public class GamePlan implements Observable {
      */
     private void setUpGame() {
         // vytvářejí se jednotlivé prostory
-        Area home = new Area("home", "Home", "pod mostem, kde Sven bydlí.");
-        Area soupKitchen = new Area("soupKitchen", "Soup kitchen", "u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.");
-        Area junkyard = new Area("junkyard", "Junkyard", "na smetišti.");
-        Area jobCenter = new Area("jobCenter", "Job center", "u pracáku.");
-        Area thriftShop = new Area("thriftShop", "Thrift Shop", "v sekáči.");
-        Area pawnshop = new Area("pawnshop", "Pawnshop", "v zastavárně.");
-        Area lidl = new Area("lidl", "Lidl", "v Lidlu, ceník: \nRohlíky - 1   \nPsí granule - 4   \nBezlepkový chleba - 2");
-        Area kiosk = new Area("kiosk", "Kiosk", "v trafice, ceník: \nSnus - 1");
+        Area home = new Area("home", "Home", "under the bridge, where Sven lives.");
+        Area soupKitchen = new Area("soupKitchen", "Soup kitchen", "next to the Soup kitchen, which is closed for today, you see your friend Kim.");
+        Area junkyard = new Area("junkyard", "Junkyard", "next to a Junkyard.");
+        Area jobCenter = new Area("jobCenter", "Job center", "next to the Job center.");
+        Area thriftShop = new Area("thriftShop", "Thrift Shop", "in the Thrift shop.");
+        Area pawnshop = new Area("pawnshop", "Pawnshop", "in the Pawnshop.");
+        Area lidl = new Area("lidl", "Lidl", "in Lidl, prices: \nBagels - 1   \nDog food - 4   \nGluten-free bread - 2");
+        Area kiosk = new Area("kiosk", "Kiosk", "in the kiosk, prices: \nSnus - 1");
 
         //vytváření jednotlivých věcí
         Item oldClock = new Item("oldClock", "Old clock", true, false, false, 0);
         Item branikBottle = new Item("branikBottle", "Branik bottle", true, false, true, 0);
         Item svijanyBottle = new Item("svijanyBottle", "Svijany bottle", true, false, true, 0);
         Item pilsnerBottle = new Item("pilsnerBottle", "Pilsner bottle", true, false, true, 0);
-        Item bottleMachine = new Item("botleMachine", "Bottle machine", false, false, false, 0);
+        Item bottleMachine = new Item("bottleMachine", "Bottle machine", false, false, false, 0);
 
         Item snus = new Item("snus", "Snus", false, true, false, 1);
         Item glutenFreeBread = new Item("glutenFreeBread", "Gluten-free bread", false, true, false, 2);

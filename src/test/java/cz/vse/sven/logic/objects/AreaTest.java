@@ -16,15 +16,15 @@ public class AreaTest {
 
     private GamePlan plan;
     private Area test;
-    private Item sebratelna;
-    private Item koupitelna;
+    private Item canBePickedUp;
+    private Item purchasable;
 
     @BeforeEach
     public void setUp() {
         plan = new GamePlan();
-        test = new Area("test", "test", "testpopis");
-        sebratelna = new Item("sebratelna", "Sebratelná", true, false, false, 0);
-        koupitelna = new Item("koupitelna", "Koupitelná", false, true, false, 1);
+        test = new Area("test", "test", "testdesc");
+        canBePickedUp = new Item("canBePickedUp", "CanBePickedUp", true, false, false, 0);
+        purchasable = new Item("purchasable", "Purchasable", false, true, false, 1);
     }
 
     /**
@@ -34,9 +34,9 @@ public class AreaTest {
      */
     @Test
     public void exitDescription() {
-        assertEquals("východy: jidelna  ", plan.getCurrentArea().exitDescription());
+        assertEquals("exits: soupKitchen  ", plan.getCurrentArea().exitDescription());
         plan.getCurrentArea().setExit(test);
-        assertEquals("východy: test  jidelna  ", plan.getCurrentArea().exitDescription());
+        assertEquals("exits: test  soupKitchen  ", plan.getCurrentArea().exitDescription());
     }
 
     /**
@@ -45,7 +45,7 @@ public class AreaTest {
      */
     @Test
     public void returnNeighboringArea() {
-        assertEquals("jidelna", plan.getCurrentArea().returnNeighboringArea("jidelna").getName());
+        assertEquals("soupKitchen", plan.getCurrentArea().returnNeighboringArea("soupKitchen").getName());
         assertNull(plan.getCurrentArea().returnNeighboringArea("test"));
     }
 
@@ -58,25 +58,25 @@ public class AreaTest {
     @Test
     public void metodySouvisejiciSVeci() {
         //v prostoru se nenachází žádné věci
-        assertEquals("věci: ", plan.getCurrentArea().itemList());
+        assertEquals("items: ", plan.getCurrentArea().itemList());
 
         //přidání a odebrání věci
         plan.getCurrentArea().addItem(new Item("test", "Test", true, false, false, 0));
-        assertEquals("věci: test  ", plan.getCurrentArea().itemList());
+        assertEquals("items: test  ", plan.getCurrentArea().itemList());
         plan.getCurrentArea().removeItem("test");
-        assertEquals("věci: ", plan.getCurrentArea().itemList());
+        assertEquals("items: ", plan.getCurrentArea().itemList());
 
         // zjištění, zda se věc v prostoru nachází
         assertFalse(plan.getCurrentArea().containsItem("test"));
-        plan.getCurrentArea().addItem(sebratelna);
-        assertTrue(plan.getCurrentArea().containsItem("sebratelna"));
+        plan.getCurrentArea().addItem(canBePickedUp);
+        assertTrue(plan.getCurrentArea().containsItem("canBePickedUp"));
 
         // zjištění, zda je věc sebratelná nebo koupitelná
-        plan.getCurrentArea().addItem(koupitelna);
-        assertEquals(sebratelna, plan.getCurrentArea().canItemBePickedUp("sebratelna"));
-        assertNull(plan.getCurrentArea().canItemBePickedUp("koupitelna"));
-        assertEquals(koupitelna, plan.getCurrentArea().isItemPurchasable("koupitelna"));
-        assertNull(plan.getCurrentArea().isItemPurchasable("sebratelna"));
+        plan.getCurrentArea().addItem(purchasable);
+        assertEquals(canBePickedUp, plan.getCurrentArea().canItemBePickedUp("canBePickedUp"));
+        assertNull(plan.getCurrentArea().canItemBePickedUp("purchasable"));
+        assertEquals(purchasable, plan.getCurrentArea().isItemPurchasable("purchasable"));
+        assertNull(plan.getCurrentArea().isItemPurchasable("canBePickedUp"));
     }
 
     /**
@@ -87,17 +87,17 @@ public class AreaTest {
     @Test
     public void metodySouvisejiciSPostavou() {
         // seznam postav
-        assertEquals("postavy: Pepa  ", plan.getCurrentArea().NPCList());
+        assertEquals("NPCs: pepa  ", plan.getCurrentArea().NPCList());
 
         // zjištění, zda se postava v prostoru nachází
-        assertTrue(plan.getCurrentArea().containsNPC("Pepa"));
+        assertTrue(plan.getCurrentArea().containsNPC("pepa"));
         assertFalse(plan.getCurrentArea().containsNPC("test"));
 
         // odebrání a přidání postavy
-        plan.getCurrentArea().removeNPC("Pepa");
-        assertEquals("postavy: ", plan.getCurrentArea().NPCList());
+        plan.getCurrentArea().removeNPC("pepa");
+        assertEquals("NPCs: ", plan.getCurrentArea().NPCList());
 
-        plan.getCurrentArea().addNPC(new NPC("postava", "postava"));
-        assertEquals("postavy: postava  ", plan.getCurrentArea().NPCList());
+        plan.getCurrentArea().addNPC(new NPC("npc", "NPC"));
+        assertEquals("NPCs: npc  ", plan.getCurrentArea().NPCList());
     }
 }

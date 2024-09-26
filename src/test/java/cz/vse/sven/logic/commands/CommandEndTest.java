@@ -27,10 +27,10 @@ public class CommandEndTest {
      */
     @Test
     public void executeCommand() {
-        CommandEnd prikazKonec = new CommandEnd(game);
+        CommandEnd commandEnd = new CommandEnd(game);
 
         //zadání příkazu
-        assertEquals("Hra byla ukončena příkazem konec. Díky za zahrání.", prikazKonec.executeCommand());
+        assertEquals("The game was ended through a command. Thank you for playing.", commandEnd.executeCommand());
 
         // konec hry
         assertTrue(game.gameEnd());

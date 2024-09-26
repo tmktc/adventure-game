@@ -127,13 +127,13 @@ public class HomeController {
      * Metoda nastaví souřadnice prostorů na mapě
      */
     private void insertCoordinates() {
-        AreaCoordinates.put("domov", new Point2D(380, 100));
-        AreaCoordinates.put("jidelna", new Point2D(435, 130));
-        AreaCoordinates.put("smetiste", new Point2D(260, 155));
-        AreaCoordinates.put("pracak", new Point2D(150, 60));
-        AreaCoordinates.put("sekac", new Point2D(10, 130));
-        AreaCoordinates.put("zastavarna", new Point2D(125, 205));
-        AreaCoordinates.put("trafika", new Point2D(590, 110));
+        AreaCoordinates.put("home", new Point2D(380, 100));
+        AreaCoordinates.put("soupKitchen", new Point2D(435, 130));
+        AreaCoordinates.put("junkyard", new Point2D(260, 155));
+        AreaCoordinates.put("jobCenter", new Point2D(150, 60));
+        AreaCoordinates.put("thriftShop", new Point2D(10, 130));
+        AreaCoordinates.put("pawnshop", new Point2D(125, 205));
+        AreaCoordinates.put("kiosk", new Point2D(590, 110));
         AreaCoordinates.put("lidl", new Point2D(590, 170));
     }
 
@@ -181,7 +181,7 @@ public class HomeController {
         String area = game.getGamePlan().getCurrentArea().getName();
         player.setLayoutX(AreaCoordinates.get(area).getX());
         player.setLayoutY(AreaCoordinates.get(area).getY());
-        labelAreaDescription.setText("Nacházíš se " + game.getGamePlan().getCurrentArea().getDescription().replaceAll("\n", ""));
+        labelAreaDescription.setText("You are " + game.getGamePlan().getCurrentArea().getDescription().replaceAll("\n", ""));
     }
 
     /**
@@ -248,7 +248,7 @@ public class HomeController {
     private void processDialogWindow(String command) {
         String dialog = game.processCommand(command);
         Alert dialogWindow = new Alert(Alert.AlertType.INFORMATION);
-        dialogWindow.setTitle("Dialog");
+        dialogWindow.setTitle("Dialogue");
         dialogWindow.setHeaderText(dialog);
         dialogWindow.show();
     }
@@ -285,7 +285,7 @@ public class HomeController {
         if (game.getGamePlan().getCurrentArea().getName().equals("lidl") || game.getGamePlan().getCurrentArea().getName().equals("kiosk")) {
             command = CommandBuy.NAME + " " + target.getName();
         } else {
-            command = CommandPickUp.NAZEV + " " + target.getName();
+            command = CommandPickUp.NAME + " " + target.getName();
         }
         processItemInteraction(command);
     }
@@ -350,12 +350,12 @@ public class HomeController {
     @FXML
     private void gameFinish() {
         Alert end = new Alert(Alert.AlertType.CONFIRMATION);
-        end.setTitle("Konec hry");
-        end.setContentText("Toto je konec hry, díky za zahrání!");
+        end.setTitle("End of the game");
+        end.setContentText("This is the end of the game, thank you for playing!");
         end.setHeaderText(game.returnEpilogue());
 
-        ButtonType newGame = new ButtonType("Nová hra");
-        ButtonType exit = new ButtonType("Ukončit");
+        ButtonType newGame = new ButtonType("New game");
+        ButtonType exit = new ButtonType("Exit");
         end.getButtonTypes().setAll(newGame, exit);
 
         Optional<ButtonType> result = end.showAndWait();

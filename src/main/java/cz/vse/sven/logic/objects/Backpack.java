@@ -47,7 +47,7 @@ public class Backpack {
         if (itemList.containsKey(item)) {
             String v = selectItem(item).getFullName();
             itemList.remove(item);
-            return " - Předali jste " + v;
+            return " - You handed over " + v;
         }
         return null;
     }
@@ -84,7 +84,7 @@ public class Backpack {
      * @return seznam věcí v batohu
      */
     public String itemList() {
-        String itemList = "věci v batohu: ";
+        String itemList = "items in backpack: ";
         for (String item : this.itemList.keySet()) {
             itemList += item + " ";
         }

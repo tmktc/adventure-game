@@ -21,8 +21,8 @@ public class CommandBackpackTest {
     @BeforeEach
     public void setUp() {
         backpack = new Backpack();
-        Item item1 = new Item("Vec1", "Věc1", true, false, false, 0);
-        Item item2 = new Item("Vec2", "Věc2", true, false, false, 0);
+        Item item1 = new Item("item1", "Item1", true, false, false, 0);
+        Item item2 = new Item("item2", "Item2", true, false, false, 0);
         backpack.putItem(item1);
         backpack.putItem(item2);
     }
@@ -32,8 +32,8 @@ public class CommandBackpackTest {
      */
     @Test
     public void executeCommand() {
-        CommandBackpack prikazBatoh = new CommandBackpack(backpack);
-        assertEquals("věci v batohu: Vec1 Vec2 ", prikazBatoh.executeCommand());
+        CommandBackpack commandBackpack = new CommandBackpack(backpack);
+        assertEquals("items in backpack: item2 item1 ", commandBackpack.executeCommand());
 
     }
 }

@@ -28,8 +28,8 @@ public class Start extends Application {
      */
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("text")) {
-            IGame hra = new Game();
-            TextInterface ui = new TextInterface(hra);
+            IGame game = new Game();
+            TextInterface ui = new TextInterface(game);
             ui.hraj();
             Platform.exit();
         } else {
@@ -52,14 +52,14 @@ public class Start extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Adventura Sven");
+        stage.setTitle("Sven's Adventure");
 
-        Alert uvitani = new Alert(Alert.AlertType.INFORMATION);
-        uvitani.setTitle("Uvítání");
-        uvitani.setHeaderText("\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
-                "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
-                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
-                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.");
-        uvitani.show();
+        Alert introduction = new Alert(Alert.AlertType.INFORMATION);
+        introduction.setTitle("Introduction");
+        introduction.setHeaderText("\nYou play as Sven, who lives under the bridge with his dog Pepa.\n" +
+                "They are both hungry, but Sven has no food and no money to buy it.\n" +
+                "He decides to leave Pepa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
+                "His main goal is to obtain food for Pepa and himself.");
+        introduction.show();
     }
 }

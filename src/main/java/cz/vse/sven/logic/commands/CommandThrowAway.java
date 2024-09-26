@@ -41,24 +41,24 @@ public class CommandThrowAway implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste název věci, kterou chcete vyndat z batohu";
+            return "You must name the item you want to throw away.";
         }
 
         String itemName = parameters[0];
         Area currentArea = plan.getCurrentArea();
         if (backpack.containsItem(itemName)) {
 
-            if (!(currentArea.getName().equals("lidl") || currentArea.getName().equals("trafika"))) {
+            if (!(currentArea.getName().equals("lidl") || currentArea.getName().equals("kiosk"))) {
                 Item item = backpack.selectItem(itemName);
                 backpack.removeItem(itemName);
                 currentArea.addItem(item);
-                return item.getFullName() + " nyní leží na zemi";
+                return item.getFullName() + " now lies on the ground.";
             }
-            return "V tomto prostoru nelze odkládat věci";
+            return "You can not throw away items in this area.";
 
 
         }
-        return "Takovou věc u sebe nemáte";
+        return "There is no such thing in you backpack.";
     }
 
     /**

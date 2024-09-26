@@ -24,15 +24,15 @@ public class GameTest {
      * Otestuje základní průběh hry
      */
     @Test
-    public void zakladniPrubehHry() {
-        assertEquals("domov", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("jdi jidelna");
+    public void basicGameplay() {
+        assertEquals("home", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("go soupKitchen");
         assertFalse(game.gameEnd());
-        assertEquals("jidelna", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("jdi smetiste");
+        assertEquals("soupKitchen", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("go junkyard");
         assertFalse(game.gameEnd());
-        assertEquals("smetiste", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("konec");
+        assertEquals("junkyard", game.getGamePlan().getCurrentArea().getName());
+        game.processCommand("end");
         assertTrue(game.gameEnd());
     }
 
@@ -40,17 +40,17 @@ public class GameTest {
      * Otestuje scénář hry, kdy prohrajeme, protože nám uteče lupič
      */
     @Test
-    public void prubehHryProhra1() {
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi smetiste");
-        game.processCommand("seber StareHodiny");
-        game.processCommand("jdi zastavarna");
-        game.processCommand("promluv Zastavarnik");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("promluv Podezrely");
+    public void gameplayLoss1() {
+        game.processCommand("go soupKitchen");
+        game.processCommand("go junkyard");
+        game.processCommand("pickUp oldClock");
+        game.processCommand("go pawnshop");
+        game.processCommand("talk pawnbroker");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("talk suspect");
         assertTrue(game.getGamePlan().isLoss());
     }
 
@@ -58,30 +58,30 @@ public class GameTest {
      * Otestuje scénář, kdy prohrajeme, protože jsme nestihli koupit jídlo
      */
     @Test
-    public void prubehHryProhra2() {
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi smetiste");
-        game.processCommand("seber StareHodiny");
-        game.processCommand("jdi zastavarna");
-        game.processCommand("promluv Zastavarnik");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("promluv Kim");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("seber CervenaBunda");
-        game.processCommand("seber ZelenaCepice");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi domov");
-        game.processCommand("promluv Pepa");
+    public void gameplayLoss2() {
+        game.processCommand("go soupKitchen");
+        game.processCommand("go junkyard");
+        game.processCommand("pickUp oldClock");
+        game.processCommand("go pawnshop");
+        game.processCommand("talk pawnbroker");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("talk kim");
+        game.processCommand("go junkyard");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("pickUp redJacket");
+        game.processCommand("pickUp greenCap");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("go home");
+        game.processCommand("talk pepa");
         assertTrue(game.getGamePlan().isLoss());
     }
 
@@ -89,34 +89,34 @@ public class GameTest {
      * Otestujeme scénář výhry
      */
     @Test
-    public void prubehHryVyhra() {
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi smetiste");
-        game.processCommand("seber StareHodiny");
-        game.processCommand("jdi zastavarna");
-        game.processCommand("promluv Zastavarnik");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("promluv Kim");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("seber CervenaBunda");
-        game.processCommand("seber ZelenaCepice");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi lidl");
-        game.processCommand("kup Rohliky");
-        game.processCommand("kup PsiGranule");
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi domov");
-        game.processCommand("promluv Pepa");
+    public void gameplayWin() {
+        game.processCommand("go soupKitchen");
+        game.processCommand("go junkyard");
+        game.processCommand("pickUp oldClock");
+        game.processCommand("go pawnshop");
+        game.processCommand("talk pawnbroker");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("talk kim");
+        game.processCommand("go junkyard");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("pickUp redJacket");
+        game.processCommand("pickUp greenCap");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("go lidl");
+        game.processCommand("buy bagels");
+        game.processCommand("buy dogFood");
+        game.processCommand("go soupKitchen");
+        game.processCommand("go home");
+        game.processCommand("talk pepa");
         assertTrue(game.getGamePlan().isWin());
     }
 
@@ -124,44 +124,44 @@ public class GameTest {
      * Otestuje scénář perfektní výhry
      */
     @Test
-    public void prubehHryPerfektniVyhra() {
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi smetiste");
-        game.processCommand("seber StareHodiny");
-        game.processCommand("seber LahevOdSvijan");
-        game.processCommand("seber LahevOdPlzne");
-        game.processCommand("seber LahevOdBranika");
-        game.processCommand("jdi zastavarna");
-        game.processCommand("promluv Zastavarnik");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("promluv Kim");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi pracak");
-        game.processCommand("promluv Podezrely");
-        game.processCommand("seber CervenaBunda");
-        game.processCommand("seber ZelenaCepice");
-        game.processCommand("jdi sekac");
-        game.processCommand("promluv Prodavac");
-        game.processCommand("jdi smetiste");
-        game.processCommand("jdi jidelna");
-        game.processCommand("jdi lidl");
-        game.processCommand("vymen LahevOdSvijan");
-        game.processCommand("vymen LahevOdPlzne");
-        game.processCommand("vymen LahevOdBranika");
-        game.processCommand("kup Rohliky");
-        game.processCommand("kup PsiGranule");
-        game.processCommand("kup BezlepkovyChleba");
-        game.processCommand("jdi trafika");
-        game.processCommand("kup Snus");
-        game.processCommand("jdi jidelna");
-        game.processCommand("promluv Kim");
-        game.processCommand("jdi domov");
-        game.processCommand("promluv Pepa");
+    public void gameplayPerfectWin() {
+        game.processCommand("go soupKitchen");
+        game.processCommand("go junkyard");
+        game.processCommand("pickUp oldClock");
+        game.processCommand("pickUp svijanyBottle");
+        game.processCommand("pickUp pilsnerBottle");
+        game.processCommand("pickUp branikBottle");
+        game.processCommand("go pawnshop");
+        game.processCommand("talk pawnbroker");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("talk kim");
+        game.processCommand("go junkyard");
+        game.processCommand("go jobCenter");
+        game.processCommand("talk suspect");
+        game.processCommand("pickUp redJacket");
+        game.processCommand("pickUp greenCap");
+        game.processCommand("go thriftShop");
+        game.processCommand("talk shopAssistant");
+        game.processCommand("go junkyard");
+        game.processCommand("go soupKitchen");
+        game.processCommand("go lidl");
+        game.processCommand("return svijanyBottle");
+        game.processCommand("return pilsnerBottle");
+        game.processCommand("return branikBottle");
+        game.processCommand("buy bagels");
+        game.processCommand("buy dogFood");
+        game.processCommand("buy glutenFreeBread");
+        game.processCommand("go kiosk");
+        game.processCommand("buy snus");
+        game.processCommand("go soupKitchen");
+        game.processCommand("talk kim");
+        game.processCommand("go home");
+        game.processCommand("talk pepa");
         assertTrue(game.getGamePlan().isPerfectWin());
     }
 
@@ -169,34 +169,34 @@ public class GameTest {
      * Otestuje různé konce hry
      */
     @Test
-    public void gameEndProhra() {
+    public void gameEndLoss() {
         game.getGamePlan().setLoss(true);
-        String spravnyText = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
-                "\nProhra, hodně štěstí příště.\n";
+        String spravnyText = "You did not manage to obtain food for Pepa and yourself in time." +
+                "\na Loss, better luck next time.\n";
         assertEquals(spravnyText, game.returnEpilogue());
 
 
         game.getProgressInstance().setProgress(3);
-        String spravnyText2 = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
-                "\nProhra, hodně štěstí příště.\n";
+        String spravnyText2 = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
+                "\na Loss, better luck next time.\n";
         assertEquals(spravnyText2, game.returnEpilogue());
     }
 
     @Test
-    public void gameEndVyhra() {
+    public void gameEndWin() {
         game.getGamePlan().setWin(true);
-        String spravnyText = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
-                "Kim ale dneska bude o hladu - příště by jste to mohli napravit.\n" +
-                "Výhra, dobrá práce.\n";
+        String spravnyText = "You managed to obtain food for Pepa and yourself.\n" +
+                "Kim will be hungry today - you can do better next time.\n" +
+                "a Win, good job.\n";
         assertEquals(spravnyText, game.returnEpilogue());
 
     }
 
     @Test
-    public void gameEndPerfektniVyhra() {
+    public void gameEndPerfectWin() {
         game.getGamePlan().setPerfectWin(true);
-        String spravnyText = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
-                "Perfektni výhra, gratuluji.\n";
+        String spravnyText = "You managed to obtain food for everyone and Sven bought snus.\n" +
+                "a Perfect win, congratulations.\n";
         assertEquals(spravnyText, game.returnEpilogue());
     }
 }

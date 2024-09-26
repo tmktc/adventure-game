@@ -14,7 +14,7 @@ import cz.vse.sven.logic.objects.Item;
  */
 public class CommandPickUp implements ICommand {
 
-    public static final String NAZEV = "seber";
+    public static final String NAME = "pickUp";
     private GamePlan plan;
     private Backpack backpack;
 
@@ -41,7 +41,7 @@ public class CommandPickUp implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste název věci, kterou chcete sebrat";
+            return "You must name the item you want to pick up.";
         }
 
         String jmenoVeci = parameters[0];
@@ -49,17 +49,17 @@ public class CommandPickUp implements ICommand {
         if (aktualniArea.containsItem(jmenoVeci)) {
             Item item = aktualniArea.canItemBePickedUp(jmenoVeci);
             if (item == null) {
-                return "Takovou věc nelze sebrat";
+                return "You can not pick up this item.";
             } else {
                 if (backpack.putItem(item)) {
                     aktualniArea.removeItem(jmenoVeci);
-                    return "Sebrali jste " + item.getFullName();
+                    return "You picked up " + item.getFullName() + ".";
                 } else {
-                    return "Nemáte dostatek místa v batohu";
+                    return "Not enough space in the backpack.";
                 }
             }
         }
-        return "Taková věc tu není";
+        return "There is no such item here.";
     }
 
     /**
@@ -69,6 +69,6 @@ public class CommandPickUp implements ICommand {
      */
     @Override
     public String getName() {
-        return NAZEV;
+        return NAME;
     }
 }

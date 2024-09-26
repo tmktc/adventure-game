@@ -32,27 +32,27 @@ class CommandThrowAwayTest {
      */
     @Test
     void executeCommand() {
-        CommandThrowAway prikazVyndej = new CommandThrowAway(plan, backpack);
+        CommandThrowAway commandThrowAway = new CommandThrowAway(plan, backpack);
 
         //žádný parametr
-        assertEquals("Nezadali jste název věci, kterou chcete vyndat z batohu", prikazVyndej.executeCommand());
+        assertEquals("You must name the item you want to throw away.", commandThrowAway.executeCommand());
 
         //danou věc nemáme v batohu
-        assertEquals("Takovou věc u sebe nemáte", prikazVyndej.executeCommand("test"));
+        assertEquals("There is no such thing in you backpack.", commandThrowAway.executeCommand("test"));
 
         //věc u sebe máme
-        backpack.putItem(new Item("vec", "Věc", true, false, false, 0));
-        assertEquals("Věc nyní leží na zemi", prikazVyndej.executeCommand("vec"));
-        assertTrue(plan.getCurrentArea().containsItem("vec"));
+        backpack.putItem(new Item("item", "Item", true, false, false, 0));
+        assertEquals("Item now lies on the ground.", commandThrowAway.executeCommand("item"));
+        assertTrue(plan.getCurrentArea().containsItem("item"));
 
         //nacházíme se v lidlu
         plan.setCurrentArea(new Area("lidl", "Lidl", "test"));
-        backpack.putItem(new Item("vec2", "Věc2", true, false, false, 0));
-        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.executeCommand("vec2"));
+        backpack.putItem(new Item("item2", "Item2", true, false, false, 0));
+        assertEquals("You can not throw away items in this area.", commandThrowAway.executeCommand("item2"));
 
         //nacházíme se v trafice
-        plan.setCurrentArea(new Area("trafika", "test", "test"));
-        assertEquals("V tomto prostoru nelze odkládat věci", prikazVyndej.executeCommand("vec2"));
+        plan.setCurrentArea(new Area("kiosk", "test", "test"));
+        assertEquals("You can not throw away items in this area.", commandThrowAway.executeCommand("item2"));
 
     }
 }

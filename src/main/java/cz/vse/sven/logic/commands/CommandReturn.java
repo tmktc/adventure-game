@@ -44,26 +44,26 @@ public class CommandReturn implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste název věci, kterou chcete vyměnit";
+            return "You must name the item you want to return.";
         }
 
         String bottle = parameters[0];
         Area currentArea = plan.getCurrentArea();
-        if (currentArea.containsItem("AutomatNaLahve")) {
+        if (currentArea.containsItem("bottleMachine")) {
             if (backpack.containsItem(bottle)) {
                 if (backpack.selectItem(bottle).isReturnable()) {
                     String l = backpack.selectItem(bottle).getFullName();
                     backpack.removeItem(bottle);
                     money.addMoney(1);
-                    return "Vyměnili jste " + l + " a dostali jste 1 Euro";
+                    return "You returned " + l + " and got 1 Euro.";
                 } else {
-                    return "Tuto věc nelze vyměnit";
+                    return "You cannot return this item.";
                 }
             } else {
-                return "Takovou věc u sebe nemáš";
+                return "There is no such thing in you backpack.";
             }
         } else {
-            return "Nejsi u automatu na výměnu lahví";
+            return "There is not Bottle machine in here.";
         }
     }
 

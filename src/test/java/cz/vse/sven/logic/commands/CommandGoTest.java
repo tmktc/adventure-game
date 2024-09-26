@@ -29,22 +29,22 @@ public class CommandGoTest {
      */
     @Test
     public void executeCommand() {
-        CommandGo prikazJdi = new CommandGo(game.getGamePlan(), progress);
+        CommandGo commandGo = new CommandGo(game.getGamePlan(), progress);
 
         // Parametr chybí
-        assertEquals("Nezadali jste místo, kam chcete jít", prikazJdi.executeCommand());
+        assertEquals("You must enter the area you want to go to.", commandGo.executeCommand());
 
         // Není platný sousední prostor
-        assertEquals("Tam se odsud jít nedá", prikazJdi.executeCommand("smetiste"));
+        assertEquals("You can not go there from here.", commandGo.executeCommand("junkyard"));
 
         String spravnyText =
-                "\n\nNacházíš se u jídelny, která má právě zavřeno, vedle ní postává váš kamarád Kim.\n" +
+                "\n\nYou are next to the Soup kitchen, which is closed for today, you see your friend Kim.\n" +
                         "\n" +
-                        "východy: lidl  smetiste  trafika  domov  \n" +
-                        "věci: \n" +
-                        "postavy: Kim  \n";
+                        "exits: junkyard  lidl  kiosk  home  \n" +
+                        "items: \n" +
+                        "NPCs: kim  \n";
 
         // Platný sousední prostor
-        assertEquals(spravnyText, prikazJdi.executeCommand("jidelna"));
+        assertEquals(spravnyText, commandGo.executeCommand("soupKitchen"));
     }
 }

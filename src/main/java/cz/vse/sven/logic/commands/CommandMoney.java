@@ -31,7 +31,7 @@ public class CommandMoney implements ICommand {
      */
     @Override
     public String executeCommand(String... parameters) {
-        return "V kapse máte " + money.getMoney() + " Euro";
+        return "You have " + money.getMoney() + " Euro in your pocket.";
     }
 
     /**

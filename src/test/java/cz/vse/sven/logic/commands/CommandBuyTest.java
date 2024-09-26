@@ -34,34 +34,34 @@ public class CommandBuyTest {
      */
     @Test
     public void executeCommand() {
-        CommandBuy prikazKup = new CommandBuy(plan, backpack, money);
+        CommandBuy commandBuy = new CommandBuy(plan, backpack, money);
 
         // bez parametru
-        assertEquals("Nezadali jste název položky, kterou chcete koupit", prikazKup.executeCommand());
+        assertEquals("You must name the item you want to buy.", commandBuy.executeCommand());
 
         // vec neni v prostoru
-        assertEquals("Taková věc tu není", prikazKup.executeCommand("test"));
+        assertEquals("There is no such item here.", commandBuy.executeCommand("test"));
 
         // vec neni koupitelna
-        Item nekoupitelna = new Item("nekoupitelna", "Nekoupitelná", true, false, true, 0);
+        Item nekoupitelna = new Item("notPurchasable", "NotPurchasable", true, false, true, 0);
         plan.getCurrentArea().addItem(nekoupitelna);
-        assertEquals("Taková věc není koupitelná", prikazKup.executeCommand("nekoupitelna"));
+        assertEquals("You can not buy this item.", commandBuy.executeCommand("notPurchasable"));
 
         // nedostatek penez
-        Item koupitelna = new Item("koupitelna", "Koupitelná", false, true, false, 1);
+        Item koupitelna = new Item("purchasable", "Purchasable", false, true, false, 1);
         plan.getCurrentArea().addItem(koupitelna);
-        assertEquals("Nemáte dostatek peněz ke koupi této věci", prikazKup.executeCommand("koupitelna"));
+        assertEquals("Not enough money to buy this item.", commandBuy.executeCommand("purchasable"));
 
         // nedostatek mista v batohu
         money.addMoney(1);
         backpack.setCapacity(0);
-        assertEquals("Nemáte dostatek místa v batohu", prikazKup.executeCommand("koupitelna"));
+        assertEquals("Not enough space in the backpack.", commandBuy.executeCommand("purchasable"));
 
         // všechno v pořádku
         backpack.setCapacity(1);
-        assertEquals("Koupili jste Koupitelná za 1 Euro", prikazKup.executeCommand("koupitelna"));
-        assertFalse(backpack.selectItem("koupitelna").isPurchasable());
-        assertTrue(backpack.selectItem("koupitelna").getCanBePickedUp());
+        assertEquals("You bought Purchasable for 1 Euro.", commandBuy.executeCommand("purchasable"));
+        assertFalse(backpack.selectItem("purchasable").isPurchasable());
+        assertTrue(backpack.selectItem("purchasable").getCanBePickedUp());
 
 
     }

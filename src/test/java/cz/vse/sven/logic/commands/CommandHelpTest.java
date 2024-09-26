@@ -39,11 +39,11 @@ public class CommandHelpTest {
      */
     @Test
     public void executeCommand() {
-        CommandHelp prikazNapoveda = new CommandHelp(listOfCommands);
-        String spravnyText = "Hra má čtyři možné konce. Dva z nich jsou špatné, jeden dobrý a jeden perfektní.\n" +
-                "Průběh hry se vždy posune dál díky promluvení s nějakou postavou. Dávejte pozor, co postavy říkají.\n\n" +
-                "Možné příkazy: batoh jdi kup ";
+        CommandHelp commandHelp = new CommandHelp(listOfCommands);
+        String spravnyText = "The game has four possible endings. Two of which are bad, one good and one perfect.\n" +
+                "The game always progresses through talking to an NPC. Pay attention to what NPCs are saying.\n\n" +
+                "Available commands: backpack buy go ";
 
-        assertEquals(spravnyText, prikazNapoveda.executeCommand());
+        assertEquals(spravnyText, commandHelp.executeCommand());
     }
 }

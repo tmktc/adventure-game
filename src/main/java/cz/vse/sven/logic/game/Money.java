@@ -33,7 +33,7 @@ public class Money {
      */
     public String addMoney(double sum) {
         money += sum;
-        return " - Dostali jste " + sum + " Euro";
+        return " - You received " + sum + " Euro.";
     }
 
     /**

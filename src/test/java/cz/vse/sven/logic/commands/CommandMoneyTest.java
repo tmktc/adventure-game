@@ -26,14 +26,14 @@ public class CommandMoneyTest {
      */
     @Test
     public void executeCommand() {
-        CommandMoney prikazPenize = new CommandMoney(money);
+        CommandMoney commandMoney = new CommandMoney(money);
 
         // nemáme žádné peníze
-        assertEquals("V kapse máte 0.0 Euro", prikazPenize.executeCommand());
+        assertEquals("You have 0.0 Euro in your pocket.", commandMoney.executeCommand());
 
         // Přidání peněz a testování znovu
         money.addMoney(1.0);
-        assertEquals("V kapse máte 1.0 Euro", prikazPenize.executeCommand());
+        assertEquals("You have 1.0 Euro in your pocket.", commandMoney.executeCommand());
 
     }
 }

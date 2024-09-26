@@ -60,10 +60,10 @@ public class Game implements IGame {
      * Vrátí úvodní zprávu pro hráče.
      */
     public String returnIntroduction() {
-        return "\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
-                "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
-                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
-                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.";
+        return "\nYou play as Sven, who lives under the bridge with his dog Pepa.\n" +
+                "They are both hungry, but Sven has no food and no money to buy it.\n" +
+                "He decides to leave Pepa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
+                "His main goal is to obtain food for Pepa and himself.";
     }
 
     /**
@@ -72,21 +72,21 @@ public class Game implements IGame {
     public String returnEpilogue() {
         String epilogue = "";
         if (gamePlan.isPerfectWin()) {
-            epilogue = "Obstarali jste pro všechny jídlo a Sven si koupil snus.\n" +
-                    "Perfektni výhra, gratuluji.\n";
+            epilogue = "You managed to obtain food for everyone and Sven bought snus.\n" +
+                    "a Perfect win, congratulations.\n";
         }
         if (gamePlan.isWin()) {
-            epilogue = "Obstarali jste jídlo pro sebe a pro Pepu.\n" +
-                    "Kim ale dneska bude o hladu - příště by jste to mohli napravit.\n" +
-                    "Výhra, dobrá práce.\n";
+            epilogue = "You managed to obtain food for Pepa and yourself.\n" +
+                    "Kim will be hungry today - you can do better next time.\n" +
+                    "a Win, good job.\n";
         }
         if (gamePlan.isLoss()) {
             if (progress.getProgress() == 3) {
-                epilogue = "Sven byl sám na lupiče krátký, lupičovi se podařilo s oblečením utéct." +
-                        "\nProhra, hodně štěstí příště.\n";
+                epilogue = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
+                        "\na Loss, better luck next time.\n";
             } else {
-                epilogue = "Nestihli jste koupit pro jídlo pro sebe a pro Pepu" +
-                        "\nProhra, hodně štěstí příště.\n";
+                epilogue = "You did not manage to obtain food for Pepa and yourself in time." +
+                        "\na Loss, better luck next time.\n";
             }
         }
         return epilogue;
@@ -113,7 +113,7 @@ public class Game implements IGame {
             ICommand command = validCommands.returnCommand(commandWord);
             textToShow = command.executeCommand(parameters);
         } else {
-            textToShow = "Neznámý příkaz";
+            textToShow = "Unknown command.";
         }
         notifyObserver(GameChange.ITEM_CHANGE);
         notifyObserver(GameChange.NPC_CHANGE);

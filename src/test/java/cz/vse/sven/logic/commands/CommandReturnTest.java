@@ -33,25 +33,25 @@ public class CommandReturnTest {
      */
     @Test
     public void executeCommand() {
-        CommandReturn prikazVymen = new CommandReturn(plan, backpack, money);
+        CommandReturn commandReturn = new CommandReturn(plan, backpack, money);
 
         // bez parametru
-        assertEquals("Nezadali jste název věci, kterou chcete vyměnit", prikazVymen.executeCommand());
+        assertEquals("You must name the item you want to return.", commandReturn.executeCommand());
 
         // nenacházíme se u automatu na výměnu lahví
-        assertEquals("Nejsi u automatu na výměnu lahví", prikazVymen.executeCommand("test"));
+        assertEquals("There is not Bottle machine in here.", commandReturn.executeCommand("test"));
 
         // věc, kterou chceme vyměnit, u sebe nemáme
-        plan.getCurrentArea().addItem(new Item("AutomatNaLahve", "Automat na láhve", false, false, false, 0));
-        assertEquals("Takovou věc u sebe nemáš", prikazVymen.executeCommand("test"));
+        plan.getCurrentArea().addItem(new Item("bottleMachine", "Bottle machine", false, false, false, 0));
+        assertEquals("There is no such thing in you backpack.", commandReturn.executeCommand("test"));
 
         // věc, kterou u sebe máme a chceme vyměnit, není vyměnitelná
-        backpack.putItem(new Item("nevymenitelna", "Nevyměnitelná", false, true, false, 1));
-        assertEquals("Tuto věc nelze vyměnit", prikazVymen.executeCommand("nevymenitelna"));
+        backpack.putItem(new Item("nonreturnable", "Nonreturnable", false, true, false, 1));
+        assertEquals("You cannot return this item.", commandReturn.executeCommand("nonreturnable"));
 
         // všechno správně
-        backpack.putItem(new Item("vymenitelna", "Vyměnitelná", true, false, true, 0));
-        assertEquals("Vyměnili jste Vyměnitelná a dostali jste 1 Euro", prikazVymen.executeCommand("vymenitelna"));
+        backpack.putItem(new Item("returnable", "Returnable", true, false, true, 0));
+        assertEquals("You returned Returnable and got 1 Euro.", commandReturn.executeCommand("returnable"));
 
 
     }

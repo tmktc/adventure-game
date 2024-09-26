@@ -124,7 +124,7 @@ public class Area {
      * @return Dlouhý popis prostoru
      */
     public String longDescription() {
-        return "\n\nNacházíš se " + description + "\n\n"
+        return "\n\nYou are " + description + "\n\n"
                 + exitDescription() + "\n"
                 + itemList() + "\n"
                 + NPCList() + "\n";
@@ -137,7 +137,7 @@ public class Area {
      * @return Popis východů - názvů sousedních prostorů
      */
     public String exitDescription() {
-        String returnedText = "východy: ";
+        String returnedText = "exits: ";
         for (Area neighbor : exits) {
             returnedText += neighbor.getName() + "  ";
         }
@@ -270,7 +270,7 @@ public class Area {
         List<String> items = new ArrayList<>(itemList.keySet());
         Collections.sort(items);
 
-        String itemList = "věci: ";
+        String itemList = "items: ";
         for (String item : items) {
             itemList += item + "  ";
         }
@@ -316,7 +316,7 @@ public class Area {
         List<String> NPCs = new ArrayList<>(NPCList.keySet());
         Collections.sort(NPCs);
 
-        String NPCList = "postavy: ";
+        String NPCList = "NPCs: ";
         for (String NPCName : NPCs) {
             NPCList += NPCName + "  ";
         }

@@ -30,9 +30,9 @@ public class CommandHelp implements ICommand {
      */
     @Override
     public String executeCommand(String... parameters) {
-        return "Hra má čtyři možné konce. Dva z nich jsou špatné, jeden dobrý a jeden perfektní.\n" +
-                "Průběh hry se vždy posune dál díky promluvení s nějakou postavou. Dávejte pozor, co postavy říkají.\n\n" +
-                "Možné příkazy: " + validCommands.returnCommandNames();
+        return "The game has four possible endings. Two of which are bad, one good and one perfect.\n" +
+                "The game always progresses through talking to an NPC. Pay attention to what NPCs are saying.\n\n" +
+                "Available commands: " + validCommands.returnCommandNames();
     }
 
     /**

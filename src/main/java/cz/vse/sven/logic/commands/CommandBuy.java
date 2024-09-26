@@ -15,7 +15,7 @@ import cz.vse.sven.logic.objects.Item;
  */
 public class CommandBuy implements ICommand {
 
-    public static final String NAME = "kup";
+    public static final String NAME = "buy";
     private GamePlan plan;
     private Backpack backpack;
     private Money money;
@@ -46,7 +46,7 @@ public class CommandBuy implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste název položky, kterou chcete koupit";
+            return "You must name the item you want to buy.";
         }
 
         String itemName = parameters[0];
@@ -55,7 +55,7 @@ public class CommandBuy implements ICommand {
         if (currentArea.containsItem(itemName)) {
             Item item = currentArea.isItemPurchasable(itemName);
             if (item == null) {
-                return "Taková věc není koupitelná";
+                return "You can not buy this item.";
             } else {
                 if (money.getMoney() >= item.getPrice()) {
                     if (backpack.putItem(item)) {
@@ -63,16 +63,16 @@ public class CommandBuy implements ICommand {
                         money.subtractMoney(item.getPrice());
                         item.setCanBePickedUp(true);
                         item.setPurchasable(false);
-                        return "Koupili jste " + item.getFullName() + " za " + item.getPrice() + " Euro";
+                        return "You bought " + item.getFullName() + " for " + item.getPrice() + " Euro.";
                     } else {
-                        return "Nemáte dostatek místa v batohu";
+                        return "Not enough space in the backpack.";
                     }
                 } else {
-                    return "Nemáte dostatek peněz ke koupi této věci";
+                    return "Not enough money to buy this item.";
                 }
             }
         }
-        return "Taková věc tu není";
+        return "There is no such item here.";
     }
 
     /**

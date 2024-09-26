@@ -36,7 +36,7 @@ public class CommandEnd implements ICommand {
     public String executeCommand(String... parameters) {
 
         game.setGameEnd();
-        return "Hra byla ukončena příkazem konec. Díky za zahrání.";
+        return "The game was ended through a command. Thank you for playing.";
     }
 
     /**

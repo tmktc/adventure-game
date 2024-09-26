@@ -50,7 +50,7 @@ public class CommandTalk implements ICommand {
     @Override
     public String executeCommand(String... parameters) {
         if (parameters.length == 0) {
-            return "Nezadali jste název postavy, se kterou chcete promluvit.";
+            return "You must name the NPC you want to talk to.";
         }
 
         String name = parameters[0];
@@ -58,15 +58,15 @@ public class CommandTalk implements ICommand {
 
         if (currentArea.containsNPC(name)) {
             return switch (name) {
-                case "Pepa" -> dialogPepa();
-                case "Kim" -> dialogKim();
-                case "Suspect" -> dialogSuspect();
-                case "ShopAssistant" -> dialogShopAssistant();
-                case "Pawnbroker" -> dialogPawnbroker();
+                case "pepa" -> dialogPepa();
+                case "kim" -> dialogKim();
+                case "suspect" -> dialogSuspect();
+                case "shopAssistant" -> dialogShopAssistant();
+                case "pawnbroker" -> dialogPawnbroker();
                 default -> "default";
             };
         } else {
-            return "Tato postava tu není.";
+            return "There is no such NPC in here.";
         }
     }
 
@@ -76,21 +76,21 @@ public class CommandTalk implements ICommand {
      * @return dialog s Pepou
      */
     private String dialogPepa() {
-        if ((progress.getProgress() == 6) && (backpack.containsItem("PsiGranule")) && ((backpack.containsItem("Rohliky")) || backpack.containsItem("BezlepkovyChleba"))) {
+        if ((progress.getProgress() == 6) && (backpack.containsItem("dogFood")) && ((backpack.containsItem("bagels")) || backpack.containsItem("glutenFreeBread"))) {
             plan.setWin(true);
             game.setGameEnd();
             return "";
-        } else if ((progress.getProgress() == 7) && backpack.containsItem("Snus") && (backpack.containsItem("PsiGranule")) && (backpack.containsItem("Rohliky"))) {
+        } else if ((progress.getProgress() == 7) && backpack.containsItem("snus") && (backpack.containsItem("dogFood")) && (backpack.containsItem("bagels"))) {
             plan.setPerfectWin(true);
             game.setGameEnd();
             return "";
-        } else if (progress.getProgress() >= 6 && (!(backpack.containsItem("PsiGranule")) || (!(backpack.containsItem("Rohliky")) && !(backpack.containsItem("BezlepkovyChleba"))))) {
+        } else if (progress.getProgress() >= 6 && (!(backpack.containsItem("dogFood")) || (!(backpack.containsItem("bagels")) && !(backpack.containsItem("glutenFreeBread"))))) {
             plan.setLoss(true);
             game.setGameEnd();
             return "";
         }
 
-        return "\nSven: \n\"Ahoj Pepo\"\n";
+        return "\nSven: \n\"Hi, Pepa.\"\n";
     }
 
     /**
@@ -100,22 +100,22 @@ public class CommandTalk implements ICommand {
      */
     private String dialogKim() {
         if (progress.getProgress() == 0) {
-            return "\nKim: \n\"Čau Svene, škoda, že maj dneska zavřeno, co? Já se tak těšil na moje oblíbené bezlepkové nudle." +
-                    "\nMrzí mě, že je Pepa o hladu, ale možná mám pro tebe řešení." +
-                    "\nSice u sebe nemám ani cent, ale když jsem šel k jídelně, tak jsem na smetišti zahlídl nějaké staré hodiny." +
-                    "\nJdi je najít a zkus je prodat v zastavárně, třeba za ně dostaneš dostatek peněz na jídlo pro Pepu i tebe.\"\n";
+            return "\nKim: \n\"Hey Sven, too bad the Soup kitchen is closed today, right? I was looking forward to my favorite gluten-free noodles." +
+                    "\nI am sorry that Pepa will not get to eat today, but I might have a solution for you." +
+                    "\nI myself have no money, but when I was on my way here, I saw an old clock in a junkyard." +
+                    "\nGo find it and try to sell in in a Pawnshop, maybe you will get enough money to buy food for Pepa and yourself.\"\n";
         } else if (progress.getProgress() == 3) {
             progress.addProgress();
-            return "\nKim: \n\"Rád ti pomůžu, veď mě k tomu grázlovi.\"\n";
+            return "\nKim: \n\"I will gladly help you, lead me to him.\"\n";
         } else if (progress.getProgress() == 4) {
-            return "\nKim: \n\"Už tam budem?\"\n";
-        } else if (progress.getProgress() == 6 && backpack.containsItem("BezlepkovyChleba")) {
+            return "\nKim: \n\"Are we there yet?\"\n";
+        } else if (progress.getProgress() == 6 && backpack.containsItem("glutenFreeBread")) {
             progress.addProgress();
-            return "\nSven: \n\"Ještě jednou díky za pomoc Kime, tady máš ode mě překvapení.\"\n" +
-                    backpack.removeItem("BezlepkovyChleba") + "\n";
+            return "\nSven: \n\"Thank you once again for your help Kim, here is a little surprise.\"\n" +
+                    backpack.removeItem("glutenFreeBread") + "\n";
         }
 
-        return "\nKim: \n\"Čau Svene\"\n";
+        return "\nKim: \n\"Hi, Sven.\"\n";
     }
 
     /**
@@ -126,27 +126,27 @@ public class CommandTalk implements ICommand {
     private String dialogSuspect() {
         if (progress.getProgress() == 2) {
             progress.addProgress();
-            return "\nSven: \n\"Sám ho nepřemůžu, musím si vzít na pomoc Kima, ten by měl být stále u jídelny.\n" +
-                    "Ten chudák tam asi pořád čeká na ty jeho oblíbené bezlepkové nudle.\"\n";
+            return "\nSven: \n\"I can not confront him alone, I need to ask Kim for help, he should still be in front of the Soup kitchen.\n" +
+                    "The poor guy is probably waiting there for his gluten-free noodles.\"\n";
         } else if (progress.getProgress() == 3) {
-            plan.getCurrentArea().removeNPC("Podezrely");
+            plan.getCurrentArea().removeNPC("suspect");
             plan.setLoss(true);
             game.setGameEnd();
             return "";
         } else if (progress.getProgress() == 4) {
             progress.addProgress();
 
-            plan.getCurrentArea().addItem(new Item("CervenaBunda", "Červená bunda", true, false, false, 0));
-            plan.getCurrentArea().addItem(new Item("ZelenaCepice", "Zelená čepice", true, false, false, 0));
+            plan.getCurrentArea().addItem(new Item("redJacket", "Red jacket", true, false, false, 0));
+            plan.getCurrentArea().addItem(new Item("greenCap", "Green cap", true, false, false, 0));
 
-            plan.getCurrentArea().removeNPC("Podezrely");
-            plan.getCurrentArea().removeNPC("Kim");
+            plan.getCurrentArea().removeNPC("suspect");
+            plan.getCurrentArea().removeNPC("kim");
 
-            return "\nLupiče jste s Kimem přemohli tak, že hanbou utekl. Červená bunda a Zelená čepice upadly na zem.\n" +
-                    "Kim se s vámi rozloučil a odešel zpátky k jídelně.\n";
+            return "\nYou managed to beat the thief. The red jacket and green cap fell on the ground.\n" +
+                    "Kim said goodbye and headed back to the Soup kitchen.\n";
         }
 
-        return "\nPodezřele vypadající pán: \n\"Všímej si svého.\"\n";
+        return "\nSuspiciously looking person: \n\"Get lost.\"\n";
     }
 
     /**
@@ -157,25 +157,25 @@ public class CommandTalk implements ICommand {
     private String dialogShopAssistant() {
         if (progress.getProgress() == 1) {
             progress.addProgress();
-            return "\nProdavač: \n\"Před chvílí sem vtrhl nějaký grázl a sebral mi oblečení.\n" +
-                    "Jestli mi to oblečení dokážes přinést zpátky, dostaneš pěknou odměnu.\n" +
-                    "Byla to červená bunda a zelená čepice.\n" +
-                    "Utíkal směrem k pracáku. Pokud si pospíšíš, možná ho tam ještě zastihneš.\"\n";
+            return "\nShop assistant: \n\"Some bastard rushed into the shop and stole clothes this morning.\n" +
+                    "If you manage to get the clothes back to me, you will be rewarded.\n" +
+                    "It is a red jacket and a green cap.\n" +
+                    "He ran towards the Job center, he could still be there.\"\n";
         } else if (progress.getProgress() == 5) {
-            if (backpack.containsItem("CervenaBunda") && backpack.containsItem("ZelenaCepice")) {
+            if (backpack.containsItem("redJacket") && backpack.containsItem("greenCap")) {
                 progress.addProgress();
-                return "\nProdavač: \n\"Já věděl, že to dokážeš. Tady máš zaslouženou odměnu.\"\n" +
-                        backpack.removeItem("CervenaBunda") + "\n" +
-                        backpack.removeItem("ZelenaCepice") + "\n" +
+                return "\nShop assistant: \n\"I knew you could do it. Here is your reward.\"\n" +
+                        backpack.removeItem("redJacket") + "\n" +
+                        backpack.removeItem("greenCap") + "\n" +
                         money.addMoney(4.5) +
-                        "\n\nSven: \n\"Už bych měl mít dostatek peněz na jídlo. Doufám, že v Lidlu budou slevy.\n" +
-                        "Měl bych si pospíšit, za chvíli budou zavírat.\"\n";
+                        "\n\nSven: \n\"I should have enough money now. I hope there will be discounts in Lidl.\n" +
+                        "I should hurry up, it is almost closing time.\"\n";
             }
 
-            return "\nProdavač: \n\"Tak co, už máš pro mě to oblečení?\"\n";
+            return "\nShop assistant: \n\"Hey do you have the clothes for me?\"\n";
         }
 
-        return "\nSven: \n\"Není nic, co bych si v sekáči mohl koupit.\"\n";
+        return "\nSven: \n\"I can not afford anything in this shop.\"\n";
     }
 
     /**
@@ -184,17 +184,17 @@ public class CommandTalk implements ICommand {
      * @return dialog se Zastavárníkem
      */
     private String dialogPawnbroker() {
-        if (backpack.containsItem("StareHodiny")) {
+        if (backpack.containsItem("oldClock")) {
             if (progress.getProgress() == 0) {
                 progress.addProgress();
-                return "\nZastavárník: \n\"Za takovéhle hodiny ti dám maximálně tak 50 centů.\"\n" +
-                        backpack.removeItem("StareHodiny") + "\n" +
+                return "\nPawnbroker: \n\"I will give 50 cents for this clock.\"\n" +
+                        backpack.removeItem("oldClock") + "\n" +
                         money.addMoney(0.5) +
-                        "\n\nZastavárník: \n\"Potrebuješ víc peněz? Můj kámoš ze sekáče by pro tebe možná měl nějakej kšeft.\"\n";
+                        "\n\nPawnbroker: \n\"Do you need more money? My friend from the Thrift shop could have a job for you.\"\n";
             }
         }
 
-        return "\nSven: \n\"Nemám nic, co bych zastavárníkovi mohl prodat.\"\n";
+        return "\nSven: \n\"I have nothing to sell or buy here.\"\n";
     }
 
     /**
