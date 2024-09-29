@@ -8,7 +8,7 @@ import cz.vse.sven.logic.objects.Area;
 /**
  * CommandGo - moves the player to a neighboring area
  */
-public class CommandGo implements ICommand {
+public class Go implements ICommand {
 
     public static final String NAME = "go";
     private GamePlan gamePlan;
@@ -20,7 +20,7 @@ public class CommandGo implements ICommand {
      * @param gamePlan    of the current game instance
      * @param progress of the current game instance
      */
-    public CommandGo(GamePlan gamePlan, Progress progress) {
+    public Go(GamePlan gamePlan, Progress progress) {
         this.gamePlan = gamePlan;
         this.progress = progress;
     }

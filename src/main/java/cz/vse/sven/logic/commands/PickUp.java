@@ -8,7 +8,7 @@ import cz.vse.sven.logic.objects.Item;
 /**
  * CommandPickUp - picks up an item and puts it into player's backpack
  */
-public class CommandPickUp implements ICommand {
+public class PickUp implements ICommand {
 
     public static final String NAME = "pickUp";
     private GamePlan gamePlan;
@@ -20,7 +20,7 @@ public class CommandPickUp implements ICommand {
      * @param gamePlan  of the current game instance
      * @param backpack which the picked up item should be put into
      */
-    public CommandPickUp(GamePlan gamePlan, Backpack backpack) {
+    public PickUp(GamePlan gamePlan, Backpack backpack) {
         this.gamePlan = gamePlan;
         this.backpack = backpack;
     }

@@ -36,16 +36,12 @@ public class Game implements IGame {
         money = new Money();
         progress = new Progress();
         validCommands = new ListOfCommands();
-        validCommands.insertCommand(new CommandHelp(validCommands));
-        validCommands.insertCommand(new CommandGo(gamePlan, progress));
-        validCommands.insertCommand(new CommandEnd(this));
-        validCommands.insertCommand(new CommandPickUp(gamePlan, backpack));
-        validCommands.insertCommand(new CommandBuy(gamePlan, backpack, money));
-        validCommands.insertCommand(new CommandBackpack(backpack));
-        validCommands.insertCommand(new CommandTalk(gamePlan, backpack, money, progress, this));
-        validCommands.insertCommand(new CommandReturn(gamePlan, backpack, money));
-        validCommands.insertCommand(new CommandMoney(money));
-        validCommands.insertCommand(new CommandThrowAway(gamePlan, backpack));
+        validCommands.insertCommand(new Go(gamePlan, progress));
+        validCommands.insertCommand(new PickUp(gamePlan, backpack));
+        validCommands.insertCommand(new Buy(gamePlan, backpack, money));
+        validCommands.insertCommand(new Talk(gamePlan, backpack, money, progress, this));
+        validCommands.insertCommand(new Return(gamePlan, backpack, money));
+        validCommands.insertCommand(new ThrowAway(gamePlan, backpack));
         for (GameChange gameChange : GameChange.values()) {
             listOfObservers.put(gameChange, new HashSet<>());
         }
@@ -93,27 +89,18 @@ public class Game implements IGame {
      * if the condition is met it executes the command
      * and notifies the observer to a check possible game change.
      *
-     * @param line player's input
+     * @param keyWord player's input
      * @return returns processed command message to be displayed
      */
-    public String processCommand(String line) {
-        String[] words = line.split("[ \t]+");
-        String commandWord = words[0];
-        String[] parameters = new String[words.length - 1];
-        for (int i = 0; i < parameters.length; i++) {
-            parameters[i] = words[i + 1];
-        }
-        String textToShow;
-        if (validCommands.isValidCommand(commandWord)) {
-            ICommand command = validCommands.returnCommand(commandWord);
-            textToShow = command.executeCommand(parameters);
-        } else {
-            textToShow = "Unknown command.";
-        }
+    public String processCommand(String keyWord, String parameter) {
+        ICommand command = validCommands.returnCommand(keyWord);
+        String message = command.executeCommand(parameter);
+
         notifyObserver(GameChange.ITEM_CHANGE);
         notifyObserver(GameChange.NPC_CHANGE);
         notifyObserver(GameChange.MONEY_CHANGE);
-        return textToShow;
+
+        return message;
     }
 
     /**

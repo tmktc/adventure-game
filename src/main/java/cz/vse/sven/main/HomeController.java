@@ -15,11 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -212,61 +209,15 @@ public class HomeController {
     }
 
     /**
-     * Tells the game to process the go command and displays the outcome of the command
-     * it also clears the item interaction info display
-     *
-     * @param command that has been triggered
-     */
-    @FXML
-    private void processAreaTransition(String command) {
-        labelItemInteractionInfo.setText("");
-        game.processCommand(command);
-    }
-
-    /**
-     * Tells the game to process an item interaction command and displays the outcome of the command
-     * it also updates the item interaction info display
-     *
-     * @param command that has been triggered
-     */
-    @FXML
-    private void processItemInteraction(String command) {
-        String info = game.processCommand(command);
-        labelItemInteractionInfo.setText(info);
-    }
-
-    /**
-     * Tells the game to process the talk command and displays the outcome of the command v in popup window
-     *
-     * @param command that has been triggered
-     */
-    @FXML
-    private void processDialogWindow(String command) {
-        String dialog = game.processCommand(command);
-        Alert dialogWindow = new Alert(Alert.AlertType.INFORMATION);
-        dialogWindow.setTitle("Dialogue");
-        dialogWindow.setHeaderText(dialog);
-        dialogWindow.show();
-    }
-
-    /**
-     * Tells the game to process a command
-     *
-     * @param command that has been triggered
-     */
-    private void processDialog(String command) {
-        game.processCommand(command);
-    }
-
-    /**
      * Makes the area change when the player clicks on an area in the Exits panel
      */
     @FXML
     private void clickExitsPanel() {
         Area target = panelExits.getSelectionModel().getSelectedItem();
         if (target == null) return;
-        String command = CommandGo.NAME + " " + target.getName();
-        processAreaTransition(command);
+
+        labelItemInteractionInfo.setText("");
+        game.processCommand(Go.NAME, target.getName());
     }
 
     /**
@@ -276,13 +227,11 @@ public class HomeController {
     private void clickItemsInAreaPanel() {
         Item target = panelItemsInArea.getSelectionModel().getSelectedItem();
         if (target == null) return;
-        String command;
         if (game.getGamePlan().getCurrentArea().getName().equals("lidl") || game.getGamePlan().getCurrentArea().getName().equals("kiosk")) {
-            command = CommandBuy.NAME + " " + target.getName();
+            labelItemInteractionInfo.setText(game.processCommand(Buy.NAME, target.getName()));
         } else {
-            command = CommandPickUp.NAME + " " + target.getName();
+            labelItemInteractionInfo.setText(game.processCommand(PickUp.NAME, target.getName()));
         }
-        processItemInteraction(command);
     }
 
     /**
@@ -292,13 +241,11 @@ public class HomeController {
     private void clickItemsInBackpackPanel() {
         Item target = panelItemsInBackpack.getSelectionModel().getSelectedItem();
         if (target == null) return;
-        String command;
         if (game.getGamePlan().getCurrentArea().getName().equals("lidl")) {
-            command = CommandReturn.NAME + " " + target.getName();
+            labelItemInteractionInfo.setText(game.processCommand(Return.NAME,target.getName()));
         } else {
-            command = CommandThrowAway.NAME + " " + target.getName();
+            labelItemInteractionInfo.setText(game.processCommand(ThrowAway.NAME, target.getName()));
         }
-        processItemInteraction(command);
     }
 
     /**
@@ -310,15 +257,16 @@ public class HomeController {
     private void clickNPCsInAreaPanel() {
         NPC target = panelNPCsInArea.getSelectionModel().getSelectedItem();
         if (target == null) return;
-        String command = CommandTalk.NAME + " " + target.getName();
-
         if (
                 (game.getGamePlan().getCurrentArea().containsNPC("peppa") && (game.getProgressInstance().getProgress() >= 6))
                         || (game.getGamePlan().getCurrentArea().containsNPC("suspect") && game.getProgressInstance().getProgress() == 3)
         ) {
-            processDialog(command);
+            game.processCommand(Talk.NAME, target.getName());
         } else {
-            processDialogWindow(command);
+            Alert dialogWindow = new Alert(Alert.AlertType.INFORMATION);
+            dialogWindow.setTitle("Dialogue");
+            dialogWindow.setHeaderText(game.processCommand(Talk.NAME, target.getName()));
+            dialogWindow.show();
         }
     }
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CommandGoTest {
+public class GoTest {
 
     private Game game;
     private Progress progress;
@@ -20,13 +20,13 @@ public class CommandGoTest {
 
     @Test
     public void executeCommand() {
-        CommandGo commandGo = new CommandGo(game.getGamePlan(), progress);
+        ICommand go = new Go(game.getGamePlan(), progress);
 
         // no parameter
-        assertEquals("You must enter the area you want to go to.", commandGo.executeCommand());
+        assertEquals("You must enter the area you want to go to.", go.executeCommand());
 
         // not valid neighboring area
-        assertEquals("You can not go there from here.", commandGo.executeCommand("junkyard"));
+        assertEquals("You can not go there from here.", go.executeCommand("junkyard"));
 
         String correctText =
                 "\n\nYou are next to the Soup kitchen, which is closed for today, you see your friend Kim.\n" +
@@ -36,6 +36,6 @@ public class CommandGoTest {
                         "NPCs: kim  \n";
 
         // valid neighboring area
-        assertEquals(correctText, commandGo.executeCommand("soupKitchen"));
+        assertEquals(correctText, go.executeCommand("soupKitchen"));
     }
 }

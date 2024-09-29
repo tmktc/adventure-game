@@ -29,10 +29,11 @@ public interface IGame extends Observable {
      * if the condition is met it executes the command
      * and notifies the observer to a check possible game change.
      *
-     * @param line player's input
-     * @return returns processed command message to be displayed
+     * @param keyWord of the command
+     * @param parameter of the command
+     * @return processed command message to be displayed
      */
-    String processCommand(String line);
+    String processCommand(String keyWord, String parameter);
 
 
     /**

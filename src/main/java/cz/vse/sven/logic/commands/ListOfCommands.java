@@ -44,20 +44,4 @@ public class ListOfCommands {
         return CommandMap.containsKey(string);
     }
 
-    /**
-     * Returns list of valid commands sorted alphabetically
-     *
-     * @return list
-     */
-    public String returnCommandNames() {
-        List<String> commands = new ArrayList<>(CommandMap.keySet());
-        Collections.sort(commands);
-
-        String list = "";
-        for (String commandWord : commands) {
-            list += commandWord + " ";
-        }
-        return list;
-
-    }
 }

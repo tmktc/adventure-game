@@ -2,6 +2,7 @@ package cz.vse.sven.logic.game;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import cz.vse.sven.logic.commands.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,133 +16,120 @@ public class GameTest {
     }
 
     @Test
-    public void basicGameplay() {
-        assertEquals("home", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("go soupKitchen");
-        assertFalse(game.isGameEnd());
-        assertEquals("soupKitchen", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("go junkyard");
-        assertFalse(game.isGameEnd());
-        assertEquals("junkyard", game.getGamePlan().getCurrentArea().getName());
-        game.processCommand("end");
-        assertTrue(game.isGameEnd());
-    }
-
-    @Test
     public void gameplayLoss1() {
-        game.processCommand("go soupKitchen");
-        game.processCommand("go junkyard");
-        game.processCommand("pickUp oldClock");
-        game.processCommand("go pawnshop");
-        game.processCommand("talk pawnbroker");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("talk suspect");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(PickUp.NAME, "oldClock");
+        game.processCommand(Go.NAME, "pawnshop");
+        game.processCommand(Talk.NAME, "pawnbroker");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(Talk.NAME, "suspect");
         assertTrue(game.getGamePlan().isLoss());
     }
 
     @Test
     public void gameplayLoss2() {
         // did not manage to buy food in time
-        game.processCommand("go soupKitchen");
-        game.processCommand("go junkyard");
-        game.processCommand("pickUp oldClock");
-        game.processCommand("go pawnshop");
-        game.processCommand("talk pawnbroker");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("talk kim");
-        game.processCommand("go junkyard");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("pickUp redJacket");
-        game.processCommand("pickUp greenCap");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("go home");
-        game.processCommand("talk peppa");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(PickUp.NAME, "oldClock");
+        game.processCommand(Go.NAME, "pawnshop");
+        game.processCommand(Talk.NAME, "pawnbroker");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Talk.NAME, "kim");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(PickUp.NAME, "redJacket");
+        game.processCommand(PickUp.NAME, "greenCap");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "home");
+        game.processCommand(Talk.NAME, "peppa");
         assertTrue(game.getGamePlan().isLoss());
     }
 
     @Test
     public void gameplayWin() {
-        game.processCommand("go soupKitchen");
-        game.processCommand("go junkyard");
-        game.processCommand("pickUp oldClock");
-        game.processCommand("go pawnshop");
-        game.processCommand("talk pawnbroker");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("talk kim");
-        game.processCommand("go junkyard");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("pickUp redJacket");
-        game.processCommand("pickUp greenCap");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("go lidl");
-        game.processCommand("buy bagels");
-        game.processCommand("buy dogFood");
-        game.processCommand("go soupKitchen");
-        game.processCommand("go home");
-        game.processCommand("talk peppa");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(PickUp.NAME, "oldClock");
+        game.processCommand(Go.NAME, "pawnshop");
+        game.processCommand(Talk.NAME, "pawnbroker");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Talk.NAME, "kim");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(PickUp.NAME, "redJacket");
+        game.processCommand(PickUp.NAME, "greenCap");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "lidl");
+        game.processCommand(Buy.NAME, "bagels");
+        game.processCommand(Buy.NAME, "dogFood");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "home");
+        game.processCommand(Talk.NAME, "peppa");
         assertTrue(game.getGamePlan().isWin());
     }
 
     @Test
     public void gameplayPerfectWin() {
-        game.processCommand("go soupKitchen");
-        game.processCommand("go junkyard");
-        game.processCommand("pickUp oldClock");
-        game.processCommand("pickUp svijanyBottle");
-        game.processCommand("pickUp pilsnerBottle");
-        game.processCommand("pickUp branikBottle");
-        game.processCommand("go pawnshop");
-        game.processCommand("talk pawnbroker");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("talk kim");
-        game.processCommand("go junkyard");
-        game.processCommand("go jobCenter");
-        game.processCommand("talk suspect");
-        game.processCommand("pickUp redJacket");
-        game.processCommand("pickUp greenCap");
-        game.processCommand("go thriftShop");
-        game.processCommand("talk shopAssistant");
-        game.processCommand("go junkyard");
-        game.processCommand("go soupKitchen");
-        game.processCommand("go lidl");
-        game.processCommand("return svijanyBottle");
-        game.processCommand("return pilsnerBottle");
-        game.processCommand("return branikBottle");
-        game.processCommand("buy bagels");
-        game.processCommand("buy dogFood");
-        game.processCommand("buy glutenFreeBread");
-        game.processCommand("go kiosk");
-        game.processCommand("buy snus");
-        game.processCommand("go soupKitchen");
-        game.processCommand("talk kim");
-        game.processCommand("go home");
-        game.processCommand("talk peppa");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(PickUp.NAME, "oldClock");
+        game.processCommand(PickUp.NAME, "svijanyBottle");
+        game.processCommand(PickUp.NAME, "pilsnerBottle");
+        game.processCommand(PickUp.NAME, "branikBottle");
+        game.processCommand(Go.NAME, "pawnshop");
+        game.processCommand(Talk.NAME, "pawnbroker");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Talk.NAME, "kim");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "jobCenter");
+        game.processCommand(Talk.NAME, "suspect");
+        game.processCommand(PickUp.NAME, "redJacket");
+        game.processCommand(PickUp.NAME, "greenCap");
+        game.processCommand(Go.NAME, "thriftShop");
+        game.processCommand(Talk.NAME, "shopAssistant");
+        game.processCommand(Go.NAME, "junkyard");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Go.NAME, "lidl");
+        game.processCommand(Return.NAME, "svijanyBottle");
+        game.processCommand(Return.NAME, "pilsnerBottle");
+        game.processCommand(Return.NAME, "branikBottle");
+        game.processCommand(Buy.NAME, "bagels");
+        game.processCommand(Buy.NAME, "dogFood");
+        game.processCommand(Buy.NAME, "glutenFreeBread");
+        game.processCommand(Go.NAME, "kiosk");
+        game.processCommand(Buy.NAME, "snus");
+        game.processCommand(Go.NAME, "soupKitchen");
+        game.processCommand(Talk.NAME, "kim");
+        game.processCommand(Go.NAME, "home");
+        game.processCommand(Talk.NAME, "peppa");
         assertTrue(game.getGamePlan().isPerfectWin());
     }
 

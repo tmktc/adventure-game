@@ -9,7 +9,7 @@ import cz.vse.sven.logic.objects.Item;
  * CommandThrowAway - puts an item from the backpack into the area
  */
 
-public class CommandThrowAway implements ICommand {
+public class ThrowAway implements ICommand {
 
     public static final String NAME = "throwaway";
     private GamePlan gamePlan;
@@ -21,7 +21,7 @@ public class CommandThrowAway implements ICommand {
      * @param gamePlan  of the current game instance
      * @param backpack where the item is
      */
-    public CommandThrowAway(GamePlan gamePlan, Backpack backpack) {
+    public ThrowAway(GamePlan gamePlan, Backpack backpack) {
         this.gamePlan = gamePlan;
         this.backpack = backpack;
     }

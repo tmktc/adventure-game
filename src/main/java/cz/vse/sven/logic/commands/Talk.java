@@ -11,7 +11,7 @@ import cz.vse.sven.logic.objects.Item;
 /**
  * CommandTalk - starts a dialogue with an NPC
  */
-public class CommandTalk implements ICommand {
+public class Talk implements ICommand {
 
     public static final String NAME = "talk";
     private GamePlan gamePlan;
@@ -28,7 +28,7 @@ public class CommandTalk implements ICommand {
      * @param money   player's money balance
      * @param progress of the current game instance
      */
-    public CommandTalk(GamePlan gamePlan, Backpack backpack, Money money, Progress progress, Game game) {
+    public Talk(GamePlan gamePlan, Backpack backpack, Money money, Progress progress, Game game) {
         this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;

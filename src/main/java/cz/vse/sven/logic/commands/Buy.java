@@ -9,7 +9,7 @@ import cz.vse.sven.logic.objects.Item;
 /**
  * CommandBuy - buys an item
  */
-public class CommandBuy implements ICommand {
+public class Buy implements ICommand {
 
     public static final String NAME = "buy";
     private GamePlan gamePlan;
@@ -23,7 +23,7 @@ public class CommandBuy implements ICommand {
      * @param backpack  which the bought item should be put into
      * @param money amount of money that should be subtracted from players balance
      */
-    public CommandBuy(GamePlan gamePlan, Backpack backpack, Money money) {
+    public Buy(GamePlan gamePlan, Backpack backpack, Money money) {
         this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;

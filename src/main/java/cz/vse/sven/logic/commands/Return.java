@@ -8,7 +8,7 @@ import cz.vse.sven.logic.objects.Area;
 /**
  * CommandReturn - returns bottles to the Bottle machine
  */
-public class CommandReturn implements ICommand {
+public class Return implements ICommand {
 
     public static final String NAME = "return";
     private GamePlan gamePlan;
@@ -22,7 +22,7 @@ public class CommandReturn implements ICommand {
      * @param backpack  where the bottle is located
      * @param money balance that money should be added to
      */
-    public CommandReturn(GamePlan gamePlan, Backpack backpack, Money money) {
+    public Return(GamePlan gamePlan, Backpack backpack, Money money) {
         this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;

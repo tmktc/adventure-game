@@ -1,10 +1,6 @@
 package cz.vse.sven.main;
 
-import cz.vse.sven.logic.game.Game;
-import cz.vse.sven.logic.game.IGame;
-import cz.vse.sven.uiText.TextInterface;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,14 +19,7 @@ public class Start extends Application {
      * @param args parameter
      */
     public static void main(String[] args) {
-        if (args.length > 0 && args[0].equals("text")) {
-            IGame game = new Game();
-            TextInterface ui = new TextInterface(game);
-            ui.play();
-            Platform.exit();
-        } else {
-            launch();
-        }
+        launch();
     }
 
     /**
