@@ -21,41 +21,41 @@
     </rowConstraints>
     <MenuBar GridPane.columnSpan="2147483647">
         <Menu mnemonicParsing="false" text="Hra">
-            <MenuItem onAction="#novaHra" text="Nová hra"/>
-            <MenuItem onAction="#ukoncitHru" text="Ukončit"/>
+            <MenuItem onAction="#newGame" text="Nová game"/>
+            <MenuItem onAction="#exitGame" text="Exit"/>
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.15, 0.85" GridPane.rowIndex="2">
         <VBox>
-            <Label fx:id="labelPostavyVProstoru" alignment="CENTER" maxWidth="1.7976931348623157E308"
-                   text="Postavy v prostoru" textAlignment="CENTER">
+            <Label fx:id="labelNPCsInArea" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                   text="NPCs in the area" textAlignment="CENTER">
                 <font>
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <ListView fx:id="panelPostavVProstoru" onMouseClicked="#klikPanelPostavVProstoru"/>
-            <Label fx:id="labelVeciVProstoru" alignment="CENTER" maxWidth="1.7976931348623157E308"
-                   text="Věci v prostoru" textAlignment="CENTER">
+            <ListView fx:id="panelNPCsInArea" onMouseClicked="#clickNPCsInAreaPanel"/>
+            <Label fx:id="labelItemsInArea" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                   text="Items in the area" textAlignment="CENTER">
                 <font>
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <ListView fx:id="panelVeciVProstoru" onMouseClicked="#klikPanelVeciVProstoru"/>
+            <ListView fx:id="panelItemsInArea" onMouseClicked="#clickItemsInAreaPanel"/>
         </VBox>
         <VBox alignment="CENTER">
             <HBox alignment="CENTER">
                 <Pane>
                     <ImageView fitHeight="332.0" fitWidth="710.0" pickOnBounds="true"
                                preserveRatio="true">
-                        <Image url="@mapa.PNG"/>
+                        <Image url="@map.PNG"/>
                     </ImageView>
-                    <ImageView fx:id="hrac" fitHeight="40.0" fitWidth="40.0" layoutX="380.0"
+                    <ImageView fx:id="player" fitHeight="40.0" fitWidth="40.0" layoutX="380.0"
                                layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@hrac.png"/>
+                        <Image url="@player.png"/>
                     </ImageView>
                 </Pane>
             </HBox>
-            <Label fx:id="popisProstoru" alignment="CENTER" text="popis prostoru" textAlignment="CENTER">
+            <Label fx:id="labelAreaDescription" alignment="CENTER" text="area description" textAlignment="CENTER">
                 <VBox.margin>
                     <Insets top="10.0"/>
                 </VBox.margin>
@@ -63,7 +63,7 @@
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <Label fx:id="hlaseniPriInterakciSVecmi">
+            <Label fx:id="labelItemInteractionInfo">
                 <VBox.margin>
                     <Insets top="15.0"/>
                 </VBox.margin>
@@ -73,20 +73,20 @@
             </Label>
         </VBox>
         <VBox>
-            <Label fx:id="labelVeciVBatohu" alignment="CENTER" maxWidth="1.7976931348623157E308"
-                   text="Věci v batohu" textAlignment="CENTER">
+            <Label fx:id="labelItemsInBackpack" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                   text="Items in the backpack" textAlignment="CENTER">
                 <font>
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <ListView fx:id="panelVeciVBatohu" onMouseClicked="#klikPanelVeciVBatohu"/>
-            <Label fx:id="labelVychody" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Východy"
+            <ListView fx:id="panelItemsInBackpack" onMouseClicked="#clickItemsInBackpackPanel"/>
+            <Label fx:id="labelExits" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Exits"
                    textAlignment="CENTER">
                 <font>
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <ListView fx:id="panelVychodu" onMouseClicked="#klikPanelVychodu"/>
+            <ListView fx:id="panelExits" onMouseClicked="#clickExitsPanel"/>
         </VBox>
     </SplitPane>
     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.rowIndex="3">
@@ -100,8 +100,8 @@
             <HBox.margin>
                 <Insets left="20.0"/>
             </HBox.margin>
-            <Label fx:id="labelPenizeVKapse" alignment="CENTER" maxWidth="1.7976931348623157E308"
-                   text="Peníze:" textAlignment="CENTER">
+            <Label fx:id="labelMoneyStatus" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                   text="Money:" textAlignment="CENTER">
                 <VBox.margin>
                     <Insets/>
                 </VBox.margin>
@@ -109,8 +109,8 @@
                     <Font size="13.0"/>
                 </font>
             </Label>
-            <Label fx:id="ukazatelPenez" alignment="CENTER" maxWidth="1.7976931348623157E308"
-                   text="castka" textAlignment="CENTER">
+            <Label fx:id="labelCurrentMoney" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                   text="sum" textAlignment="CENTER">
                 <VBox.margin>
                     <Insets/>
                 </VBox.margin>
@@ -124,7 +124,7 @@
         <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
-        <Button fx:id="tlacitkoNapoveda" mnemonicParsing="false" onAction="#klikNapoveda" text="Nápověda">
+        <Button fx:id="buttonHelp" mnemonicParsing="false" onAction="#clickHelp" text="Help">
             <padding>
                 <Insets bottom="10.0" left="40.0" right="40.0" top="10.0"/>
             </padding>

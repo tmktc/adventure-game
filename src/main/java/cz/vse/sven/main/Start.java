@@ -1,8 +1,8 @@
 package cz.vse.sven.main;
 
-import cz.vse.sven.logika.hra.Hra;
-import cz.vse.sven.logika.hra.IHra;
-import cz.vse.sven.uiText.TextoveRozhrani;
+import cz.vse.sven.logic.game.Game;
+import cz.vse.sven.logic.game.IGame;
+import cz.vse.sven.uiText.TextInterface;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,26 +11,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-/*******************************************************************************
- * Třída  Start je hlavní třídou projektu,
- * který představuje jednoduchou textovou adventuru určenou k dalším úpravám a rozšiřování
- *
- * @author Jarmila Pavlíčková, Tomáš Kotouč
- * @version únor 2024
+/**
+ * Start - main class
  */
 public class Start extends Application {
 
     /**
-     * Pokud je parametr "text", tak se hra spustí v textové verzi
-     * pokud parametr není "text", tak se hra spustí v grafické verzi
+     * If the parameter is "text", the game is launched in text version
+     * otherwise the game is launched in the GUI version
      *
-     * @param args Parametry příkazového řádku
+     * @param args parameter
      */
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("text")) {
-            IHra hra = new Hra();
-            TextoveRozhrani ui = new TextoveRozhrani(hra);
-            ui.hraj();
+            IGame game = new Game();
+            TextInterface ui = new TextInterface(game);
+            ui.play();
             Platform.exit();
         } else {
             launch();
@@ -38,11 +34,8 @@ public class Start extends Application {
     }
 
     /**
-     * Spuštění grafické verze - načtení FXML souboru, vytvoření a nastavení scény,
-     * zobrazí okno s uvítáním
-     *
-     * @param stage instance okna
-     * @throws Exception pokud nastane chyba
+     * GUI version launch - FXML file load, creating and setting of the scene,
+     * displaying the introduction window
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -52,14 +45,14 @@ public class Start extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Adventura Sven");
+        stage.setTitle("Sven's Adventure");
 
-        Alert uvitani = new Alert(Alert.AlertType.INFORMATION);
-        uvitani.setTitle("Uvítání");
-        uvitani.setHeaderText("\nV této hře hrajete za Svena, který žije pod mostem se svým psem Pepou.\n" +
-                "Oba mají hlad, Sven u sebe však žádné jídlo nemá. Peníze mu také chybí.\n" +
-                "Rozhodne se, že Pepu nechá doma a vydá se do nedaleké jídelny (která dává bezdomovcům jídlo zdarma).\n" +
-                "Jeho hlavním cílem je obstarat jídlo pro sebe a pro Pepu.");
-        uvitani.show();
+        Alert introduction = new Alert(Alert.AlertType.INFORMATION);
+        introduction.setTitle("Introduction");
+        introduction.setHeaderText("\nYou play as Sven, who lives under the bridge with his dog Peppa.\n" +
+                "They are both hungry, but Sven has no food and no money to buy it.\n" +
+                "He decides to leave Peppa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
+                "His main goal is to obtain food for Peppa and himself.");
+        introduction.show();
     }
 }
