@@ -327,12 +327,12 @@ public class HomeController {
      */
     @FXML
     private void clickHelp() {
-        Stage helpStage = new Stage();
-        WebView wv = new WebView();
-        Scene helpScene = new Scene(wv);
-        helpStage.setScene(helpScene);
-        helpStage.show();
-        wv.getEngine().load(getClass().getResource("help.html").toExternalForm());
+        Alert introduction = new Alert(Alert.AlertType.INFORMATION);
+        introduction.setTitle("Help");
+        introduction.setHeaderText("The game has four possible endings. Two of which are bad, one good and one perfect.\n" +
+                "The game always progresses through talking to an NPC. Pay attention to what NPCs are saying.\n\n" +
+                "You control the game by clicking on exits, NPCs and items in the side panels.");
+        introduction.show();
     }
 
     /**
