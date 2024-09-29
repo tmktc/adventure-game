@@ -3,62 +3,51 @@ package cz.vse.sven.logic.commands;
 import java.util.*;
 
 /**
- * Class SeznamPrikazu - eviduje seznam přípustných příkazů adventury.
- * Používá se pro rozpoznávání příkazů
- * a vrácení odkazu na třídu implementující konkrétní příkaz.
- * Každý nový příkaz (instance implementující rozhraní Prikaz) se
- * musí do seznamu přidat metodou vlozPrikaz.
- * <p>
- * Tato třída je součástí jednoduché textové hry.
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova
- * @version pro školní rok 2016/2017
+ * ListOfCommands - keeps track of the list of valid commands
  */
 public class ListOfCommands {
     private Map<String, ICommand> CommandMap;
 
     /**
-     * Konstruktor
+     * Constructor
      */
     public ListOfCommands() {
         CommandMap = new HashMap<>();
     }
 
     /**
-     * Vkládá nový příkaz.
+     * Inserts a new command into the list of valid commands
      *
-     * @param command Instance třídy implementující rozhraní IPrikaz
+     * @param command to be inserted
      */
     public void insertCommand(ICommand command) {
         CommandMap.put(command.getName(), command);
     }
 
     /**
-     * Vrací odkaz na instanci třídy implementující rozhraní IPrikaz,
-     * která provádí příkaz uvedený jako parametr.
+     * Returns a command from the list of valid commands
      *
-     * @param string klíčové slovo příkazu, který chce hráč zavolat
-     * @return instance třídy, která provede požadovaný příkaz
+     * @param string command keyword
+     * @return instance of the command
      */
     public ICommand returnCommand(String string) {
         return CommandMap.getOrDefault(string, null);
     }
 
     /**
-     * Kontroluje, zda zadaný řetězec je přípustný příkaz.
+     * Checks whether the keyword is a valid command
      *
-     * @param string Řetězec, který se má otestovat, zda je přípustný příkaz
-     * @return Vrací hodnotu true, pokud je zadaný
-     * řetězec přípustný příkaz
+     * @param string keyword to check
+     * @return true - false, false - invalid
      */
     public boolean isValidCommand(String string) {
         return CommandMap.containsKey(string);
     }
 
     /**
-     * Vrací abecedně seřazený seznam přípustných příkazů, jednotlivé příkazy jsou odděleny mezerou.
+     * Returns list of valid commands sorted alphabetically
      *
-     * @return Řetězec, který obsahuje seznam přípustných příkazů
+     * @return list
      */
     public String returnCommandNames() {
         List<String> commands = new ArrayList<>(CommandMap.keySet());

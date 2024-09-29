@@ -3,33 +3,20 @@ package cz.vse.sven.logic.objects;
 import java.util.*;
 
 /**
- * Trida Prostor - popisuje jednotlivé prostory (místnosti) hry
- * <p>
- * Tato třída je součástí jednoduché textové hry.
- * <p>
- * "Prostor" reprezentuje jedno místo (místnost, prostor, ..) ve scénáři hry.
- * Prostor může mít sousední prostory připojené přes východy. Pro každý východ
- * si prostor ukládá odkaz na sousedící prostor.
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version březen 2024
+ * Area - different areas the player moves between
+ * Each area has at least one neighboring area, the player can only move between neighboring areas
  */
 public class Area {
 
     private String name;
     private String fullName;
     private String description;
-    private Set<Area> exits;    // obsahuje sousedni mistnosti
+    private Set<Area> exits;
     private Map<String, Item> itemList;
     private Map<String, NPC> NPCList;
 
     /**
-     * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
-     * před domem"
-     *
-     * @param name nazev prostoru, jednoznačný identifikátor, jedno slovo nebo
-     *              víceslovný název bez mezer.
-     * @param description Popis prostoru.
+     * Constructor
      */
     public Area(String name, String fullName, String description) {
         this.name = name;
@@ -41,55 +28,34 @@ public class Area {
     }
 
     /**
-     * Definuje východ z prostoru (sousední/vedlejsi prostor). Vzhledem k tomu,
-     * že je použit Set pro uložení východů, může být sousední prostor uveden
-     * pouze jednou (tj. nelze mít dvoje dveře do stejné sousední místnosti).
-     * Druhé zadání stejného prostoru tiše přepíše předchozí zadání (neobjeví se
-     * žádné chybové hlášení). Lze zadat též cestu ze do sebe sama.
+     * Puts an area into the exits list of an area
      *
-     * @param area prostor, který sousedi s aktualnim prostorem.
+     * @param area to be added into the list
      */
     public void setExit(Area area) {
         exits.add(area);
     }
 
     /**
-     * Metoda equals pro porovnání dvou prostorů. Překrývá se metoda equals ze
-     * třídy Object. Dva prostory jsou shodné, pokud mají stejný název. Tato
-     * metoda je důležitá z hlediska správného fungování seznamu východů (Set).
-     * <p>
-     * Bližší popis metody equals je u třídy Object.
+     * equals method - two areas are the same if the have the same name
      *
-     * @param o object, který se má porovnávat s aktuálním
-     * @return hodnotu true, pokud má zadaný prostor stejný název, jinak false
+     * @param area to be compared
+     * @return true if the name are the same, false if not
      */
     @Override
-    public boolean equals(Object o) {
-        // porovnáváme zda se nejedná o dva odkazy na stejnou instanci
-
-        if (this == o) {
+    public boolean equals(Object area) {
+        if (this == area) {
             return true;
         }
-        // porovnáváme jakého typu je parametr
-        if (!(o instanceof Area)) {
-            return false; // pokud parametr není typu Prostor, vrátíme false
+        if (!(area instanceof Area)) {
+            return false;
         }
-        // přetypujeme parametr na typ Prostor
-        Area second = (Area) o;
-
-        //metoda equals třídy java.util.Objects porovná hodnoty obou názvů.
-        //Vrátí true pro stejné názvy a i v případě, že jsou oba názvy null,
-        //jinak vrátí false.
-
+        Area second = (Area) area;
         return (java.util.Objects.equals(this.name, second.name));
     }
 
     /**
-     * metoda hashCode vraci ciselny identifikator instance, ktery se pouziva
-     * pro optimalizaci ukladani v dynamickych datovych strukturach. Pri
-     * prekryti metody equals je potreba prekryt i metodu hashCode. Podrobny
-     * popis pravidel pro vytvareni metody hashCode je u metody hashCode ve
-     * tride Object
+     * hashCode method
      */
     @Override
     public int hashCode() {
@@ -100,43 +66,41 @@ public class Area {
     }
 
     /**
-     * Vrací název prostoru (byl zadán při vytváření prostoru jako parametr
-     * konstruktoru)
+     * Returns the name of an area
      *
-     * @return název prostoru
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Getter pro název s mezerami a diakritikou
+     * Returns the full name of an area
      *
-     * @return název s mezerami a diakritikou
+     * @return full name
      */
     public String getFullName() {
         return fullName;
     }
 
     /**
-     * Vrací "dlouhý" popis prostoru
+     * Returns the long version of the description
      *
-     * @return Dlouhý popis prostoru
+     * @return long description
      */
     public String longDescription() {
         return "\n\nYou are " + description + "\n\n"
-                + exitDescription() + "\n"
+                + exitsDescription() + "\n"
                 + itemList() + "\n"
                 + NPCList() + "\n";
     }
 
     /**
-     * Vrací textový řetězec, který popisuje sousední východy, například:
-     * "vychody: hala ".
+     * Returns exits description of an area
      *
-     * @return Popis východů - názvů sousedních prostorů
+     * @return all exits of an area
      */
-    public String exitDescription() {
+    public String exitsDescription() {
         String returnedText = "exits: ";
         for (Area neighbor : exits) {
             returnedText += neighbor.getName() + "  ";
@@ -145,15 +109,12 @@ public class Area {
     }
 
     /**
-     * Vrací prostor, který sousedí s aktuálním prostorem a jehož název je zadán
-     * jako parametr. Pokud prostor s udaným jménem nesousedí s aktuálním
-     * prostorem, vrací se hodnota null.
+     * Returns an area, that neighbors the area and has the give name
+     * If the two areas do not neighbor, null is returned
      *
-     * @param neighborName Jméno sousedního prostoru (východu)
-     * @return Prostor, který se nachází za příslušným východem, nebo hodnota
-     * null, pokud prostor zadaného jména není sousedem.
+     * @param neighborName potential neighboring area
+     * @return Neighboring area or null
      */
-
     public Area returnNeighboringArea(String neighborName) {
         List<Area> searchedAreas =
                 exits.stream()
@@ -167,76 +128,72 @@ public class Area {
     }
 
     /**
-     * Vrací kolekci obsahující prostory, se kterými tento prostor sousedí.
-     * Takto získaný seznam sousedních prostor nelze upravovat (přidávat,
-     * odebírat východy) protože z hlediska správného návrhu je to plně
-     * záležitostí třídy Prostor.
+     * Returns an unmodifiable collection of areas exits
      *
-     * @return Nemodifikovatelná kolekce prostorů (východů), se kterými tento
-     * prostor sousedí.
+     * @return unmodifiable collection of areas exits
      */
     public Collection<Area> getExits() {
         return Collections.unmodifiableCollection(exits);
     }
 
     /**
-     * Metoda vrátí kolekci věcí nacházejících se v prostoru
+     * Returns an unmodifiable collection of areas items
      *
-     * @return kolekce věcí nacházejících se v prostoru
+     * @return unmodifiable collection of areas items
      */
-    public Collection<Item> getItemList() {
+    public Collection<Item> getItems() {
         return Collections.unmodifiableCollection(itemList.values());
     }
 
     /**
-     * Metoda vrátí kolekci postav nacházejích se v prostoru
+     * Returns an unmodifiable collection of areas NPCs
      *
-     * @return kolekce postav nacházejících se v prostoru
+     * @return unmodifiable collection of areas NPCs
      */
-    public Collection<NPC> getNPCList() {
+    public Collection<NPC> getNPCs() {
         return Collections.unmodifiableCollection(NPCList.values());
     }
 
     /**
-     * Přidá věc do prostoru
+     * Adds an item into the area
      *
-     * @param item k přidání
+     * @param item to be added
      */
     public void addItem(Item item) {
         itemList.put(item.getName(), item);
     }
 
     /**
-     * Odebere věc z prostoru
+     * Removes an item from the area
      *
-     * @param item k odebrání
+     * @param item to be removed
      */
     public void removeItem(String item) {
         itemList.remove(item);
     }
 
     /**
-     * Zkontroluje, zda prostor obsahuje danou věc
+     * Checks whether the area contains given item
      *
-     * @param itemName ke zkontrolování
+     * @param item to be checked
      * @return true/false
      */
-    public boolean containsItem(String itemName) {
-        return itemList.containsKey(itemName);
+    public boolean containsItem(String item) {
+        return itemList.containsKey(item);
     }
 
     /**
-     * Zkontroluje, zda daná věc nacházejíci se v prostoru je sebratelná
+     * Checks whether an item in the area can be picked up
      *
-     * @param itemName ke zkontrolovaní
-     * @return Pokud je sebratelná, tak věc vrátí, pokud ne, vrátí null
+     * @param item to be checked
+     * @return the item if it can be picked up, null if it can not be picked up
      */
-    public Item canItemBePickedUp(String itemName) {
-        Item item;
-        if (itemList.containsKey(itemName)) {
-            item = itemList.get(itemName);
-            if (item.getCanBePickedUp()) {
-                return item;
+    public Item canItemBePickedUp(String item) {
+        Item i;
+        if (itemList.containsKey(item)) {
+            i = itemList.get(item);
+            if (i.getCanBePickedUp()) {
+                return i;
             }
             return null;
         }
@@ -244,17 +201,17 @@ public class Area {
     }
 
     /**
-     * Zkontroluje, zda daná věc nacházejíci se v prostoru je koupitelná
+     * Checks whether an item in the area is purchasable
      *
-     * @param itemName ke zkontrolovaní
-     * @return Pokud je koupitelná, tak věc vrátí, pokud ne, vrátí null
+     * @param item to be checked
+     * @return the item if it is purchasable, null if it is not purchasable
      */
-    public Item isItemPurchasable(String itemName) {
-        Item item;
-        if (itemList.containsKey(itemName)) {
-            item = itemList.get(itemName);
-            if (item.isPurchasable()) {
-                return item;
+    public Item isItemPurchasable(String item) {
+        Item i;
+        if (itemList.containsKey(item)) {
+            i = itemList.get(item);
+            if (i.isPurchasable()) {
+                return i;
             }
             return null;
         }
@@ -262,9 +219,9 @@ public class Area {
     }
 
     /**
-     * Vrátí abecedně seřazený seznam věcí v prostoru
+     * Returns a list of the items in the area sorted alphabetically
      *
-     * @return seznam věcí
+     * @return items list
      */
     public String itemList() {
         List<String> items = new ArrayList<>(itemList.keySet());
@@ -278,9 +235,9 @@ public class Area {
     }
 
     /**
-     * Vloží postavu do prostoru v případě, že se postava v tomot prostoru ještě nenachází
+     * Puts an NPC into the area if the NPC is not already located in the area
      *
-     * @param NPC k vložení
+     * @param NPC to be put into the area
      */
     public void addNPC(NPC NPC) {
         if (!(NPCList.containsKey(NPC.getName()))) {
@@ -289,28 +246,28 @@ public class Area {
     }
 
     /**
-     * Odebere věc z prostoru
+     * Removes NPC from the area
      *
-     * @param NPCName k odebrání
+     * @param NPCName to be removed
      */
     public void removeNPC(String NPCName) {
         NPCList.remove(NPCName);
     }
 
     /**
-     * zjistí, zda se postava v prostoru nachází
+     * Checks whether the area contains given NPC
      *
-     * @param NPCName ke kontrole
-     * @return true - postava se v prostoru nachazi, false - nenachazi
+     * @param NPC to be checked
+     * @return true/false
      */
-    public boolean containsNPC(String NPCName) {
-        return NPCList.containsKey(NPCName);
+    public boolean containsNPC(String NPC) {
+        return NPCList.containsKey(NPC);
     }
 
     /**
-     * Vrátí abecedně seřazený seznam postav v prostoru
+     * Returns a list of the NPCs in the area sorted alphabetically
      *
-     * @return seznam postav
+     * @return NPCs list
      */
     public String NPCList() {
         List<String> NPCs = new ArrayList<>(NPCList.keySet());
@@ -324,18 +281,18 @@ public class Area {
     }
 
     /**
-     * Vrátí popis prostoru
+     * Returns area's description
      *
-     * @return popis prostoru
+     * @return area description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * toString metoda třídy Prostor
+     * toString method
      *
-     * @return název prostoru
+     * @return area name
      */
     @Override
     public String toString() {

@@ -7,16 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Testovací třída PrikazBatohTest slouží k otestování třídy PrikazBatoh
- *
- * @author Tomáš Kotouč
- * @version prosinec 2023
- */
 public class CommandBackpackTest {
 
     private Backpack backpack;
-
 
     @BeforeEach
     public void setUp() {
@@ -27,9 +20,6 @@ public class CommandBackpackTest {
         backpack.putItem(item2);
     }
 
-    /**
-     * Otestuje, zda příkaz správně vypíše obsah batohu
-     */
     @Test
     public void executeCommand() {
         CommandBackpack commandBackpack = new CommandBackpack(backpack);

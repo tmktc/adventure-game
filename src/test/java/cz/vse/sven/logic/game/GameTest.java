@@ -5,12 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testovací třída HraTest slouží k otestování třídy Hra
- *
- * @author Tomáš Kotouč
- * @version březen 2024
- */
 public class GameTest {
 
     private Game game;
@@ -20,25 +14,19 @@ public class GameTest {
         game = new Game();
     }
 
-    /**
-     * Otestuje základní průběh hry
-     */
     @Test
     public void basicGameplay() {
         assertEquals("home", game.getGamePlan().getCurrentArea().getName());
         game.processCommand("go soupKitchen");
-        assertFalse(game.gameEnd());
+        assertFalse(game.isGameEnd());
         assertEquals("soupKitchen", game.getGamePlan().getCurrentArea().getName());
         game.processCommand("go junkyard");
-        assertFalse(game.gameEnd());
+        assertFalse(game.isGameEnd());
         assertEquals("junkyard", game.getGamePlan().getCurrentArea().getName());
         game.processCommand("end");
-        assertTrue(game.gameEnd());
+        assertTrue(game.isGameEnd());
     }
 
-    /**
-     * Otestuje scénář hry, kdy prohrajeme, protože nám uteče lupič
-     */
     @Test
     public void gameplayLoss1() {
         game.processCommand("go soupKitchen");
@@ -54,11 +42,9 @@ public class GameTest {
         assertTrue(game.getGamePlan().isLoss());
     }
 
-    /**
-     * Otestuje scénář, kdy prohrajeme, protože jsme nestihli koupit jídlo
-     */
     @Test
     public void gameplayLoss2() {
+        // did not manage to buy food in time
         game.processCommand("go soupKitchen");
         game.processCommand("go junkyard");
         game.processCommand("pickUp oldClock");
@@ -81,13 +67,10 @@ public class GameTest {
         game.processCommand("go junkyard");
         game.processCommand("go soupKitchen");
         game.processCommand("go home");
-        game.processCommand("talk pepa");
+        game.processCommand("talk peppa");
         assertTrue(game.getGamePlan().isLoss());
     }
 
-    /**
-     * Otestujeme scénář výhry
-     */
     @Test
     public void gameplayWin() {
         game.processCommand("go soupKitchen");
@@ -116,13 +99,10 @@ public class GameTest {
         game.processCommand("buy dogFood");
         game.processCommand("go soupKitchen");
         game.processCommand("go home");
-        game.processCommand("talk pepa");
+        game.processCommand("talk peppa");
         assertTrue(game.getGamePlan().isWin());
     }
 
-    /**
-     * Otestuje scénář perfektní výhry
-     */
     @Test
     public void gameplayPerfectWin() {
         game.processCommand("go soupKitchen");
@@ -161,42 +141,39 @@ public class GameTest {
         game.processCommand("go soupKitchen");
         game.processCommand("talk kim");
         game.processCommand("go home");
-        game.processCommand("talk pepa");
+        game.processCommand("talk peppa");
         assertTrue(game.getGamePlan().isPerfectWin());
     }
 
-    /**
-     * Otestuje různé konce hry
-     */
     @Test
-    public void gameEndLoss() {
+    public void isGameEndLoss() {
         game.getGamePlan().setLoss(true);
-        String spravnyText = "You did not manage to obtain food for Pepa and yourself in time." +
+        String CorrectText = "You did not manage to obtain food for Peppa and yourself in time." +
                 "\na Loss, better luck next time.\n";
-        assertEquals(spravnyText, game.returnEpilogue());
+        assertEquals(CorrectText, game.returnEpilogue());
 
 
         game.getProgressInstance().setProgress(3);
-        String spravnyText2 = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
+        String correctText2 = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
                 "\na Loss, better luck next time.\n";
-        assertEquals(spravnyText2, game.returnEpilogue());
+        assertEquals(correctText2, game.returnEpilogue());
     }
 
     @Test
-    public void gameEndWin() {
+    public void isGameEndWin() {
         game.getGamePlan().setWin(true);
-        String spravnyText = "You managed to obtain food for Pepa and yourself.\n" +
+        String correctText = "You managed to obtain food for Peppa and yourself.\n" +
                 "Kim will be hungry today - you can do better next time.\n" +
                 "a Win, good job.\n";
-        assertEquals(spravnyText, game.returnEpilogue());
+        assertEquals(correctText, game.returnEpilogue());
 
     }
 
     @Test
-    public void gameEndPerfectWin() {
+    public void isGameEndPerfectWin() {
         game.getGamePlan().setPerfectWin(true);
-        String spravnyText = "You managed to obtain food for everyone and Sven bought snus.\n" +
+        String correctText = "You managed to obtain food for everyone and Sven bought snus.\n" +
                 "a Perfect win, congratulations.\n";
-        assertEquals(spravnyText, game.returnEpilogue());
+        assertEquals(correctText, game.returnEpilogue());
     }
 }

@@ -6,37 +6,30 @@ import cz.vse.sven.logic.objects.NPC;
 import cz.vse.sven.logic.objects.Area;
 
 /**
- * Třída PrikazJdi implementuje pro hru příkaz jdi.
- * příkaz umožňuje hráči pohybovat se mezi prostory
- *
- * @author Jarmila Pavlickova, Luboš Pavlíček, Tomáš Kotouč
- * @version březen 2024
+ * CommandGo - moves the player to a neighboring area
  */
 public class CommandGo implements ICommand {
 
     public static final String NAME = "go";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Progress progress;
 
     /**
-     * Konstruktor třídy
+     * Constructor
      *
-     * @param plan     herní plán, ve kterém se bude ve hře "chodit"
-     * @param progress hry
+     * @param gamePlan    of the current game instance
+     * @param progress of the current game instance
      */
-    public CommandGo(GamePlan plan, Progress progress) {
-        this.plan = plan;
+    public CommandGo(GamePlan gamePlan, Progress progress) {
+        this.gamePlan = gamePlan;
         this.progress = progress;
     }
 
     /**
-     * Provádí příkaz "jdi". Zkouší se vyjít do zadaného prostoru. Pokud prostor
-     * existuje, vstoupí se do nového prostoru. Pokud zadaný sousední prostor
-     * (východ) není, vypíše se chybové hlášení.
+     * Checks whether the area neighbors the current area
      *
-     * @param parameters - jako  parametr obsahuje jméno prostoru (východu),
-     *                  do kterého se má jít.
-     * @return zpráva, kterou vypíše hra hráči
+     * @param parameters area where the player wants to go
+     * @return info message
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -46,24 +39,24 @@ public class CommandGo implements ICommand {
 
         String direction = parameters[0];
 
-        Area neighboringArea = plan.getCurrentArea().returnNeighboringArea(direction);
-        Area currentArea = plan.getCurrentArea();
+        Area neighboringArea = gamePlan.getCurrentArea().returnNeighboringArea(direction);
+        Area currentArea = gamePlan.getCurrentArea();
 
         if (neighboringArea == null) {
             return "You can not go there from here.";
         } else {
-            plan.setCurrentArea(neighboringArea);
-            //Kim nás musí po určitý čas následovat, takže vždy z předchozího prostoru Kima odebereme a do dalšího přidáme
+            gamePlan.setCurrentArea(neighboringArea);
+            //Kim has to follow us at one point, so we remove him from current area and put him into the one we are about to enter
             if (progress.getProgress() == 4) {
-                currentArea.removeNPC("Kim");
-                neighboringArea.addNPC(new NPC("Kim", "Kim"));
+                currentArea.removeNPC("kim");
+                neighboringArea.addNPC(new NPC("kim", "Kim"));
             }
             if (progress.getProgress() > 4) {
                 if (neighboringArea.getName().equals("soupKitchen")) {
-                    neighboringArea.addNPC(new NPC("Kim", "Kim"));
+                    neighboringArea.addNPC(new NPC("kim", "Kim"));
                 }
                 if (!(currentArea.getName().equals("soupKitchen"))) {
-                    currentArea.removeNPC("Kim");
+                    currentArea.removeNPC("kim");
                 }
             }
             return neighboringArea.longDescription();
@@ -71,9 +64,9 @@ public class CommandGo implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

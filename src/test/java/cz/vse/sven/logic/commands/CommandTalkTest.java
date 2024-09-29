@@ -12,20 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testovací třída PrikazPromluvTest slouží k otestování třídy PrikazPromluv
- *
- * @author Tomáš Kotouč
- * @version březen 2024
- */
 public class CommandTalkTest {
 
     private GamePlan plan;
     private Backpack backpack;
     private Progress progress;
     private Money money;
-    private CommandTalk prikazPromluv;
-
+    private CommandTalk commandTalk;
 
     @BeforeEach
     public void setUp() {
@@ -34,48 +27,34 @@ public class CommandTalkTest {
         money = new Money();
         progress = new Progress();
         Game game = new Game();
-        prikazPromluv = new CommandTalk(plan, backpack, money, progress, game);
+        commandTalk = new CommandTalk(plan, backpack, money, progress, game);
     }
 
-
-    /**
-     * Otestuje fungování příkazu, pokud postava, se kterou chceme mluvit, v prostoru není
-     */
     @Test
     public void executeCommand() {
-        assertEquals("There is no such NPC in here.", prikazPromluv.executeCommand("test"));
+        assertEquals("There is no such NPC in here.", commandTalk.executeCommand("test"));
     }
 
-
-    /**
-     * Otestuje správné fungování příkazu u Pepy
-     */
     @Test
-    public void executeCommandPepa() {
-        //podminky pro prohru
+    public void executeCommandPeppa() {
         progress.setProgress(6);
-        prikazPromluv.executeCommand("pepa");
+        commandTalk.executeCommand("peppa");
         assertTrue(plan.isLoss());
 
-        //podminky pro vyhru
         backpack.putItem(new Item("dogFood", "Dog food", false, false, false, 0));
         backpack.putItem(new Item("bagels", "Bagels", false, false, false, 0));
-        prikazPromluv.executeCommand("pepa");
+        commandTalk.executeCommand("peppa");
         assertTrue(plan.isWin());
 
-        //podminky pro perfektni vyhru
         progress.setProgress(7);
         backpack.putItem(new Item("snus", "Snus", false, false, false, 0));
-        prikazPromluv.executeCommand("pepa");
+        commandTalk.executeCommand("peppa");
         assertTrue(plan.isPerfectWin());
     }
 
-    /**
-     * Otestuje správné fungování příkazu u Kima
-     */
     @Test
     public void executeCommandKim() {
-        // podminky pro posledni dialog s Kimem
+        // conditions for the last dialogue with Kim
         progress.setProgress(6);
         plan.getCurrentArea().addNPC(new NPC("kim", "Kim"));
         backpack.putItem(new Item("glutenFreeBread", "Gluten-free bread", false, false, false, 0));
@@ -83,32 +62,26 @@ public class CommandTalkTest {
         assertEquals("\n" +
                 "Sven: \n" +
                 "\"Thank you once again for your help Kim, here is a little surprise.\"\n" +
-                " - You handed over Gluten-free bread\n", prikazPromluv.executeCommand("kim"));
+                " - You handed over Gluten-free bread\n", commandTalk.executeCommand("kim"));
         assertFalse(backpack.containsItem("glutenFreeBread"));
         assertEquals(7, progress.getProgress());
     }
 
-    /**
-     * Otestuje správné fungování příkazu u Podezřelého pro prohru
-     */
     @Test
-    public void executeCommandPodezrelyProhra() {
-        // podmínky pro neúspěšnou konfrontaci lupiče - prohru
+    public void executeCommandSuspectLoss() {
+        // conditions for a bad confrontation with the suspect
         progress.setProgress(3);
         plan.getCurrentArea().addNPC(new NPC("suspect", "Suspect"));
-        prikazPromluv.executeCommand("suspect");
+        commandTalk.executeCommand("suspect");
 
         assertTrue(plan.isLoss());
     }
 
-    /**
-     * Otestuje správné fungování příkazu u Podezřelého pro výhru
-     */
     @Test
-    public void executeCommandPodezrelyVyhra() {
+    public void executeCommandSuspectWin() {
         plan.getCurrentArea().addNPC(new NPC("suspect", "Suspect"));
         progress.setProgress(4);
-        prikazPromluv.executeCommand("suspect");
+        commandTalk.executeCommand("suspect");
 
         assertTrue(plan.getCurrentArea().containsItem("redJacket"));
         assertTrue(plan.getCurrentArea().containsItem("greenCap"));
@@ -116,17 +89,14 @@ public class CommandTalkTest {
 
     }
 
-    /**
-     * Otestuje správné fungování příkazu u Prodavače
-     */
     @Test
-    public void executeCommandProdavac() {
-        // podmínky pro získání odměny
+    public void executeCommandShopAssistant() {
+        // conditions for getting a reward
         plan.getCurrentArea().addNPC(new NPC("shopAssistant", "Shop assistant"));
         progress.setProgress(5);
         backpack.putItem(new Item("redJacket", "Red jacket", false, false, false, 0));
         backpack.putItem(new Item("greenCap", "Green cap", false, false, false, 0));
-        prikazPromluv.executeCommand("shopAssistant");
+        commandTalk.executeCommand("shopAssistant");
 
         assertEquals(6, progress.getProgress());
         assertEquals(4.5, money.getMoney(), 0.0001);
@@ -135,15 +105,12 @@ public class CommandTalkTest {
 
     }
 
-    /**
-     * Otestuje správné fungování příkazu u Zastavarnika
-     */
     @Test
-    public void executeCommandZastavarnik() {
-        // podmínky pro získání odměny
+    public void executeCommandPawnBroker() {
+        // conditions for getting a reward
         plan.getCurrentArea().addNPC(new NPC("pawnbroker", "Pawnbroker"));
         backpack.putItem(new Item("oldClock", "Old clock", false, false, false, 0));
-        prikazPromluv.executeCommand("pawnbroker");
+        commandTalk.executeCommand("pawnbroker");
 
         assertEquals(0.5, money.getMoney(), 0.0001);
         assertFalse(backpack.containsItem("oldClock"));

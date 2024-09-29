@@ -13,17 +13,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Class HerniPlan - třída představující mapu a stav adventury.
- * <p>
- * Tato třída inicializuje prvky ze kterých se hra skládá:
- * vytváří všechny prostory,
- * propojuje je vzájemně pomocí východů
- * vytváří všechny věci a postavy a vkládá je do prostorů
- * a pamatuje si aktuální prostor, ve kterém se hráč právě nachází.
- * Dále upravuje a kontroluje stavy možných konců hry
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version březen 2024
+ * GamePlan - sets up the game manages it's state.
+ * It initializes game objects (areas, items, NPCs) and connects them.
+ * It keeps track of current area.
+ * It sets and checks game endings.
  */
 public class GamePlan implements Observable {
 
@@ -34,7 +27,7 @@ public class GamePlan implements Observable {
     private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
-     * Konstruktor
+     * Constructor
      */
     public GamePlan() {
         setUpGame();
@@ -44,12 +37,10 @@ public class GamePlan implements Observable {
     }
 
     /**
-     * Vytváří jednotlivé prostory a propojuje je pomocí východů.
-     * Dále vytváří věci a postavy a vkládá je do prostorů
-     * Jako výchozí aktuální prostor nastaví domeček.
+     * It initializes game objects (areas, items, NPCs) and connects them.
      */
     private void setUpGame() {
-        // vytvářejí se jednotlivé prostory
+        // Areas
         Area home = new Area("home", "Home", "under the bridge, where Sven lives.");
         Area soupKitchen = new Area("soupKitchen", "Soup kitchen", "next to the Soup kitchen, which is closed for today, you see your friend Kim.");
         Area junkyard = new Area("junkyard", "Junkyard", "next to a Junkyard.");
@@ -59,28 +50,26 @@ public class GamePlan implements Observable {
         Area lidl = new Area("lidl", "Lidl", "in Lidl, prices: \nBagels - 1   \nDog food - 4   \nGluten-free bread - 2");
         Area kiosk = new Area("kiosk", "Kiosk", "in the kiosk, prices: \nSnus - 1");
 
-        //vytváření jednotlivých věcí
+        // Items
         Item oldClock = new Item("oldClock", "Old clock", true, false, false, 0);
         Item branikBottle = new Item("branikBottle", "Branik bottle", true, false, true, 0);
         Item svijanyBottle = new Item("svijanyBottle", "Svijany bottle", true, false, true, 0);
         Item pilsnerBottle = new Item("pilsnerBottle", "Pilsner bottle", true, false, true, 0);
         Item bottleMachine = new Item("bottleMachine", "Bottle machine", false, false, false, 0);
-
         Item snus = new Item("snus", "Snus", false, true, false, 1);
         Item glutenFreeBread = new Item("glutenFreeBread", "Gluten-free bread", false, true, false, 2);
         Item dogFood = new Item("dogFood", "Dog Food", false, true, false, 4);
         Item bagels = new Item("bagels", "Bagels", false, true, false, 1);
 
-
-        //vytvareni jednotlivych postav
-        NPC pepa = new NPC("pepa", "Pepa");
+        // NPCs
+        NPC peppa = new NPC("peppa", "Peppa");
         NPC kim = new NPC("kim", "Kim");
         NPC suspect = new NPC("suspect", "Suspect");
         NPC shopAssistant = new NPC("shopAssistant", "Shop assistant");
         NPC pawnbroker = new NPC("pawnbroker", "Pawnbroker");
 
 
-        // přiřazují se průchody mezi prostory (sousedící prostory)
+        // Area exits
         home.setExit(soupKitchen);
         soupKitchen.setExit(home);
         soupKitchen.setExit(junkyard);
@@ -104,9 +93,9 @@ public class GamePlan implements Observable {
         lidl.setExit(soupKitchen);
         lidl.setExit(kiosk);
 
-        currentArea = home;  // hra začíná u Svena doma
+        currentArea = home;
 
-        // davame veci do prostoru
+        // Put items into areas
         junkyard.addItem(oldClock);
         junkyard.addItem(branikBottle);
         junkyard.addItem(svijanyBottle);
@@ -117,8 +106,8 @@ public class GamePlan implements Observable {
         lidl.addItem(dogFood);
         lidl.addItem(bagels);
 
-        // davame postavy do prostoru
-        home.addNPC(pepa);
+        // Put NPCs into areas
+        home.addNPC(peppa);
         soupKitchen.addNPC(kim);
         jobCenter.addNPC(suspect);
         thriftShop.addNPC(shopAssistant);
@@ -126,19 +115,18 @@ public class GamePlan implements Observable {
     }
 
     /**
-     * Metoda vrací odkaz na aktuální prostor, ve ktetém se hráč právě nachází.
+     * Returns current area
      *
-     * @return aktuální prostor
+     * @return current area
      */
     public Area getCurrentArea() {
         return currentArea;
     }
 
     /**
-     * Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory,
-     * dále upozorní pozorovatele na změnu místnosti
+     * Sets current area and notifies the observer
      *
-     * @param area nový aktuální prostor
+     * @param area to be set as new current area
      */
     public void setCurrentArea(Area area) {
         currentArea = area;
@@ -146,63 +134,63 @@ public class GamePlan implements Observable {
     }
 
     /**
-     * Metoda zjistí stav prohry
+     * Checks loss status
      *
-     * @return stav prohry
+     * @return loss status
      */
     public boolean isLoss() {
         return loss;
     }
 
     /**
-     * Metoda mění stav prohry
+     * Sets loss status
      *
-     * @param stav na který se má prohra změnit
+     * @param status true or false
      */
-    public void setLoss(boolean stav) {
-        this.loss = stav;
+    public void setLoss(boolean status) {
+        this.loss = status;
     }
 
     /**
-     * Metoda zjistí stav výhry
+     * Checks win status
      *
-     * @return stav výhry
+     * @return wins status
      */
     public boolean isWin() {
         return win;
     }
 
     /**
-     * Metoda mění stav výhry
+     * Sets win status
      *
-     * @param stav na který se má výhra změnit
+     * @param status true or false
      */
-    public void setWin(boolean stav) {
-        this.win = stav;
+    public void setWin(boolean status) {
+        this.win = status;
     }
 
     /**
-     * Metoda zjistí stav perfektní výhry
+     * Check perfect win status
      *
-     * @return stav perfektní prohry
+     * @return perfect win status
      */
     public boolean isPerfectWin() {
         return perfectWin;
     }
 
     /**
-     * Metoda mění stav perfektní výhry
+     * Sets perfect win status
      *
-     * @param stav na který se má perfektní výhra změnit
+     * @param status true or false
      */
-    public void setPerfectWin(boolean stav) {
-        this.perfectWin = stav;
+    public void setPerfectWin(boolean status) {
+        this.perfectWin = status;
     }
 
     /**
-     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
+     * Adds observer to the list of observers of given game change
      *
-     * @param observer který má být přidán
+     * @param observer to be registered
      */
     @Override
     public void register(GameChange gameChange, Observer observer) {
@@ -210,7 +198,7 @@ public class GamePlan implements Observable {
     }
 
     /**
-     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
+     * When called, the update method for every observer in the list for a given game change is called.
      */
     private void notifyObserver(GameChange gameChange) {
         for (Observer observer : listOfObservers.get(gameChange)) {

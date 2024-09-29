@@ -6,18 +6,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 /**
- * Třída slouží k úpravě buňěk (východů) v panelu východů (listView)
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Edits area exit cells in exits panel
  */
 public class ListCellArea extends ListCell<Area> {
 
     /**
-     * Metoda nastavuje jména a obrázky jednotlivých východů
+     * Edits area exit cells in exits panel
      *
-     * @param area jaký prostor se v buňce nachází
-     * @param empty   jestli je buňka prázdná
+     * @param area what area the cell represents
+     * @param empty   whether the cell is empty
      */
     @Override
     protected void updateItem(Area area, boolean empty) {

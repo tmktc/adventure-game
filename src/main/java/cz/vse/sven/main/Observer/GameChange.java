@@ -1,10 +1,7 @@
 package cz.vse.sven.main.Observer;
 
 /**
- * Typy změn hry
- *
- * @author Tomáš Kotouč
- * @version únor 2024
+ * Game change types
  */
 public enum GameChange {
 

@@ -6,18 +6,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 /**
- * Třída slouží k úpravě buňěk (věcí) v panelu věcí v prostoru a batohu (listView)
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Edits item cells in item panels
  */
 public class ListCellItem extends ListCell<Item> {
 
     /**
-     * Metoda nastavuje jména a obrázky jednotlivých věcí
+     * Edits item cells in item panels
      *
-     * @param item   jaká věc se v buňce nachází
-     * @param empty jestli je buňka prázdná
+     * @param item what item the cell represents
+     * @param empty   whether the cell is empty
      */
     @Override
     protected void updateItem(Item item, boolean empty) {

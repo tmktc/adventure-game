@@ -3,10 +3,7 @@ package cz.vse.sven.logic.commands;
 import cz.vse.sven.logic.objects.Backpack;
 
 /**
- * Třída PrikazBatoh - vypisuje obsah batohu
- *
- * @author Tomáš Kotouč
- * @version prosinec 2023
+ * CommandBackpack - returns the list of items in a backpack
  */
 public class CommandBackpack implements ICommand {
 
@@ -14,18 +11,18 @@ public class CommandBackpack implements ICommand {
     private Backpack backpack;
 
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param backpack jehož obsah se má vypsat
+     * @param backpack who contents are to be returned
      */
     public CommandBackpack(Backpack backpack) {
         this.backpack = backpack;
     }
 
     /**
-     * Metoda vrátí seznam věcí v batohu
+     * Returns backpack contents list
      *
-     * @return seznam věcí v batohu
+     * @return backpack contents list
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -33,9 +30,9 @@ public class CommandBackpack implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

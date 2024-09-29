@@ -4,71 +4,62 @@ import cz.vse.sven.logic.objects.Backpack;
 import cz.vse.sven.main.Observer.Observable;
 
 /**
- * Rozhraní které musí implementovat hra, je na ně navázáno uživatelské rozhraní
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version únor 2024
+ * Game interface
  */
 public interface IGame extends Observable {
 
     /**
-     * Vrátí úvodní zprávu pro hráče.
-     *
-     * @return vrací se řetězec, který se má vypsat na obrazovku
+     * Returns introduction message for the player
      */
     String returnIntroduction();
 
     /**
-     * Vrátí závěrečnou zprávu pro hráče.
-     *
-     * @return vrací se řetězec, který se má vypsat na obrazovku
+     * Returns epilogue message for the player
      */
     String returnEpilogue();
 
     /**
-     * Vrací informaci o tom, zda hra již skončila, je jedno zda výhrou, prohrou nebo příkazem konec.
-     *
-     * @return vrací true, pokud hra skončila
+     * Returns true if the game has ended
      */
-    boolean gameEnd();
+    boolean isGameEnd();
 
     /**
-     * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
-     * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
-     * Pokud ano spustí samotné provádění příkazu.
+     * Processes the string parameter, splits it into command keyword etc.,
+     * checks whether it is a valid command keyword,
+     * if the condition is met it executes the command
+     * and notifies the observer to a check possible game change.
      *
-     * @param radek text, který zadal uživatel jako příkaz do hry.
-     * @return vrací se řetězec, který se má vypsat na obrazovku
+     * @param line player's input
+     * @return returns processed command message to be displayed
      */
-    String processCommand(String radek);
+    String processCommand(String line);
 
 
     /**
-     * Metoda vrátí odkaz na herní plán, je využita hlavně v testech,
-     * kde se jejím prostřednictvím získává aktualní místnost hry.
+     * Returns GamePlan instance
      *
-     * @return odkaz na herní plán
+     * @return GamePlan instance
      */
     GamePlan getGamePlan();
 
     /**
-     * Metoda vrátí odkaz na batoh ve hře
+     * Returns Backpack instance
      *
-     * @return odkaz na batoh
+     * @return Backpack instance
      */
     Backpack getBackpack();
 
     /**
-     * Vrátí hodnotu peněz
+     * Returns Progress instance
      *
-     * @return hodnota peněz
-     */
-    String getMoney();
-
-    /**
-     * Vrátí instanci třídy peněz, která uchovává stav peněz v aktuální instanci hry
-     *
-     * @return instance peněz
+     * @return Progress instance
      */
     Progress getProgressInstance();
+
+    /**
+     * Returns money balance in the current game instance
+     *
+     * @return money balance
+     */
+    String getMoney();
 }

@@ -6,18 +6,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 /**
- * Třída slouží k úpravě buňěk (postav) v panelu postav v prostoru (listView)
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Edits NPC cells in NPC panels
  */
 public class ListCellNPC extends ListCell<NPC> {
 
     /**
-     * Metoda nastavuje jména a obrázky jednotlivých postav
+     * Edits NPC cells in NPC panels
      *
-     * @param NPC jaká postava se v buňce nachází
-     * @param empty   jestli je buňka prázdná
+     * @param NPC what NPC the cell represents
+     * @param empty   whether the cell is empty
      */
     @Override
     protected void updateItem(NPC NPC, boolean empty) {

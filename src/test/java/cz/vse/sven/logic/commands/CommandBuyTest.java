@@ -9,18 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testovací třída PrikazKupTest slouží k otestování třídy PrikazKup
- *
- * @author Tomáš Kotouč
- * @version březen 2024
- */
 public class CommandBuyTest {
 
     private GamePlan plan;
     private Backpack backpack;
     private Money money;
-
 
     @BeforeEach
     public void setUp() {
@@ -29,35 +22,32 @@ public class CommandBuyTest {
         money = new Money();
     }
 
-    /**
-     * Otestuje všechny možné případy
-     */
     @Test
     public void executeCommand() {
         CommandBuy commandBuy = new CommandBuy(plan, backpack, money);
 
-        // bez parametru
+        // no parameter
         assertEquals("You must name the item you want to buy.", commandBuy.executeCommand());
 
-        // vec neni v prostoru
+        // item not in area
         assertEquals("There is no such item here.", commandBuy.executeCommand("test"));
 
-        // vec neni koupitelna
-        Item nekoupitelna = new Item("notPurchasable", "NotPurchasable", true, false, true, 0);
-        plan.getCurrentArea().addItem(nekoupitelna);
+        // item not purchasable
+        Item notPurchasable = new Item("notPurchasable", "NotPurchasable", true, false, true, 0);
+        plan.getCurrentArea().addItem(notPurchasable);
         assertEquals("You can not buy this item.", commandBuy.executeCommand("notPurchasable"));
 
-        // nedostatek penez
-        Item koupitelna = new Item("purchasable", "Purchasable", false, true, false, 1);
-        plan.getCurrentArea().addItem(koupitelna);
+        // not enough money
+        Item purchasable = new Item("purchasable", "Purchasable", false, true, false, 1);
+        plan.getCurrentArea().addItem(purchasable);
         assertEquals("Not enough money to buy this item.", commandBuy.executeCommand("purchasable"));
 
-        // nedostatek mista v batohu
+        // no backpack space
         money.addMoney(1);
         backpack.setCapacity(0);
         assertEquals("Not enough space in the backpack.", commandBuy.executeCommand("purchasable"));
 
-        // všechno v pořádku
+        // all good
         backpack.setCapacity(1);
         assertEquals("You bought Purchasable for 1 Euro.", commandBuy.executeCommand("purchasable"));
         assertFalse(backpack.selectItem("purchasable").isPurchasable());

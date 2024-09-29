@@ -7,12 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Testovací třída PrikazJdiTest slouží k otestování třídy PrikazJdi
- *
- * @author Tomáš Kotouč
- * @version únor 2024
- */
 public class CommandGoTest {
 
     private Game game;
@@ -24,27 +18,24 @@ public class CommandGoTest {
         progress = new Progress();
     }
 
-    /**
-     * Otestuje, zda se příkaz správně vypořádá se zadaným parametrem
-     */
     @Test
     public void executeCommand() {
         CommandGo commandGo = new CommandGo(game.getGamePlan(), progress);
 
-        // Parametr chybí
+        // no parameter
         assertEquals("You must enter the area you want to go to.", commandGo.executeCommand());
 
-        // Není platný sousední prostor
+        // not valid neighboring area
         assertEquals("You can not go there from here.", commandGo.executeCommand("junkyard"));
 
-        String spravnyText =
+        String correctText =
                 "\n\nYou are next to the Soup kitchen, which is closed for today, you see your friend Kim.\n" +
                         "\n" +
                         "exits: junkyard  lidl  kiosk  home  \n" +
                         "items: \n" +
                         "NPCs: kim  \n";
 
-        // Platný sousední prostor
-        assertEquals(spravnyText, commandGo.executeCommand("soupKitchen"));
+        // valid neighboring area
+        assertEquals(correctText, commandGo.executeCommand("soupKitchen"));
     }
 }

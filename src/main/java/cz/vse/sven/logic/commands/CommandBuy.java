@@ -7,41 +7,40 @@ import cz.vse.sven.logic.objects.Area;
 import cz.vse.sven.logic.objects.Item;
 
 /**
- * Třída PrikazKup implementuje pro hru příkaz kup.
- * příkazem hráč koupí věci v obchodě
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * CommandBuy - buys an item
  */
 public class CommandBuy implements ICommand {
 
     public static final String NAME = "buy";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Backpack backpack;
     private Money money;
 
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param plan   herní plán, ve kterém se bude kupovat
-     * @param backpack  do kterého se mají koupené věci vložit
-     * @param money které se mají po nákupu odečíst
+     * @param gamePlan   of the current game instance
+     * @param backpack  which the bought item should be put into
+     * @param money amount of money that should be subtracted from players balance
      */
-    public CommandBuy(GamePlan plan, Backpack backpack, Money money) {
-        this.plan = plan;
+    public CommandBuy(GamePlan gamePlan, Backpack backpack, Money money) {
+        this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;
     }
 
     /**
-     * Metoda nejdříve zkontroluje, zda se daná věc v prostoru nachází,
-     * zkontroluje koupitelnost věci pomocí metody jeVecKoupitelna,
-     * pokud máme ke koupi dostatek peněz, tak nákup proběhne
-     * dále nastaví koupitelnost věci na false, protože věc již vlastníme
-     * a sebratelnost na true, kdybom věc chtěli odložit
+     * Checks whether the item is located in the current area,
+     * checks whether the item is purchasable,
+     * checks whether player has enough money to buy the item,
+     * checks whether player's backpack is not full,
+     * if these conditions are met, the purchase is completed.
+     * <p>
+     * The ability to purchase the item is set to false, because the player already owns the item,
+     * the player can also throw away and pick up the item now.
      *
-     * @param parameters - věc, kterou chceme koupit.
-     * @return hlášení, zda se nákup povedl
+     * @param parameters item to be bought.
+     * @return information about the success of the command
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -50,7 +49,7 @@ public class CommandBuy implements ICommand {
         }
 
         String itemName = parameters[0];
-        Area currentArea = plan.getCurrentArea();
+        Area currentArea = gamePlan.getCurrentArea();
 
         if (currentArea.containsItem(itemName)) {
             Item item = currentArea.isItemPurchasable(itemName);
@@ -76,9 +75,9 @@ public class CommandBuy implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

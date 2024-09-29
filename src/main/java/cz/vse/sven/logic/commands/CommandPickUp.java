@@ -6,37 +6,33 @@ import cz.vse.sven.logic.objects.Area;
 import cz.vse.sven.logic.objects.Item;
 
 /**
- * Třída PrikazSeber - implementuje pro hru příkaz jdi.
- * příkazem hráč sebere vybranou věc
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * CommandPickUp - picks up an item and puts it into player's backpack
  */
 public class CommandPickUp implements ICommand {
 
     public static final String NAME = "pickUp";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Backpack backpack;
 
-
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param plan  ve kterém se bude sbírat
-     * @param backpack do kterého se mají sebrané věci vložit
+     * @param gamePlan  of the current game instance
+     * @param backpack which the picked up item should be put into
      */
-    public CommandPickUp(GamePlan plan, Backpack backpack) {
-        this.plan = plan;
+    public CommandPickUp(GamePlan gamePlan, Backpack backpack) {
+        this.gamePlan = gamePlan;
         this.backpack = backpack;
     }
 
     /**
-     * Metoda nejdříve zjistí, zda se věc v aktuálním prostoru nachází,
-     * dále pomocí metody jeVecSebratelna zjistí, zda je sebratelná,
-     * pokud má hráč dostatek místa v batohu, tak se věc do batohu vloží
+     * Checks whether the item is in the current area,
+     * checks whether the item can be picked up,
+     * checks whether player's backpack is not full,
+     * if these conditions are met, the purchase is completed.
      *
-     * @param parameters - věc, co chceme sebrat
-     * @return hlášení, zda se sebrání povedlo
+     * @param parameters item to be picked up
+     * @return information about the success of the command
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -44,16 +40,16 @@ public class CommandPickUp implements ICommand {
             return "You must name the item you want to pick up.";
         }
 
-        String jmenoVeci = parameters[0];
-        Area aktualniArea = plan.getCurrentArea();
-        if (aktualniArea.containsItem(jmenoVeci)) {
-            Item item = aktualniArea.canItemBePickedUp(jmenoVeci);
-            if (item == null) {
+        String item = parameters[0];
+        Area aktualniArea = gamePlan.getCurrentArea();
+        if (aktualniArea.containsItem(item)) {
+            Item i = aktualniArea.canItemBePickedUp(item);
+            if (i == null) {
                 return "You can not pick up this item.";
             } else {
-                if (backpack.putItem(item)) {
-                    aktualniArea.removeItem(jmenoVeci);
-                    return "You picked up " + item.getFullName() + ".";
+                if (backpack.putItem(i)) {
+                    aktualniArea.removeItem(item);
+                    return "You picked up " + i.getFullName() + ".";
                 } else {
                     return "Not enough space in the backpack.";
                 }
@@ -63,9 +59,9 @@ public class CommandPickUp implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

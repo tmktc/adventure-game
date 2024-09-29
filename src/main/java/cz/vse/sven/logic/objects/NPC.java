@@ -3,10 +3,7 @@ package cz.vse.sven.logic.objects;
 import java.util.Objects;
 
 /**
- * Třída Postava - realizuje postavy ve hře
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * NPC
  */
 public class NPC {
 
@@ -15,9 +12,7 @@ public class NPC {
     private final String fullName;
 
     /**
-     * Konstruktor
-     *
-     * @param name postavy
+     * Constructor
      */
     public NPC(String name, String fullName) {
         this.name = name;
@@ -25,41 +20,35 @@ public class NPC {
     }
 
     /**
-     * Getter pro jméno postavy
-     *
-     * @return jméno postavy
+     * Name getter
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Getter pro jméno s mezerami a diakritikou
-     *
-     * @return jméno s mezerami a diakritikou
+     * Full name getter
      */
     public String getFullName() {
         return fullName;
     }
 
     /**
-     * Dvě postavy jsou stejné, pokud mají stejné jméno
+     * equals method - two NPCs are the same, if they have the same name
      *
-     * @param o postava, která se má porovnat
-     * @return true pokud je stejná, false pokud ne
+     * @param NPC to be compared
+     * @return true if the two NPCs are the same, false if not
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NPC NPC = (NPC) o;
-        return Objects.equals(name, NPC.name);
+    public boolean equals(Object NPC) {
+        if (this == NPC) return true;
+        if (NPC == null || getClass() != NPC.getClass()) return false;
+        NPC n = (NPC) NPC;
+        return Objects.equals(name, n.name);
     }
 
     /**
-     * Metoda hashCode
-     *
-     * @return ciselny identifikator instance
+     * hashCode method
      */
     @Override
     public int hashCode() {
@@ -67,9 +56,9 @@ public class NPC {
     }
 
     /**
-     * toString metoda Postavy
+     * toString method
      *
-     * @return jméno postavy
+     * @return NPC name
      */
     @Override
     public String toString() {

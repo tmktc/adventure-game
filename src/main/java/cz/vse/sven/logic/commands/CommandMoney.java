@@ -3,31 +3,26 @@ package cz.vse.sven.logic.commands;
 import cz.vse.sven.logic.game.Money;
 
 /**
- * Třída PrikazPenize - implementuje pro hru příkaz penize.
- * příkaz peníze vypíše počet peněz, který má hráč u sebe
- *
- * @author Tomáš Kotouč
- * @version prosinec 2023
+ * CommandMoney - returns player's money balance
  */
 public class CommandMoney implements ICommand {
 
     private static final String NAME = "money";
     private Money money;
 
-
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param money jejichž částku chceme zobrazit
+     * @param money instance
      */
     public CommandMoney(Money money) {
         this.money = money;
     }
 
     /**
-     * Metoda vrátí počet peněz, který má hráč u sebe
+     * Returns player's money balance
      *
-     * @return hlášku s početem peněz
+     * @return balance message
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -35,9 +30,9 @@ public class CommandMoney implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

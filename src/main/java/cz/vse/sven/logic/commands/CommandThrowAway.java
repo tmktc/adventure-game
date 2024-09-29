@@ -6,37 +6,33 @@ import cz.vse.sven.logic.objects.Area;
 import cz.vse.sven.logic.objects.Item;
 
 /**
- * Třída PrikazPoloz - implementuje pro hru příkaz vyndej
- * příkaz vyndá věc z batohu a položí ji na zem
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * CommandThrowAway - puts an item from the backpack into the area
  */
 
 public class CommandThrowAway implements ICommand {
 
     public static final String NAME = "throwaway";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Backpack backpack;
 
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param plan  ve kterém se bude pokládat
-     * @param backpack ze kterého se má daná věc vyndat
+     * @param gamePlan  of the current game instance
+     * @param backpack where the item is
      */
-    public CommandThrowAway(GamePlan plan, Backpack backpack) {
-        this.plan = plan;
+    public CommandThrowAway(GamePlan gamePlan, Backpack backpack) {
+        this.gamePlan = gamePlan;
         this.backpack = backpack;
     }
 
     /**
-     * Metoda nejdříve zkontroluje, zda se věc v batohu nachází,
-     * pak zkontroluje, jestli se hráč nenachází v lidlu nebo trafice,
-     * pak ji odstraní z batohu a vloží ji do aktuálního prostoru
+     * Checks whether the item is in the backpack,
+     * checks whether player is not located in lidl or kiosk,
+     * if the conditions are met, the item is put into the area
      *
-     * @param parameters počet parametrů závisí na konkrétním příkazu.
-     * @return zpráva, zda se vyndání zdařilo nebo ne
+     * @param parameters item to be thrown away
+     * @return information about the success of the command
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -45,7 +41,7 @@ public class CommandThrowAway implements ICommand {
         }
 
         String itemName = parameters[0];
-        Area currentArea = plan.getCurrentArea();
+        Area currentArea = gamePlan.getCurrentArea();
         if (backpack.containsItem(itemName)) {
 
             if (!(currentArea.getName().equals("lidl") || currentArea.getName().equals("kiosk"))) {
@@ -62,9 +58,9 @@ public class CommandThrowAway implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

@@ -1,35 +1,32 @@
 package cz.vse.sven.logic.game;
 
 /**
- * Třída Peníze - třída představující peníze hráče
- *
- * @author Tomáš Kotouč
- * @version únor 2024
+ * Money - keeps track of player's money balance
  */
 public class Money {
     private double money;
 
     /**
-     * Konstruktor - nastavuje, kolik peněz má hráč na začátku hry u sebe
+     * Constructor
      */
     public Money() {
         money = 0;
     }
 
     /**
-     * Metoda vrací počet peněz, které má hráč právě u sebe
+     * Returns current money balance
      *
-     * @return částka
+     * @return sum
      */
     public double getMoney() {
         return money;
     }
 
     /**
-     * Metoda přidává hráči peníze
+     * Adds money to the balance
      *
-     * @param sum ke přidání
-     * @return zpráva, že byly přičteny peníze
+     * @param sum to be added
+     * @return info message
      */
     public String addMoney(double sum) {
         money += sum;
@@ -37,18 +34,18 @@ public class Money {
     }
 
     /**
-     * Metodá odečítá hráči peníze
+     * Subtracts money from the balance
      *
-     * @param sum k odečtení
+     * @param sum to be subtracted
      */
     public void subtractMoney(int sum) {
         money -= sum;
     }
 
     /**
-     * toString metoda Peněz
+     * toString method
      *
-     * @return hodnota peněz
+     * @return money balance status
      */
     @Override
     public String toString() {

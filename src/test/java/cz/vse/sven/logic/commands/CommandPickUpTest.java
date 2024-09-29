@@ -8,12 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Testovací třída PrikazSeberTest slouží k otestování třídy PrikazSeber
- *
- * @author Tomáš Kotouč
- * @version březen 2024
- */
 public class CommandPickUpTest {
 
     private GamePlan plan;
@@ -26,29 +20,26 @@ public class CommandPickUpTest {
         backpack = new Backpack();
     }
 
-    /**
-     * Otestuje všechny možné případy
-     */
     @Test
     public void executeCommand() {
         CommandPickUp commandPickUp = new CommandPickUp(plan, backpack);
 
-        // žádný parametr
+        // no parameter
         assertEquals("You must name the item you want to pick up.", commandPickUp.executeCommand());
 
-        // daná věc se v prostoru nenachází
+        // item not in area
         assertEquals("There is no such item here.", commandPickUp.executeCommand("test"));
 
-        //věc není sebratelná
+        //item can not be picked up
         plan.getCurrentArea().addItem(new Item("test2", "Test2", false, false, false, 0));
         assertEquals("You can not pick up this item.", commandPickUp.executeCommand("test2"));
 
-        // nedostatek místa v batohu
+        // not space in backpack
         backpack.setCapacity(0);
         plan.getCurrentArea().addItem(new Item("test3", "Test3", true, false, false, 0));
         assertEquals("Not enough space in the backpack.", commandPickUp.executeCommand("test3"));
 
-        // všechno v pořádku
+        // all good
         backpack.setCapacity(1);
         assertEquals("You picked up Test3.", commandPickUp.executeCommand("test3"));
     }

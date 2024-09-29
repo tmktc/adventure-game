@@ -10,12 +10,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Testovací třída PrikazVyndejTest slouží k otestování třídy PrikazVyndej
- *
- * @author Tomáš Kotouč
- * @version březen 2024
- */
 class CommandThrowAwayTest {
 
     private Backpack backpack;
@@ -27,30 +21,27 @@ class CommandThrowAwayTest {
         backpack = new Backpack();
     }
 
-    /**
-     * Otestuje všechny možné případy
-     */
     @Test
     void executeCommand() {
         CommandThrowAway commandThrowAway = new CommandThrowAway(plan, backpack);
 
-        //žádný parametr
+        //no parameter
         assertEquals("You must name the item you want to throw away.", commandThrowAway.executeCommand());
 
-        //danou věc nemáme v batohu
+        //item not in backpack
         assertEquals("There is no such thing in you backpack.", commandThrowAway.executeCommand("test"));
 
-        //věc u sebe máme
+        //item in backpack
         backpack.putItem(new Item("item", "Item", true, false, false, 0));
         assertEquals("Item now lies on the ground.", commandThrowAway.executeCommand("item"));
         assertTrue(plan.getCurrentArea().containsItem("item"));
 
-        //nacházíme se v lidlu
+        //lidl
         plan.setCurrentArea(new Area("lidl", "Lidl", "test"));
         backpack.putItem(new Item("item2", "Item2", true, false, false, 0));
         assertEquals("You can not throw away items in this area.", commandThrowAway.executeCommand("item2"));
 
-        //nacházíme se v trafice
+        //kiosk
         plan.setCurrentArea(new Area("kiosk", "test", "test"));
         assertEquals("You can not throw away items in this area.", commandThrowAway.executeCommand("item2"));
 

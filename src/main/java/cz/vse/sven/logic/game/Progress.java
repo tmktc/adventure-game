@@ -1,43 +1,39 @@
 package cz.vse.sven.logic.game;
 
 /**
- * Třída Progress - slouží k manipulaci s hodnotou progress
- * hodnota progress ukazuje v jaké částí příběhu se hráč práve nachází
- *
- * @author Tomáš Kotouč
- * @version prosinec 2023
+ * Progress - keeps track of progress value (how far the player is into the story)
  */
 public class Progress {
 
     private int progress;
 
     /**
-     * Konstruktor - nastaví původní hodnotu na 0
+     * Constructor
      */
     public Progress() {
         progress = 0;
     }
 
     /**
-     * Metoda zjistí hodnotu progressu
+     * Returns progress value
      *
-     * @return hodnota progressu
+     * @return progress value
      */
     public int getProgress() {
         return progress;
     }
 
     /**
-     * Metoda nastaví hodnotu progressu - využito v testech
+     * Sets the progress value (used in tests)
      *
-     * @param number hodonta na kterou se má progress nastavit
+     * @param number value to be set
      */
     public void setProgress(int number) {
         this.progress = number;
     }
 
     /**
-     * Metoda navýší hodnotu progressu
+     * Increases progress value by 1
      */
     public void addProgress() {
         progress++;

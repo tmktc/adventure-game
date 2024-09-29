@@ -9,31 +9,27 @@ import cz.vse.sven.logic.objects.Area;
 import cz.vse.sven.logic.objects.Item;
 
 /**
- * Třída PrikazPromluv - implementuje pro hru příkaz promluv.
- * příkaz promluví s vybranou postavou
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * CommandTalk - starts a dialogue with an NPC
  */
 public class CommandTalk implements ICommand {
 
     public static final String NAME = "talk";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Backpack backpack;
     private Money money;
     private Progress progress;
     private Game game;
 
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param plan     ve kterém se bude mluvit
-     * @param backpack    který má hráč u sebe
-     * @param money   které má hráč u sebe
-     * @param progress hry
+     * @param gamePlan     of the current game instance
+     * @param backpack    player's backpack
+     * @param money   player's money balance
+     * @param progress of the current game instance
      */
-    public CommandTalk(GamePlan plan, Backpack backpack, Money money, Progress progress, Game game) {
-        this.plan = plan;
+    public CommandTalk(GamePlan gamePlan, Backpack backpack, Money money, Progress progress, Game game) {
+        this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;
         this.progress = progress;
@@ -41,11 +37,11 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda nejdříve zjistí, jestli se daná postava nachází v aktuálním prostoru
-     * a pak odkáže na metodu dialogu s danou postavou
+     * Checks whether the NPC is in the current area,
+     * then redirects to the NPCs dialogue method
      *
-     * @param parameters - jméno postavy, se kterou chceme promluvit.
-     * @return metoda dialogu s danou postavou
+     * @param parameters NPC to be talked to
+     * @return information about the success of the command
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -54,11 +50,11 @@ public class CommandTalk implements ICommand {
         }
 
         String name = parameters[0];
-        Area currentArea = plan.getCurrentArea();
+        Area currentArea = gamePlan.getCurrentArea();
 
         if (currentArea.containsNPC(name)) {
             return switch (name) {
-                case "pepa" -> dialogPepa();
+                case "peppa" -> dialogPeppa();
                 case "kim" -> dialogKim();
                 case "suspect" -> dialogSuspect();
                 case "shopAssistant" -> dialogShopAssistant();
@@ -71,39 +67,39 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda vrací podle hodnoty progressu a jiných podmínek korespondující dialog s Pepou,
+     * Returns different dialogues with Peppa, based on the conditions
      *
-     * @return dialog s Pepou
+     * @return dialogue with Peppa
      */
-    private String dialogPepa() {
+    private String dialogPeppa() {
         if ((progress.getProgress() == 6) && (backpack.containsItem("dogFood")) && ((backpack.containsItem("bagels")) || backpack.containsItem("glutenFreeBread"))) {
-            plan.setWin(true);
+            gamePlan.setWin(true);
             game.setGameEnd();
             return "";
         } else if ((progress.getProgress() == 7) && backpack.containsItem("snus") && (backpack.containsItem("dogFood")) && (backpack.containsItem("bagels"))) {
-            plan.setPerfectWin(true);
+            gamePlan.setPerfectWin(true);
             game.setGameEnd();
             return "";
         } else if (progress.getProgress() >= 6 && (!(backpack.containsItem("dogFood")) || (!(backpack.containsItem("bagels")) && !(backpack.containsItem("glutenFreeBread"))))) {
-            plan.setLoss(true);
+            gamePlan.setLoss(true);
             game.setGameEnd();
             return "";
         }
 
-        return "\nSven: \n\"Hi, Pepa.\"\n";
+        return "\nSven: \n\"Hi, Peppa.\"\n";
     }
 
     /**
-     * Metoda vrací podle hodnoty progressu a jiných podmínek korespondující dialog s Kimem,
+     * Returns different dialogues with Kim, based on the conditions
      *
-     * @return dialog s Kimem
+     * @return dialogue with Kim
      */
     private String dialogKim() {
         if (progress.getProgress() == 0) {
             return "\nKim: \n\"Hey Sven, too bad the Soup kitchen is closed today, right? I was looking forward to my favorite gluten-free noodles." +
-                    "\nI am sorry that Pepa will not get to eat today, but I might have a solution for you." +
+                    "\nI am sorry that Peppa will not get to eat today, but I might have a solution for you." +
                     "\nI myself have no money, but when I was on my way here, I saw an old clock in a junkyard." +
-                    "\nGo find it and try to sell in in a Pawnshop, maybe you will get enough money to buy food for Pepa and yourself.\"\n";
+                    "\nGo find it and try to sell in in a Pawnshop, maybe you will get enough money to buy food for Peppa and yourself.\"\n";
         } else if (progress.getProgress() == 3) {
             progress.addProgress();
             return "\nKim: \n\"I will gladly help you, lead me to him.\"\n";
@@ -119,9 +115,9 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda vrací podle hodnoty progressu a jiných podmínek korespondující dialog s Podezřelým,
+     * Returns different dialogues with Suspect, based on the conditions,
      *
-     * @return dialog s Podezřelým
+     * @return dialogue with Suspect
      */
     private String dialogSuspect() {
         if (progress.getProgress() == 2) {
@@ -129,18 +125,18 @@ public class CommandTalk implements ICommand {
             return "\nSven: \n\"I can not confront him alone, I need to ask Kim for help, he should still be in front of the Soup kitchen.\n" +
                     "The poor guy is probably waiting there for his gluten-free noodles.\"\n";
         } else if (progress.getProgress() == 3) {
-            plan.getCurrentArea().removeNPC("suspect");
-            plan.setLoss(true);
+            gamePlan.getCurrentArea().removeNPC("suspect");
+            gamePlan.setLoss(true);
             game.setGameEnd();
             return "";
         } else if (progress.getProgress() == 4) {
             progress.addProgress();
 
-            plan.getCurrentArea().addItem(new Item("redJacket", "Red jacket", true, false, false, 0));
-            plan.getCurrentArea().addItem(new Item("greenCap", "Green cap", true, false, false, 0));
+            gamePlan.getCurrentArea().addItem(new Item("redJacket", "Red jacket", true, false, false, 0));
+            gamePlan.getCurrentArea().addItem(new Item("greenCap", "Green cap", true, false, false, 0));
 
-            plan.getCurrentArea().removeNPC("suspect");
-            plan.getCurrentArea().removeNPC("kim");
+            gamePlan.getCurrentArea().removeNPC("suspect");
+            gamePlan.getCurrentArea().removeNPC("kim");
 
             return "\nYou managed to beat the thief. The red jacket and green cap fell on the ground.\n" +
                     "Kim said goodbye and headed back to the Soup kitchen.\n";
@@ -150,9 +146,9 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda vrací podle hodnoty progressu a jiných podmínek korespondující dialog s Prodavačem,
+     * Returns different dialogues with Shop assistant, based on the conditions
      *
-     * @return dialog s Prodavačem
+     * @return dialogue with Shop assistant
      */
     private String dialogShopAssistant() {
         if (progress.getProgress() == 1) {
@@ -179,9 +175,9 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda vrací podle hodnoty progressu a jiných podmínek korespondující dialog se Zastavárníkem,
+     * Returns different dialogues with Pawnbroker, based on the conditions,
      *
-     * @return dialog se Zastavárníkem
+     * @return dialogue with Pawnbroker
      */
     private String dialogPawnbroker() {
         if (backpack.containsItem("oldClock")) {
@@ -198,9 +194,9 @@ public class CommandTalk implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

@@ -6,40 +6,35 @@ import cz.vse.sven.logic.objects.Backpack;
 import cz.vse.sven.logic.objects.Area;
 
 /**
- * Třída PrikazVymen - implementuje pro hru příkaz vymen
- * příkaz slouží k vyměnění láhví v automatu
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * CommandReturn - returns bottles to the Bottle machine
  */
 public class CommandReturn implements ICommand {
 
     public static final String NAME = "return";
-    private GamePlan plan;
+    private GamePlan gamePlan;
     private Backpack backpack;
     private Money money;
 
-
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param plan   ve kterém se má vyměňovat
-     * @param backpack  ze kterého se mají vyměňované věci brát
-     * @param money které se mají po výměně zvýšit
+     * @param gamePlan   of the current game instance
+     * @param backpack  where the bottle is located
+     * @param money balance that money should be added to
      */
-    public CommandReturn(GamePlan plan, Backpack backpack, Money money) {
-        this.plan = plan;
+    public CommandReturn(GamePlan gamePlan, Backpack backpack, Money money) {
+        this.gamePlan = gamePlan;
         this.backpack = backpack;
         this.money = money;
     }
 
     /**
-     * Metoda nejdříve zjistí, zda se věc nachází v batohu
-     * dále zjistí, zda se jedná o láhev (zda je vyměnitelná)
-     * dále věc vymění
+     * Checks whether the item is located in player's backpack,
+     * checks whether the item can be returned,
+     * if these conditions are met, the item is returned and money is added to the player's balance.
      *
-     * @param parameters počet parametrů závisí na konkrétním příkazu.
-     * @return hlášení, zda se výměna povedla
+     * @param parameters item to be returned
+     * @return information about the success of the command
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -48,7 +43,7 @@ public class CommandReturn implements ICommand {
         }
 
         String bottle = parameters[0];
-        Area currentArea = plan.getCurrentArea();
+        Area currentArea = gamePlan.getCurrentArea();
         if (currentArea.containsItem("bottleMachine")) {
             if (backpack.containsItem(bottle)) {
                 if (backpack.selectItem(bottle).isReturnable()) {
@@ -68,9 +63,9 @@ public class CommandReturn implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

@@ -6,10 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Třída Batoh - třída představující inventář hráče
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Backpack - player's inventory
  */
 public class Backpack {
 
@@ -17,17 +14,17 @@ public class Backpack {
     private Map<String, Item> itemList;
 
     /**
-     * Konstruktor
+     * Constructor
      */
     public Backpack() {
         itemList = new HashMap<>();
     }
 
     /**
-     * Metoda vkládá věc do batohu pod podmínkou, že v batohu je dostatek místa
+     * Puts an item into the backpack if the backpack is not full
      *
-     * @param item, kterou chceme do batohu vložit
-     * @return true, pokud byla věc do batohu vložena, false, pokud nikoliv
+     * @param item to be added
+     * @return true if the item was added, false if not
      */
     public boolean putItem(Item item) {
         if (itemList.size() < capacity) {
@@ -38,10 +35,10 @@ public class Backpack {
     }
 
     /**
-     * Metoda odstraní věc z batohu - používána při předávání věcí jiným postavám
+     * Removes item from the backpack
      *
-     * @param item, kterou chceme z batohu odstranit
-     * @return zpráva, že věc byla předána
+     * @param item to be removed
+     * @return confirmation
      */
     public String removeItem(String item) {
         if (itemList.containsKey(item)) {
@@ -53,35 +50,35 @@ public class Backpack {
     }
 
     /**
-     * Metoda zkontroluje, zda se daná věc v batohu nachází
+     * Checks whether the backpack contains given item
      *
-     * @param itemName, kterou chceme zkontrolovat
-     * @return true, pokud ano, false, pokud ne
+     * @param item to be checked
+     * @return true/false
      */
-    public boolean containsItem(String itemName) {
-        return itemList.containsKey(itemName);
+    public boolean containsItem(String item) {
+        return itemList.containsKey(item);
     }
 
 
     /**
-     * Metoda najde věc v batohu a vrátí ji
+     * Finds an item in the backpack and returns it
      *
-     * @param itemName, kterou chceme najít
-     * @return danou věc, pokud v batohu je, null, pokud v batohu není
+     * @param item to be found
+     * @return item if it is in the backpack, null if not
      */
-    public Item selectItem(String itemName) {
-        Item itemInBackpack;
-        if (itemList.containsKey(itemName)) {
-            itemInBackpack = itemList.get(itemName);
-            return itemInBackpack;
+    public Item selectItem(String item) {
+        Item i;
+        if (itemList.containsKey(item)) {
+            i = itemList.get(item);
+            return i;
         }
         return null;
     }
 
     /**
-     * Metoda vrátí vypsaný seznam věcí v batohu
+     * Returns list of items in the backpack
      *
-     * @return seznam věcí v batohu
+     * @return items list
      */
     public String itemList() {
         String itemList = "items in backpack: ";
@@ -92,18 +89,18 @@ public class Backpack {
     }
 
     /**
-     * Vrátí kolekci věcí v batohu
+     * Returns an unmodifiable collection of items in the backpack
      *
-     * @return kolekce věcí v batohu
+     * @return unmodifiable collection of items in the backpack
      */
     public Collection<Item> getBackpackContents() {
         return Collections.unmodifiableCollection(itemList.values());
     }
 
     /**
-     * Nastavuje hodnotu kapacita - použito v testech
+     * Sets the capacity of the backpack
      *
-     * @param capacity na kterou má být nastavena
+     * @param capacity capacity value
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;

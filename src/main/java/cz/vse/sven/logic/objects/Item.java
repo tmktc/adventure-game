@@ -3,10 +3,7 @@ package cz.vse.sven.logic.objects;
 import java.util.Objects;
 
 /**
- * Třída Vec - realizuje věci
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Item
  */
 public class Item {
 
@@ -17,15 +14,8 @@ public class Item {
     private boolean canBePickedUp;
     private boolean purchasable;
 
-
     /**
-     * Konstruktor
-     *
-     * @param name       veci
-     * @param canBePickedUp  jestli jde sebrat
-     * @param purchasable  jestli jde koupit
-     * @param returnable jestli jde vymenit
-     * @param price        veci
+     * Constructor
      */
     public Item(String name, String fullName, boolean canBePickedUp, boolean purchasable, boolean returnable, int price) {
         this.name = name;
@@ -37,95 +27,77 @@ public class Item {
     }
 
     /**
-     * Getter pro jméno věci
-     *
-     * @return jméno věci
+     * Name getter
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Getter pro jméno s mezerami a diakritikou
-     *
-     * @return jméno s mezerami a diakritikou
+     * Full name getter
      */
     public String getFullName() {
         return fullName;
     }
 
     /**
-     * Getter pro boolean sebratelna
-     *
-     * @return true/false
+     * CanBePickedUp getter
      */
     public boolean getCanBePickedUp() {
         return canBePickedUp;
     }
 
     /**
-     * Setter pro boolean hodnotu sebratelna
-     *
-     * @param s hodnota boolean, která se má nastavit
+     * CanBePickedUp setter
      */
     public void setCanBePickedUp(boolean s) {
         this.canBePickedUp = s;
     }
 
     /**
-     * Getter pro boolean koupitelna
-     *
-     * @return true/false
+     * Purchasable getter
      */
     public boolean isPurchasable() {
         return purchasable;
     }
 
     /**
-     * Setter pro boolean hodnotu koupitelna
-     *
-     * @param k hodnota boolean, která se má nastavit
+     * Purchasable setter
      */
     public void setPurchasable(boolean k) {
         this.purchasable = k;
     }
 
     /**
-     * Getter pro boolean vymenitelna
-     *
-     * @return true/false
+     * Returnable getter
      */
     public boolean isReturnable() {
         return returnable;
     }
 
     /**
-     * Getter pro cenu věci
-     *
-     * @return cena věci
+     * Price getter
      */
     public int getPrice() {
         return price;
     }
 
     /**
-     * Dvě věci jsou stejné, pokud mají stejný název
+     * equals method - two items are the same if the have the same name
      *
-     * @param o věc, která se má porovnat
-     * @return true pokud je stejná, false pokud ne
+     * @param item to be compared
+     * @return true if the items are the same, false if not
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Objects.equals(name, item.name);
+    public boolean equals(Object item) {
+        if (this == item) return true;
+        if (item == null || getClass() != item.getClass()) return false;
+        Item i = (Item) item;
+        return Objects.equals(name, i.name);
     }
 
     /**
-     * Metoda hashCode
-     *
-     * @return ciselny identifikator instance
+     * hashCode method
      */
     @Override
     public int hashCode() {
@@ -133,9 +105,9 @@ public class Item {
     }
 
     /**
-     * Metoda toString věci
+     * toString method
      *
-     * @return jméno věci
+     * @return item name
      */
     @Override
     public String toString() {

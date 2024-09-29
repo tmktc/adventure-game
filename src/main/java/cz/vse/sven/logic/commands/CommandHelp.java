@@ -1,11 +1,7 @@
 package cz.vse.sven.logic.commands;
 
 /**
- * Třída PrikazNapoveda implementuje pro hru příkaz napoveda.
- * Tato třída je součástí jednoduché textové hry.
- *
- * @author Jarmila Pavlickova, Luboš Pavlíček
- * @version pro školní rok 2016/2017
+ * CommandHelp - returns the help message
  */
 public class CommandHelp implements ICommand {
 
@@ -13,20 +9,18 @@ public class CommandHelp implements ICommand {
     private ListOfCommands validCommands;
 
     /**
-     * Konstruktor třídy
+     * Constructor
      *
-     * @param validCommands seznam příkazů,
-     *                      které je možné ve hře použít,
-     *                      aby je nápověda mohla zobrazit uživateli.
+     * @param validCommands list of valid commands
      */
     public CommandHelp(ListOfCommands validCommands) {
         this.validCommands = validCommands;
     }
 
     /**
-     * Vrací seznam dostupných příkazů
+     * Returns helpful information and the list of valid commands
      *
-     * @return napoveda ke hre
+     * @return help message
      */
     @Override
     public String executeCommand(String... parameters) {
@@ -36,9 +30,9 @@ public class CommandHelp implements ICommand {
     }
 
     /**
-     * Metoda vrací název příkazu (slovo které používá hráč pro jeho vyvolání)
-     * <p>
-     * @ return nazev prikazu
+     * Returns the name of the command
+     *
+     * @return name of the command
      */
     @Override
     public String getName() {

@@ -6,38 +6,27 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class TextoveRozhrani
- * <p>
- * Toto je uživatelského rozhraní aplikace Adventura
- * Tato třída vytváří instanci třídy Hra, která představuje logiku aplikace.
- * Čte vstup zadaný uživatelem a předává tento řetězec logice a vypisuje odpověď logiky na konzoli.
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version březen 2024
+ * TextInterface - read player's text inputs
  */
 public class TextInterface {
 
     private IGame hra;
 
     /**
-     * Vytváří hru.
+     * Creates the text version of the game
      */
     public TextInterface(IGame hra) {
         this.hra = hra;
     }
 
     /**
-     * Hlavní metoda hry. Vypíše úvodní text a pak opakuje čtení a zpracování
-     * příkazu od hráče do konce hry (dokud metoda konecHry() z logiky nevrátí
-     * hodnotu true). Nakonec vypíše text epilogu a po 15 sekundách se automaticky zavře.
+     * Displays introduction text and repeatedly reads and processes text inputs from the player until the game ends
+     * After the game ends it displays epilogue text and automatically closes itself 15 seconds after the game ends.
      */
-    public void hraj() {
+    public void play() {
         System.out.println(hra.returnIntroduction() + hra.getGamePlan().getCurrentArea().longDescription());
 
-        // základní cyklus programu - opakovaně se čtou příkazy a poté
-        // se provádějí do konce hry.
-
-        while (!hra.gameEnd()) {
+        while (!hra.isGameEnd()) {
             String radek = prectiString();
             System.out.println(hra.processCommand(radek));
         }
@@ -53,9 +42,7 @@ public class TextInterface {
     }
 
     /**
-     * Metoda přečte příkaz z příkazového řádku
-     *
-     * @return Vrací přečtený příkaz jako instanci třídy String
+     * Reads player's text input
      */
     private String prectiString() {
         Scanner scanner = new Scanner(System.in);

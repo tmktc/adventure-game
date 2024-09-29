@@ -11,20 +11,15 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Třída Hra - třída představující logiku adventury.
- * <p>
- * Toto je hlavní třída  logiky aplikace.  Tato třída vytváří instanci třídy HerniPlan, která inicializuje mistnosti hry
- * a vytváří seznam platných příkazů a instance tříd provádějící jednotlivé příkazy.
- * Vypisuje uvítací a ukončovací text hry.
- * Také vyhodnocuje jednotlivé příkazy zadané uživatelem.
- *
- * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Tomáš Kotouč
- * @version březen 2024
+ * Game - main logic class
+ * It creates GamePlan instance, which initializes game objects and creates valid command list.
+ * It displays introduction and epilogue messages.
+ * It processes commands entered by the player.
  */
 
 public class Game implements IGame {
 
-    private ListOfCommands validCommands;    // obsahuje seznam přípustných příkazů
+    private ListOfCommands validCommands;
     private GamePlan gamePlan;
     private boolean gameEnd = false;
     private Backpack backpack;
@@ -33,7 +28,7 @@ public class Game implements IGame {
     private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
-     * Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan), seznam platných příkazů a seznam pozorovatelů.
+     * Creates game and initializes objects (through GamePlan class), list of valid commands and list of observers.
      */
     public Game() {
         gamePlan = new GamePlan();
@@ -57,17 +52,17 @@ public class Game implements IGame {
     }
 
     /**
-     * Vrátí úvodní zprávu pro hráče.
+     * Returns introduction message for the player
      */
     public String returnIntroduction() {
-        return "\nYou play as Sven, who lives under the bridge with his dog Pepa.\n" +
+        return "\nYou play as Sven, who lives under the bridge with his dog Peppa.\n" +
                 "They are both hungry, but Sven has no food and no money to buy it.\n" +
-                "He decides to leave Pepa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
-                "His main goal is to obtain food for Pepa and himself.";
+                "He decides to leave Peppa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
+                "His main goal is to obtain food for Peppa and himself.";
     }
 
     /**
-     * Vrátí závěrečnou zprávu pro hráče.
+     * Returns epilogue message for the player
      */
     public String returnEpilogue() {
         String epilogue = "";
@@ -76,7 +71,7 @@ public class Game implements IGame {
                     "a Perfect win, congratulations.\n";
         }
         if (gamePlan.isWin()) {
-            epilogue = "You managed to obtain food for Pepa and yourself.\n" +
+            epilogue = "You managed to obtain food for Peppa and yourself.\n" +
                     "Kim will be hungry today - you can do better next time.\n" +
                     "a Win, good job.\n";
         }
@@ -85,7 +80,7 @@ public class Game implements IGame {
                 epilogue = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
                         "\na Loss, better luck next time.\n";
             } else {
-                epilogue = "You did not manage to obtain food for Pepa and yourself in time." +
+                epilogue = "You did not manage to obtain food for Peppa and yourself in time." +
                         "\na Loss, better luck next time.\n";
             }
         }
@@ -93,13 +88,13 @@ public class Game implements IGame {
     }
 
     /**
-     * Metoda zpracuje řetězec uvedený jako parametr, rozdělí ho na slovo příkazu a další parametry.
-     * Pak otestuje zda příkaz je klíčovým slovem  např. jdi.
-     * Pokud ano spustí samotné provádění příkazu
-     * a upozorní pozorovatele na kontrolu možné změny věcí a postav v prostoru.
+     * Processes the string parameter, splits it into command keyword etc.,
+     * checks whether it is a valid command keyword,
+     * if the condition is met it executes the command
+     * and notifies the observer to a check possible game change.
      *
-     * @param line text, který zadal uživatel jako příkaz do hry.
-     * @return vrací se řetězec, který se má vypsat na obrazovku
+     * @param line player's input
+     * @return returns processed command message to be displayed
      */
     public String processCommand(String line) {
         String[] words = line.split("[ \t]+");
@@ -122,14 +117,14 @@ public class Game implements IGame {
     }
 
     /**
-     * Vrací true, pokud hra skončila.
+     * Returns true if the game has ended
      */
-    public boolean gameEnd() {
+    public boolean isGameEnd() {
         return gameEnd;
     }
 
     /**
-     * Nastaví, že je konec hry a upozorní na to pozorovatele
+     * Sets the game end and notifies the observer
      */
     public void setGameEnd() {
         this.gameEnd = true;
@@ -137,46 +132,45 @@ public class Game implements IGame {
     }
 
     /**
-     * Metoda vrátí odkaz na herní plán, je využita hlavně v testech,
-     * kde se jejím prostřednictvím získává aktualní místnost hry.
+     * Returns GamePlan instance
      *
-     * @return odkaz na herní plán
+     * @return GamePlan instance
      */
     public GamePlan getGamePlan() {
         return gamePlan;
     }
 
     /**
-     * Metoda vrátí odkaz na batoh ve hře
+     * Returns Backpack instance
      *
-     * @return odkaz na batoh
+     * @return Backpack instance
      */
     public Backpack getBackpack() {
         return backpack;
     }
 
     /**
-     * Vrátí instanci třídy progress, která uchovává stav postupu v aktuální instanci hry
+     * Returns Progress instance
      *
-     * @return instance třídy progress
+     * @return Progress instance
      */
     public Progress getProgressInstance() {
         return progress;
     }
 
     /**
-     * Vrátí hodnotu peněz
+     * Returns money balance in the current game instance
      *
-     * @return hodnota peněz
+     * @return money balance
      */
     public String getMoney() {
         return money.toString();
     }
 
     /**
-     * Metoda přidá pozorovatele do seznamu pozorovatelů dané změny hry
+     * Adds observer to the list of observers of given game change
      *
-     * @param observer který má být přidán
+     * @param observer to be registered
      */
     @Override
     public void register(GameChange gameChange, Observer observer) {
@@ -184,7 +178,7 @@ public class Game implements IGame {
     }
 
     /**
-     * Pokud je metoda zavolána, tak je pro každého pozorovatele v seznamu dané změny hry zavolána aktualizační metoda
+     * When called, the update method for every observer in the list for a given game change is called.
      */
     private void notifyObserver(GameChange gameChange) {
         for (Observer observer : listOfObservers.get(gameChange)) {

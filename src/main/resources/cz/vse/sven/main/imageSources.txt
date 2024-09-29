@@ -1,30 +1,30 @@
-jidelna.png restaurant_1421469 <a href="https://www.freepik.com/icon/restaurant_1421469#fromView=search&term=restaurant&track=ais&page=1&position=2">Icon by monkik</a>
-sekac.png shirt_664483 <a href="https://www.freepik.com/icon/shirt_664483#fromView=search&term=Clothes&track=ais&page=1&position=0">Icon by monkik</a>
+soupkitchen.png restaurant_1421469 <a href="https://www.freepik.com/icon/restaurant_1421469#fromView=search&term=restaurant&track=ais&page=1&position=2">Icon by monkik</a>
+thriftshop.png shirt_664483 <a href="https://www.freepik.com/icon/shirt_664483#fromView=search&term=Clothes&track=ais&page=1&position=0">Icon by monkik</a>
 lidl.png shopping-basket_664486 <a href="https://www.freepik.com/icon/shopping-basket_664486#fromView=search&term=Shopping+cart&track=ais&page=1&position=1">Icon by monkik</a>
-smetiste.png trash-can_995076 <a href="https://www.freepik.com/icon/trash-can_995076#fromView=search&term=Bin&track=ais&page=1&position=1">Icon by monkik</a>
-domov.png home_263115 <a href="https://www.freepik.com/icon/home_263115#fromView=search&term=home&track=ais&page=1&position=1&uuid=92aafd1d-f29e-43e9-b56c-386be9d93efe">Icon by Freepik</a>
-pracak.png bank_1259690 <a href="https://www.freepik.com/icon/bank_1259690#fromView=search&term=bank&track=ais&page=1&position=6">Icon by monkik</a>
-zastavarna.png money_664464 <a href="https://www.freepik.com/icon/money_664464#fromView=search&term=dollar+bill&track=ais&page=1&position=0">Icon by monkik</a>
-trafika.png newspaper_657114 <a href="https://www.freepik.com/icon/newspaper_657114#fromView=search&term=newspaper&track=ais&page=1&position=1&uuid=a7ca8519-b1f1-45b4-9ea4-74f1f9f7f67b">Icon by Stockio</a>
+junkyard.png trash-can_995076 <a href="https://www.freepik.com/icon/trash-can_995076#fromView=search&term=Bin&track=ais&page=1&position=1">Icon by monkik</a>
+home.png home_263115 <a href="https://www.freepik.com/icon/home_263115#fromView=search&term=home&track=ais&page=1&position=1&uuid=92aafd1d-f29e-43e9-b56c-386be9d93efe">Icon by Freepik</a>
+jobcenter.png bank_1259690 <a href="https://www.freepik.com/icon/bank_1259690#fromView=search&term=bank&track=ais&page=1&position=6">Icon by monkik</a>
+pawnshop.png money_664464 <a href="https://www.freepik.com/icon/money_664464#fromView=search&term=dollar+bill&track=ais&page=1&position=0">Icon by monkik</a>
+kiosk.png newspaper_657114 <a href="https://www.freepik.com/icon/newspaper_657114#fromView=search&term=newspaper&track=ais&page=1&position=1&uuid=a7ca8519-b1f1-45b4-9ea4-74f1f9f7f67b">Icon by Stockio</a>
 
-hrac.png player by Misbahul Munir from <a href="https://thenounproject.com/icon/player-2062361/" target="_blank" title="player Icons">Noun Project</a> (CC BY 3.0)
+player.png player by Misbahul Munir from <a href="https://thenounproject.com/icon/player-2062361/" target="_blank" title="player Icons">Noun Project</a> (CC BY 3.0)
 
-starehodiny.png alarm-clock_701537 <a href="https://www.freepik.com/icon/alarm-clock_701537#fromView=family&page=1&position=6&uuid=d0ea01de-2a35-4b3e-ba8f-b143ab331863">Icon by monkik</a>
-lahevodbranika.png, LahevOdSvijan.png, LahevOdPlzne.png beer_1408268 <a href="https://www.freepik.com/icon/beer_1408268#fromView=search&page=1&position=76&uuid=bf4fc98d-87ff-48e7-81aa-81fd1d46abcc">Icon by Good Ware</a>
-automatnalahve.png recycle-sign_861180 <a href="https://www.freepik.com/icon/recycle-sign_861180#fromView=family&page=1&position=0&uuid=b2d0fd31-3eac-4bf2-b229-5a212a40e21d">Icon by monkik</a>
+oldclock.png alarm-clock_701537 <a href="https://www.freepik.com/icon/alarm-clock_701537#fromView=family&page=1&position=6&uuid=d0ea01de-2a35-4b3e-ba8f-b143ab331863">Icon by monkik</a>
+branikbottle.png, LahevOdSvijan.png, LahevOdPlzne.png beer_1408268 <a href="https://www.freepik.com/icon/beer_1408268#fromView=search&page=1&position=76&uuid=bf4fc98d-87ff-48e7-81aa-81fd1d46abcc">Icon by Good Ware</a>
+bottlemachine.png recycle-sign_861180 <a href="https://www.freepik.com/icon/recycle-sign_861180#fromView=family&page=1&position=0&uuid=b2d0fd31-3eac-4bf2-b229-5a212a40e21d">Icon by monkik</a>
 snus.png star_7966406 <a href="https://www.freepik.com/icon/star_7966406#fromView=search&page=2&position=61&uuid=a650b9a1-d54a-48fb-86fb-0d412470f0a1">Icon by manshagraphics</a>
-bezlepkovychleba.png bread_1261020 <a href="https://www.freepik.com/icon/bread_1261020#fromView=family&page=1&position=0&uuid=ff0293cc-5fce-4a24-993f-bc3d13201cff">Icon by monkik</a>
-psigranule.png bowl_2809729 <a href="https://www.freepik.com/icon/bowl_2809729#fromView=family&page=1&position=3&uuid=eb22cef8-ce03-4466-9658-def02b1caa67">Icon by monkik</a>
-rohliky.png croissant_992799 <a href="https://www.freepik.com/icon/croissant_992799#fromView=family&page=1&position=0&uuid=4b77544d-dd0a-44da-90d5-9eee862a97da">Icon by monkik</a>
+glutenfreebread.png bread_1261020 <a href="https://www.freepik.com/icon/bread_1261020#fromView=family&page=1&position=0&uuid=ff0293cc-5fce-4a24-993f-bc3d13201cff">Icon by monkik</a>
+dogfood.png bowl_2809729 <a href="https://www.freepik.com/icon/bowl_2809729#fromView=family&page=1&position=3&uuid=eb22cef8-ce03-4466-9658-def02b1caa67">Icon by monkik</a>
+bagels.png croissant_992799 <a href="https://www.freepik.com/icon/croissant_992799#fromView=family&page=1&position=0&uuid=4b77544d-dd0a-44da-90d5-9eee862a97da">Icon by monkik</a>
 
-zelenacepice.png beanie_1365006 <a href="https://www.freepik.com/icon/beanie_1365006#fromView=family&page=1&position=3&uuid=ba423008-0587-4000-8d06-7350ffd4e9f5">Icon by monkik</a>
-cervenabunda.png jacket_2405560 <a href="https://www.freepik.com/icon/jacket_2405560#fromView=family&page=1&position=1&uuid=37c2e8db-1ba1-4041-aeaf-c82c19d1201f">Icon by monkik</a>
+greencap.png beanie_1365006 <a href="https://www.freepik.com/icon/beanie_1365006#fromView=family&page=1&position=3&uuid=ba423008-0587-4000-8d06-7350ffd4e9f5">Icon by monkik</a>
+redjacket.png jacket_2405560 <a href="https://www.freepik.com/icon/jacket_2405560#fromView=family&page=1&position=1&uuid=37c2e8db-1ba1-4041-aeaf-c82c19d1201f">Icon by monkik</a>
 
-pepa.png treats_2809753 <a href="https://www.freepik.com/icon/treats_2809753#fromView=family&page=1&position=6&uuid=545eb13c-54e1-48e8-95ab-6f554eddd4bc">Icon by monkik</a>
+peppa.png treats_2809753 <a href="https://www.freepik.com/icon/treats_2809753#fromView=family&page=1&position=6&uuid=545eb13c-54e1-48e8-95ab-6f554eddd4bc">Icon by monkik</a>
 kim.png player by Misbahul Munir from <a href="https://thenounproject.com/icon/player-2062361/" target="_blank" title="player Icons">Noun Project</a> (CC BY 3.0)
-podezrely.png question-mark_9796786 <a href="https://www.freepik.com/icon/question-mark_9796786#fromView=search&page=1&position=28&uuid=227acf9b-02c2-4250-9570-e460998adc8a">Icon by riajulislam</a>
-prodavac.png shirt_664483 <a href="https://www.freepik.com/icon/shirt_664483#fromView=search&term=Clothes&track=ais&page=1&position=0">Icon by monkik</a>
-zastavarnik.png money_664464 <a href="https://www.freepik.com/icon/money_664464#fromView=search&term=dollar+bill&track=ais&page=1&position=0">Icon by monkik</a>
+suspect.png question-mark_9796786 <a href="https://www.freepik.com/icon/question-mark_9796786#fromView=search&page=1&position=28&uuid=227acf9b-02c2-4250-9570-e460998adc8a">Icon by riajulislam</a>
+shopassistant.png shirt_664483 <a href="https://www.freepik.com/icon/shirt_664483#fromView=search&term=Clothes&track=ais&page=1&position=0">Icon by monkik</a>
+pawnbroker.png money_664464 <a href="https://www.freepik.com/icon/money_664464#fromView=search&term=dollar+bill&track=ais&page=1&position=0">Icon by monkik</a>
 
 
 

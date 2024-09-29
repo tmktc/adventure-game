@@ -26,10 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Controller pro home.fxml
- *
- * @author Tomáš Kotouč
- * @version březen 2024
+ * Controller for home.fxml
  */
 public class HomeController {
 
@@ -88,9 +85,9 @@ public class HomeController {
     private Map<String, Point2D> AreaCoordinates = new HashMap<>();
 
     /**
-     * Metoda na začátku hry:
-     * spojí panely se seznamy, registruje pozorovatele,
-     * do panelu vloží aktualizované seznamy, nastavuje továrnu buňek pro panel východů a věcí v prostoru/batohu
+     * At the start of a new game:
+     * connects panels with lists, registers observers,
+     * puts updated lists into panels and sets cell factories for the panels
      */
     @FXML
     private void initialize() {
@@ -124,7 +121,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda nastaví souřadnice prostorů na mapě
+     * Sets coordinates for the areas on the map
      */
     private void insertCoordinates() {
         AreaCoordinates.put("home", new Point2D(380, 100));
@@ -138,7 +135,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdříve vyčistí seznam východů v panelu východů (ListView) a vloží do něj aktualizovaný seznam
+     * Clears the list of exits and puts an updated list into the panel of exits
      */
     @FXML
     private void updateListOfExits() {
@@ -147,16 +144,16 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdřívé vyčistí seznam věcí v prostoru (ListView) a vloží do něj aktualizovaný seznam
+     * Clears the list of items in the area and puts an updated list into the panel of items in the area
      */
     @FXML
     private void updateListOfItemsInArea() {
         listOfItemsInArea.clear();
-        listOfItemsInArea.addAll(game.getGamePlan().getCurrentArea().getItemList());
+        listOfItemsInArea.addAll(game.getGamePlan().getCurrentArea().getItems());
     }
 
     /**
-     * Metoda nejdříve vyčistí seznam věcí v batohu (ListView) a vloží do něj aktualizovaný seznam
+     * Clears the list of items in the backpack and puts an updated list into the panel of items in the backpack
      */
     @FXML
     private void updateListOfItemsInBackpack() {
@@ -165,16 +162,16 @@ public class HomeController {
     }
 
     /**
-     * Metoda nejdříve vyčistí seznam postav v prostoru a vloží do něj aktualizovaný seznam
+     * Clears the list of NPCs in the area and puts an updated list into the panel of NPCs in the area
      */
     @FXML
     private void updateListOfNPCsInArea() {
         listOfNPCsInArea.clear();
-        listOfNPCsInArea.addAll(game.getGamePlan().getCurrentArea().getNPCList());
+        listOfNPCsInArea.addAll(game.getGamePlan().getCurrentArea().getNPCs());
     }
 
     /**
-     * Metoda aktualizuje polohu hráče na mapě, aktualizuje popis prostoru
+     * Updates player's position on the map and the area description
      */
     @FXML
     private void updatePlayerLocation() {
@@ -185,7 +182,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda aktualizuje ukazatel peněz
+     * Updates the money balance indicator
      */
     @FXML
     private void updateMoney() {
@@ -193,33 +190,32 @@ public class HomeController {
     }
 
     /**
-     * Pokud je výsledkem příkazu konec hry, tak metoda:
-     * zamezí interakci s panely a tlačítkem, ukáže konečné okno
+     * If a command results in the game end it disables panels and buttons and shows end window
      */
     @FXML
     private void updateGameEnd() {
-        buttonHelp.setDisable(game.gameEnd());
-        panelExits.setDisable(game.gameEnd());
-        panelItemsInArea.setDisable(game.gameEnd());
-        panelItemsInBackpack.setDisable(game.gameEnd());
-        panelNPCsInArea.setDisable(game.gameEnd());
-        labelExits.setDisable(game.gameEnd());
-        labelItemsInBackpack.setDisable(game.gameEnd());
-        labelNPCsInArea.setDisable(game.gameEnd());
-        labelItemsInArea.setDisable(game.gameEnd());
-        labelMoneyStatus.setDisable(game.gameEnd());
-        labelCurrentMoney.setDisable(game.gameEnd());
+        buttonHelp.setDisable(game.isGameEnd());
+        panelExits.setDisable(game.isGameEnd());
+        panelItemsInArea.setDisable(game.isGameEnd());
+        panelItemsInBackpack.setDisable(game.isGameEnd());
+        panelNPCsInArea.setDisable(game.isGameEnd());
+        labelExits.setDisable(game.isGameEnd());
+        labelItemsInBackpack.setDisable(game.isGameEnd());
+        labelNPCsInArea.setDisable(game.isGameEnd());
+        labelItemsInArea.setDisable(game.isGameEnd());
+        labelMoneyStatus.setDisable(game.isGameEnd());
+        labelCurrentMoney.setDisable(game.isGameEnd());
 
-        if (game.gameEnd()) {
+        if (game.isGameEnd()) {
             gameFinish();
         }
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz "jdi" metodou ve třídě "Hra" a vypíše výsledek zadaného příkazu
-     * dále vymaže obsah hlášení při interakci s věcmi
+     * Tells the game to process the go command and displays the outcome of the command
+     * it also clears the item interaction info display
      *
-     * @param command který se má zpracovat
+     * @param command that has been triggered
      */
     @FXML
     private void processAreaTransition(String command) {
@@ -228,21 +224,21 @@ public class HomeController {
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz "seber"/"vymen"/"kup"/"vyndej" metodou ve třídě "Hra"
-     * a aktualizuje hlášení při interakci s věcí
+     * Tells the game to process an item interaction command and displays the outcome of the command
+     * it also updates the item interaction info display
      *
-     * @param prikaz který se má zpracovat
+     * @param command that has been triggered
      */
     @FXML
-    private void processItemInteraction(String prikaz) {
-        String info = game.processCommand(prikaz);
+    private void processItemInteraction(String command) {
+        String info = game.processCommand(command);
         labelItemInteractionInfo.setText(info);
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz "promluv" metodou ve třídě "Hra" a výsledek vrátí v podobě vyskakovacího okna
+     * Tells the game to process the talk command and displays the outcome of the command v in popup window
      *
-     * @param command který se má zpracovat
+     * @param command that has been triggered
      */
     @FXML
     private void processDialogWindow(String command) {
@@ -254,16 +250,16 @@ public class HomeController {
     }
 
     /**
-     * Metoda nechá zpracovat zadaný příkaz metodou ve třídě "Hra"
+     * Tells the game to process a command
      *
-     * @param command který se má zpracovat
+     * @param command that has been triggered
      */
     private void processDialog(String command) {
         game.processCommand(command);
     }
 
     /**
-     * Metoda zajistí, aby se po kliknutí na prostor v panelu východů (ListView) do daného prostoru přešlo
+     * Makes the area change when the player clicks on an area in the Exits panel
      */
     @FXML
     private void clickExitsPanel() {
@@ -274,8 +270,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v prostoru
-     * věc buď sebrala nebo koupila (podle toho, kde se hráč nachází)
+     * Buys or picks up the item after player clicks on it in the Items in the area panel
      */
     @FXML
     private void clickItemsInAreaPanel() {
@@ -291,8 +286,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, aby se po kliknutí na věc v panelu věcí v batohu
-     * věc buď vyndala nebo vyměnila (podle toho, kde se hráč nachází)
+     * Returns or throws away an item after player clicks on it in the Items in backpack panel
      */
     @FXML
     private void clickItemsInBackpackPanel() {
@@ -308,11 +302,9 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, aby se po kliknutí na postavu v panelu postav v prostoru
-     * s danou postavou promluvilo
-     * <p>
-     * Pokud se daným promluvením dohraje hra, tak se zavolá taková metoda zpracování příkazu, která nevytvoří okno dialogu.
-     * (protože se již ukazuje okno s epilogem, tak by se dané okno s dialogem ukázalo až v případné nové hře - což nechceme)
+     * Starts a dialogue with an NPC after player clicks on it in the NPCs in the area panel
+     * If the game is finished with this action, a method that does not display a popup window is called.
+     * (The game already shows a game end window, so the dialogue window would potentially show up in different game instance - we don't want that to happen)
      */
     @FXML
     private void clickNPCsInAreaPanel() {
@@ -321,8 +313,8 @@ public class HomeController {
         String command = CommandTalk.NAME + " " + target.getName();
 
         if (
-                (game.getGamePlan().getCurrentArea().containsNPC("Pepa") && (game.getProgressInstance().getProgress() >= 6))
-                        || (game.getGamePlan().getCurrentArea().containsNPC("Suspect") && game.getProgressInstance().getProgress() == 3)
+                (game.getGamePlan().getCurrentArea().containsNPC("peppa") && (game.getProgressInstance().getProgress() >= 6))
+                        || (game.getGamePlan().getCurrentArea().containsNPC("suspect") && game.getProgressInstance().getProgress() == 3)
         ) {
             processDialog(command);
         } else {
@@ -331,8 +323,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na "Nápověda" v horní liště (MenuBar)
-     * se zobrazí nápověda v podobě vyskakovacího okna (WevView) z html souboru
+     * Shows the Help window after player clicks on the Help button
      */
     @FXML
     private void clickHelp() {
@@ -345,7 +336,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zobrazí okno s epilogem a nabídne buď ukončení hry nebo spuštění nové
+     * Shows game end windows and offers the player to either start a new game or exit (close all game widows)
      */
     @FXML
     private void gameFinish() {
@@ -367,7 +358,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na "Ukončit" se hra zavře
+     * Exits the game if the player chooses to
      */
     @FXML
     private void exitGame() {
@@ -375,7 +366,7 @@ public class HomeController {
     }
 
     /**
-     * Metoda zajistí, že po kliknutí na položku "Nová hra" se spustí nová hra (hrajeme od znova, vše je v původním stavu)
+     * Starts a new game if the player chooses to
      */
     @FXML
     private void newGame() {
