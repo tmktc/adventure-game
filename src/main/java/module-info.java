@@ -2,7 +2,7 @@ module cz.vse.sven {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
+    requires javafx.graphics;
 
 
     opens cz.vse.sven.main to javafx.fxml;

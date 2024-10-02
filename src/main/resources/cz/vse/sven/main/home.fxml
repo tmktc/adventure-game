@@ -20,8 +20,8 @@
         <RowConstraints vgrow="NEVER"/>
     </rowConstraints>
     <MenuBar GridPane.columnSpan="2147483647">
-        <Menu mnemonicParsing="false" text="Hra">
-            <MenuItem onAction="#newGame" text="Nová game"/>
+        <Menu mnemonicParsing="false" text="Game">
+            <MenuItem onAction="#newGame" text="New game"/>
             <MenuItem onAction="#exitGame" text="Exit"/>
         </Menu>
     </MenuBar>
