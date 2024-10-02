@@ -9,11 +9,6 @@ import cz.vse.sven.main.Observer.Observable;
 public interface IGame extends Observable {
 
     /**
-     * Returns introduction message for the player
-     */
-    String returnIntroduction();
-
-    /**
      * Returns epilogue message for the player
      */
     String returnEpilogue();

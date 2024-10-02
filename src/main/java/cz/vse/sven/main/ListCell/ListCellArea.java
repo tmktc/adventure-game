@@ -5,6 +5,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
+import java.util.Objects;
+
 /**
  * Edits area exit cells in exits panel
  */
@@ -25,7 +27,7 @@ public class ListCellArea extends ListCell<Area> {
         } else {
             setText(area.getFullName());
             setFont(Font.font(13));
-            String path = getClass().getResource("/cz/vse/sven/main/areas/" + area.getName() + ".png").toExternalForm();
+            String path = Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("/cz/vse/sven/main/areas/" + area.getName() + ".png"))).toExternalForm();
             ImageView iw = new ImageView(path);
             iw.setFitWidth(35);
             iw.setPreserveRatio(true);

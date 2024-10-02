@@ -11,7 +11,7 @@ import java.util.Map;
 public class Backpack {
 
     private int capacity = 5;
-    private Map<String, Item> itemList;
+    private final Map<String, Item> itemList;
 
     /**
      * Constructor
@@ -81,11 +81,11 @@ public class Backpack {
      * @return items list
      */
     public String itemList() {
-        String itemList = "items in backpack: ";
+        StringBuilder itemList = new StringBuilder("items in backpack: ");
         for (String item : this.itemList.keySet()) {
-            itemList += item + " ";
+            itemList.append(item).append(" ");
         }
-        return itemList;
+        return itemList.toString();
     }
 
     /**

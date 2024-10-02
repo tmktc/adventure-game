@@ -5,6 +5,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
+import java.util.Objects;
+
 /**
  * Edits item cells in item panels
  */
@@ -25,7 +27,7 @@ public class ListCellItem extends ListCell<Item> {
         } else {
             setText(item.getFullName());
             setFont(Font.font(13));
-            String path = getClass().getResource("/cz/vse/sven/main/items/" + item.getName().toLowerCase() + ".png").toExternalForm();
+            String path = Objects.requireNonNull(getClass().getResource("/cz/vse/sven/main/items/" + item.getName().toLowerCase() + ".png")).toExternalForm();
             ImageView iw = new ImageView(path);
             iw.setFitWidth(35);
             iw.setPreserveRatio(true);

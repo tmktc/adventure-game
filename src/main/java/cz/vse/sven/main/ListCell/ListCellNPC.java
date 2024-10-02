@@ -5,6 +5,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
+import java.util.Objects;
+
 /**
  * Edits NPC cells in NPC panels
  */
@@ -23,9 +25,9 @@ public class ListCellNPC extends ListCell<NPC> {
             setText(null);
             setGraphic(null);
         } else {
-            setText(NPC.getFullName());
+            setText(NPC.fullName());
             setFont(Font.font(13));
-            String path = getClass().getResource("/cz/vse/sven/main/NPCs/" + NPC.getName().toLowerCase() + ".png").toExternalForm();
+            String path = Objects.requireNonNull(getClass().getResource("/cz/vse/sven/main/NPCs/" + NPC.name().toLowerCase() + ".png")).toExternalForm();
             ImageView iw = new ImageView(path);
             iw.setFitWidth(35);
             iw.setPreserveRatio(true);
