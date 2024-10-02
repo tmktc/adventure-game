@@ -5,31 +5,27 @@ import java.util.Objects;
 /**
  * NPC
  */
-public class NPC {
-
-    private final String name;
-
-    private final String fullName;
+public record NPC(String name, String fullName) {
 
     /**
      * Constructor
      */
-    public NPC(String name, String fullName) {
-        this.name = name;
-        this.fullName = fullName;
+    public NPC {
     }
 
     /**
      * Name getter
      */
-    public String getName() {
+    @Override
+    public String name() {
         return name;
     }
 
     /**
      * Full name getter
      */
-    public String getFullName() {
+    @Override
+    public String fullName() {
         return fullName;
     }
 
@@ -62,6 +58,6 @@ public class NPC {
      */
     @Override
     public String toString() {
-        return getName();
+        return name();
     }
 }
