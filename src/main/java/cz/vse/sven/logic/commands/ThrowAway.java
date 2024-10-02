@@ -12,8 +12,8 @@ import cz.vse.sven.logic.objects.Item;
 public class ThrowAway implements ICommand {
 
     public static final String NAME = "throwaway";
-    private GamePlan gamePlan;
-    private Backpack backpack;
+    private final GamePlan gamePlan;
+    private final Backpack backpack;
 
     /**
      * Constructor

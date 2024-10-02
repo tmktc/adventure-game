@@ -8,12 +8,12 @@ import java.util.*;
  */
 public class Area {
 
-    private String name;
-    private String fullName;
-    private String description;
-    private Set<Area> exits;
-    private Map<String, Item> itemList;
-    private Map<String, NPC> NPCList;
+    private final String name;
+    private final String fullName;
+    private final String description;
+    private final Set<Area> exits;
+    private final Map<String, Item> itemList;
+    private final Map<String, NPC> NPCList;
 
     /**
      * Constructor
@@ -47,10 +47,9 @@ public class Area {
         if (this == area) {
             return true;
         }
-        if (!(area instanceof Area)) {
+        if (!(area instanceof Area second)) {
             return false;
         }
-        Area second = (Area) area;
         return (java.util.Objects.equals(this.name, second.name));
     }
 
@@ -101,11 +100,11 @@ public class Area {
      * @return all exits of an area
      */
     public String exitsDescription() {
-        String returnedText = "exits: ";
+        StringBuilder returnedText = new StringBuilder("exits: ");
         for (Area neighbor : exits) {
-            returnedText += neighbor.getName() + "  ";
+            returnedText.append(neighbor.getName()).append("  ");
         }
-        return returnedText;
+        return returnedText.toString();
     }
 
     /**
@@ -227,11 +226,11 @@ public class Area {
         List<String> items = new ArrayList<>(itemList.keySet());
         Collections.sort(items);
 
-        String itemList = "items: ";
+        StringBuilder itemList = new StringBuilder("items: ");
         for (String item : items) {
-            itemList += item + "  ";
+            itemList.append(item).append("  ");
         }
-        return itemList;
+        return itemList.toString();
     }
 
     /**
@@ -240,8 +239,8 @@ public class Area {
      * @param NPC to be put into the area
      */
     public void addNPC(NPC NPC) {
-        if (!(NPCList.containsKey(NPC.getName()))) {
-            NPCList.put(NPC.getName(), NPC);
+        if (!(NPCList.containsKey(NPC.name()))) {
+            NPCList.put(NPC.name(), NPC);
         }
     }
 
@@ -273,11 +272,11 @@ public class Area {
         List<String> NPCs = new ArrayList<>(NPCList.keySet());
         Collections.sort(NPCs);
 
-        String NPCList = "NPCs: ";
+        StringBuilder NPCList = new StringBuilder("NPCs: ");
         for (String NPCName : NPCs) {
-            NPCList += NPCName + "  ";
+            NPCList.append(NPCName).append("  ");
         }
-        return NPCList;
+        return NPCList.toString();
     }
 
     /**

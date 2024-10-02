@@ -71,15 +71,15 @@ public class HomeController {
 
     private IGame game = new Game();
 
-    private ObservableList<Area> listOfExits = FXCollections.observableArrayList();
+    private final ObservableList<Area> listOfExits = FXCollections.observableArrayList();
 
-    private ObservableList<Item> listOfItemsInArea = FXCollections.observableArrayList();
+    private final ObservableList<Item> listOfItemsInArea = FXCollections.observableArrayList();
 
-    private ObservableList<Item> listOfItemsInBackpack = FXCollections.observableArrayList();
+    private final ObservableList<Item> listOfItemsInBackpack = FXCollections.observableArrayList();
 
-    private ObservableList<NPC> listOfNPCsInArea = FXCollections.observableArrayList();
+    private final ObservableList<NPC> listOfNPCsInArea = FXCollections.observableArrayList();
 
-    private Map<String, Point2D> AreaCoordinates = new HashMap<>();
+    private final Map<String, Point2D> AreaCoordinates = new HashMap<>();
 
     /**
      * At the start of a new game:
@@ -97,13 +97,13 @@ public class HomeController {
             updateListOfExits();
             updatePlayerLocation();
         });
-        game.register(GameChange.GAME_END, () -> updateGameEnd());
+        game.register(GameChange.GAME_END, this::updateGameEnd);
         game.register(GameChange.ITEM_CHANGE, () -> {
             updateListOfItemsInArea();
             updateListOfItemsInBackpack();
         });
-        game.register(GameChange.NPC_CHANGE, () -> updateListOfNPCsInArea());
-        game.register(GameChange.MONEY_CHANGE, () -> updateMoney());
+        game.register(GameChange.NPC_CHANGE, this::updateListOfNPCsInArea);
+        game.register(GameChange.MONEY_CHANGE, this::updateMoney);
         insertCoordinates();
         updateListOfExits();
         updateListOfItemsInBackpack();
@@ -261,11 +261,11 @@ public class HomeController {
                 (game.getGamePlan().getCurrentArea().containsNPC("peppa") && (game.getProgressInstance().getProgress() >= 6))
                         || (game.getGamePlan().getCurrentArea().containsNPC("suspect") && game.getProgressInstance().getProgress() == 3)
         ) {
-            game.processCommand(Talk.NAME, target.getName());
+            game.processCommand(Talk.NAME, target.name());
         } else {
             Alert dialogWindow = new Alert(Alert.AlertType.INFORMATION);
             dialogWindow.setTitle("Dialogue");
-            dialogWindow.setHeaderText(game.processCommand(Talk.NAME, target.getName()));
+            dialogWindow.setHeaderText(game.processCommand(Talk.NAME, target.name()));
             dialogWindow.show();
         }
     }
@@ -277,9 +277,11 @@ public class HomeController {
     private void clickHelp() {
         Alert introduction = new Alert(Alert.AlertType.INFORMATION);
         introduction.setTitle("Help");
-        introduction.setHeaderText("The game has four possible endings. Two of which are bad, one good and one perfect.\n" +
-                "The game always progresses through talking to an NPC. Pay attention to what NPCs are saying.\n\n" +
-                "You control the game by clicking on exits, NPCs and items in the side panels.");
+        introduction.setHeaderText("""
+                The game has four possible endings. Two of which are bad, one good and one perfect.
+                The game always progresses through talking to an NPC. Pay attention to what NPCs are saying.
+
+                You control the game by clicking on exits, NPCs and items in the side panels.""");
         introduction.show();
     }
 

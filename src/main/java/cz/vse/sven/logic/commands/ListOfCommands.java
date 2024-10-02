@@ -6,7 +6,7 @@ import java.util.*;
  * ListOfCommands - keeps track of the list of valid commands
  */
 public class ListOfCommands {
-    private Map<String, ICommand> CommandMap;
+    private final Map<String, ICommand> CommandMap;
 
     /**
      * Constructor
@@ -33,15 +33,4 @@ public class ListOfCommands {
     public ICommand returnCommand(String string) {
         return CommandMap.getOrDefault(string, null);
     }
-
-    /**
-     * Checks whether the keyword is a valid command
-     *
-     * @param string keyword to check
-     * @return true - false, false - invalid
-     */
-    public boolean isValidCommand(String string) {
-        return CommandMap.containsKey(string);
-    }
-
 }

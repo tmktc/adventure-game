@@ -12,9 +12,9 @@ import cz.vse.sven.logic.objects.Item;
 public class Buy implements ICommand {
 
     public static final String NAME = "buy";
-    private GamePlan gamePlan;
-    private Backpack backpack;
-    private Money money;
+    private final GamePlan gamePlan;
+    private final Backpack backpack;
+    private final Money money;
 
     /**
      * Constructor

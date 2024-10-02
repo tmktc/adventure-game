@@ -19,13 +19,13 @@ import java.util.Set;
 
 public class Game implements IGame {
 
-    private ListOfCommands validCommands;
-    private GamePlan gamePlan;
+    private final ListOfCommands validCommands;
+    private final GamePlan gamePlan;
     private boolean gameEnd = false;
-    private Backpack backpack;
-    private Money money;
-    private Progress progress;
-    private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
+    private final Backpack backpack;
+    private final Money money;
+    private final Progress progress;
+    private final Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
      * Creates game and initializes objects (through GamePlan class), list of valid commands and list of observers.
@@ -48,36 +48,36 @@ public class Game implements IGame {
     }
 
     /**
-     * Returns introduction message for the player
-     */
-    public String returnIntroduction() {
-        return "\nYou play as Sven, who lives under the bridge with his dog Peppa.\n" +
-                "They are both hungry, but Sven has no food and no money to buy it.\n" +
-                "He decides to leave Peppa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
-                "His main goal is to obtain food for Peppa and himself.";
-    }
-
-    /**
      * Returns epilogue message for the player
      */
     public String returnEpilogue() {
         String epilogue = "";
         if (gamePlan.isPerfectWin()) {
-            epilogue = "You managed to obtain food for everyone and Sven bought snus.\n" +
-                    "a Perfect win, congratulations.\n";
+            epilogue = """
+                    You managed to obtain food for everyone and Sven bought snus.
+                    a Perfect win, congratulations.
+                    """;
         }
         if (gamePlan.isWin()) {
-            epilogue = "You managed to obtain food for Peppa and yourself.\n" +
-                    "Kim will be hungry today - you can do better next time.\n" +
-                    "a Win, good job.\n";
+            epilogue = """
+                    You managed to obtain food for Peppa and yourself.
+                    Kim will be hungry today - you can do better next time.
+                    a Win, good job.
+                    """;
         }
         if (gamePlan.isLoss()) {
             if (progress.getProgress() == 3) {
-                epilogue = "Sven got beat by the thief. The thief managed to escape with the stolen clothes." +
-                        "\na Loss, better luck next time.\n";
+                epilogue = """
+                        Sven got beat by the thief. The thief managed to escape with the stolen clothes.\
+
+                        a Loss, better luck next time.
+                        """;
             } else {
-                epilogue = "You did not manage to obtain food for Peppa and yourself in time." +
-                        "\na Loss, better luck next time.\n";
+                epilogue = """
+                        You did not manage to obtain food for Peppa and yourself in time.\
+
+                        a Loss, better luck next time.
+                        """;
             }
         }
         return epilogue;

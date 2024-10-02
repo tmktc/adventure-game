@@ -14,11 +14,11 @@ import cz.vse.sven.logic.objects.Item;
 public class Talk implements ICommand {
 
     public static final String NAME = "talk";
-    private GamePlan gamePlan;
-    private Backpack backpack;
-    private Money money;
-    private Progress progress;
-    private Game game;
+    private final GamePlan gamePlan;
+    private final Backpack backpack;
+    private final Money money;
+    private final Progress progress;
+    private final Game game;
 
     /**
      * Constructor
@@ -96,10 +96,13 @@ public class Talk implements ICommand {
      */
     private String dialogKim() {
         if (progress.getProgress() == 0) {
-            return "\nKim: \n\"Hey Sven, too bad the Soup kitchen is closed today, right? I was looking forward to my favorite gluten-free noodles." +
-                    "\nI am sorry that Peppa will not get to eat today, but I might have a solution for you." +
-                    "\nI myself have no money, but when I was on my way here, I saw an old clock in a junkyard." +
-                    "\nGo find it and try to sell in in a Pawnshop, maybe you will get enough money to buy food for Peppa and yourself.\"\n";
+            return """
+                    Kim:\s
+                    "Hey Sven, too bad the Soup kitchen is closed today, right? I was looking forward to my favorite gluten-free noodles.
+                    I am sorry that Peppa will not get to eat today, but I might have a solution for you.
+                    I myself have no money, but when I was on my way here, I saw an old clock in a junkyard.
+                    Go find it and try to sell in in a Pawnshop, maybe you will get enough money to buy food for Peppa and yourself."
+                    """;
         } else if (progress.getProgress() == 3) {
             progress.addProgress();
             return "\nKim: \n\"I will gladly help you, lead me to him.\"\n";
@@ -122,8 +125,11 @@ public class Talk implements ICommand {
     private String dialogSuspect() {
         if (progress.getProgress() == 2) {
             progress.addProgress();
-            return "\nSven: \n\"I can not confront him alone, I need to ask Kim for help, he should still be in front of the Soup kitchen.\n" +
-                    "The poor guy is probably waiting there for his gluten-free noodles.\"\n";
+            return """
+                    Sven:\s
+                    "I can not confront him alone, I need to ask Kim for help, he should still be in front of the Soup kitchen.
+                    The poor guy is probably waiting there for his gluten-free noodles."
+                    """;
         } else if (progress.getProgress() == 3) {
             gamePlan.getCurrentArea().removeNPC("suspect");
             gamePlan.setLoss(true);
@@ -138,8 +144,10 @@ public class Talk implements ICommand {
             gamePlan.getCurrentArea().removeNPC("suspect");
             gamePlan.getCurrentArea().removeNPC("kim");
 
-            return "\nYou managed to beat the thief. The red jacket and green cap fell on the ground.\n" +
-                    "Kim said goodbye and headed back to the Soup kitchen.\n";
+            return """
+                    You managed to beat the thief. The red jacket and green cap fell on the ground.
+                    Kim said goodbye and headed back to the Soup kitchen.
+                    """;
         }
 
         return "\nSuspiciously looking person: \n\"Get lost.\"\n";
@@ -153,10 +161,13 @@ public class Talk implements ICommand {
     private String dialogShopAssistant() {
         if (progress.getProgress() == 1) {
             progress.addProgress();
-            return "\nShop assistant: \n\"Some bastard rushed into the shop and stole clothes this morning.\n" +
-                    "If you manage to get the clothes back to me, you will be rewarded.\n" +
-                    "It is a red jacket and a green cap.\n" +
-                    "He ran towards the Job center, he could still be there.\"\n";
+            return """
+                    Shop assistant:\s
+                    "Some bastard rushed into the shop and stole clothes this morning.
+                    If you manage to get the clothes back to me, you will be rewarded.
+                    It is a red jacket and a green cap.
+                    He ran towards the Job center, he could still be there."
+                    """;
         } else if (progress.getProgress() == 5) {
             if (backpack.containsItem("redJacket") && backpack.containsItem("greenCap")) {
                 progress.addProgress();

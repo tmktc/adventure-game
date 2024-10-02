@@ -11,9 +11,9 @@ import cz.vse.sven.logic.objects.Area;
 public class Return implements ICommand {
 
     public static final String NAME = "return";
-    private GamePlan gamePlan;
-    private Backpack backpack;
-    private Money money;
+    private final GamePlan gamePlan;
+    private final Backpack backpack;
+    private final Money money;
 
     /**
      * Constructor

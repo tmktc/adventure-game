@@ -18,13 +18,14 @@ import java.util.Set;
  * It keeps track of current area.
  * It sets and checks game endings.
  */
+@SuppressWarnings("SameParameterValue")
 public class GamePlan implements Observable {
 
     private Area currentArea;
     private boolean win = false;
     private boolean loss = false;
     private boolean perfectWin = false;
-    private Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
+    private final Map<GameChange, Set<Observer>> listOfObservers = new HashMap<>();
 
     /**
      * Constructor

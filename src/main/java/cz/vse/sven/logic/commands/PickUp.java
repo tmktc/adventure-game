@@ -11,8 +11,8 @@ import cz.vse.sven.logic.objects.Item;
 public class PickUp implements ICommand {
 
     public static final String NAME = "pickUp";
-    private GamePlan gamePlan;
-    private Backpack backpack;
+    private final GamePlan gamePlan;
+    private final Backpack backpack;
 
     /**
      * Constructor

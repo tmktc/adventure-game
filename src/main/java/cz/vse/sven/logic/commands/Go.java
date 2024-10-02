@@ -11,8 +11,8 @@ import cz.vse.sven.logic.objects.Area;
 public class Go implements ICommand {
 
     public static final String NAME = "go";
-    private GamePlan gamePlan;
-    private Progress progress;
+    private final GamePlan gamePlan;
+    private final Progress progress;
 
     /**
      * Constructor
