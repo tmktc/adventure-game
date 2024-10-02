@@ -59,10 +59,12 @@ public class TalkTest {
         plan.getCurrentArea().addNPC(new NPC("kim", "Kim"));
         backpack.putItem(new Item("glutenFreeBread", "Gluten-free bread", false, false, false, 0));
 
-        assertEquals("\n" +
-                "Sven: \n" +
-                "\"Thank you once again for your help Kim, here is a little surprise.\"\n" +
-                " - You handed over Gluten-free bread\n", talk.executeCommand("kim"));
+        assertEquals("""
+
+                Sven:\s
+                "Thank you once again for your help Kim, here is a little surprise."
+                 - You handed over Gluten-free bread
+                """, talk.executeCommand("kim"));
         assertFalse(backpack.containsItem("glutenFreeBread"));
         assertEquals(7, progress.getProgress());
     }

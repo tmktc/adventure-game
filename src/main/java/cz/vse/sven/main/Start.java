@@ -38,10 +38,11 @@ public class Start extends Application {
 
         Alert introduction = new Alert(Alert.AlertType.INFORMATION);
         introduction.setTitle("Introduction");
-        introduction.setHeaderText("\nYou play as Sven, who lives under the bridge with his dog Peppa.\n" +
-                "They are both hungry, but Sven has no food and no money to buy it.\n" +
-                "He decides to leave Peppa at home and go to a near Soup kitchen (it gives homeless people food for free).\n" +
-                "His main goal is to obtain food for Peppa and himself.");
+        introduction.setHeaderText("""
+                You play as Sven, who lives under the bridge with his dog Peppa.
+                They are both hungry, but Sven has no food and no money to buy it.
+                He decides to leave Peppa at home and go to a near Soup kitchen (it gives homeless people food for free).
+                His main goal is to obtain food for Peppa and himself.""");
         introduction.show();
     }
 }

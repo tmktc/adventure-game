@@ -29,11 +29,15 @@ public class GoTest {
         assertEquals("You can not go there from here.", go.executeCommand("junkyard"));
 
         String correctText =
-                "\n\nYou are next to the Soup kitchen, which is closed for today, you see your friend Kim.\n" +
-                        "\n" +
-                        "exits: junkyard  lidl  kiosk  home  \n" +
-                        "items: \n" +
-                        "NPCs: kim  \n";
+                """
+
+
+                        You are next to the Soup kitchen, which is closed for today, you see your friend Kim.
+
+                        exits: junkyard  lidl  kiosk  home \s
+                        items:\s
+                        NPCs: kim \s
+                        """;
 
         // valid neighboring area
         assertEquals(correctText, go.executeCommand("soupKitchen"));
